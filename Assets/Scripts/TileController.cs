@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TileController : MonoBehaviour {
     public GameObject TileMarker;
+
     public Vector2 TileSize;
     public Vector2 BottomLeftPosition;
     public Vector2 EndLocation;
@@ -14,6 +15,8 @@ public class TileController : MonoBehaviour {
     public Vector2I[] StartPos;
 
     public PathFinder PF;
+
+    private Plane mapFloor;
 
     // Use this for initialization
     private void Start() {
@@ -40,10 +43,33 @@ public class TileController : MonoBehaviour {
                 Instantiate(TileMarker, new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y), transform.rotation);
             }
         }
+
+        mapFloor = new Plane(Vector3.up, Vector3.zero);
     }
 
     // Update is called once per frame
     private void Update() {
+        if (Input.GetMouseButtonDown(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            float distance;
+            if (mapFloor.Raycast(ray, out distance)) {
+                Vector3 tilePos = ray.GetPoint(distance);
+                Debug.Log("Position: " + tilePos);
+                tilePos -= new Vector3(BottomLeftPosition.x, 0, BottomLeftPosition.y);
+                Debug.Log("Tile Position: " + tilePos);
 
+                Vector2I tile = new Vector2I(Mathf.FloorToInt(tilePos.x + TileSize.x/2), Mathf.FloorToInt(tilePos.z + TileSize.y / 2));
+                Debug.Log("Tile: " + tile);
+
+            }
+        }
+    }
+
+    private void SetToWall() {
+        
+    }
+
+    private void SaveWallsToFile() {
+        
     }
 }

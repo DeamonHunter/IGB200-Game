@@ -17,21 +17,30 @@ public class PathFinder {
     }
 
     public List<Vector2I> CalculatePath(Vector2I position) {
+        //Set all nodes to unvisited
         ResetNodes();
 
         TileNode finalNode = Search(tiles[position.x, position.y].Node);
+
         if (finalNode == null || finalNode.Parent == null)
             throw new Exception("Path was not found.");
+
+        //Get the path from node to start and reverse it
         List<Vector2I> path = new List<Vector2I>();
         while (finalNode.Parent != null) {
             path.Add(finalNode.Location);
             finalNode = finalNode.Parent;
         }
-
         path.Reverse();
+
         return path;
     }
 
+    /// <summary>
+    /// Handles the Searching of Tiles. Using something that should be similar to A*
+    /// </summary>
+    /// <param name="startNode">The starting node from which search starts.</param>
+    /// <returns>The goal node. This node will have a parent unless no path is found.</returns>
     private TileNode Search(TileNode startNode) {
         startNode.State = TileNode.NodeState.Closed;
         SimplePriorityQueue<TileNode> nextNodes = new SimplePriorityQueue<TileNode>();
@@ -65,7 +74,7 @@ public class PathFinder {
             TileNode node = tiles[location.x, location.y].Node;
             if (!node.IsWalkable || node.State == TileNode.NodeState.Closed)
                 continue;
-
+            
             //Has it already been traversed at least once
             if (node.State == TileNode.NodeState.Open) {
                 float traversalCost = TileNode.GetGTraversalCost(node.Location, node.Parent.Location);

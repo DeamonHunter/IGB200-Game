@@ -7,10 +7,25 @@ public class TileNode : FastPriorityQueueNode {
     private TileNode parent;
     public Vector2I Location;
     public bool IsWalkable;
+
+    /// <summary>
+    /// Current Pathfinding cost to node.
+    /// </summary>
     public float G;
+
+    /// <summary>
+    /// Hueristic cost to the end.
+    /// </summary>
     public float H;
+
+    /// <summary>
+    /// Current State of the node. <seealso cref="NodeState"/>
+    /// </summary>
     public NodeState State;
 
+    /// <summary>
+    /// Total Pathfinding Cost. Adds <see cref="G"/> + <see cref="H"/>;
+    /// </summary>
     public float F {
         get { return G + H; }
     }
@@ -31,10 +46,14 @@ public class TileNode : FastPriorityQueueNode {
         this.G = 0;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="location"></param>
+    /// <param name="otherLocation"></param>
+    /// <returns></returns>
     internal static float GetGTraversalCost(Vector2I location, Vector2I otherLocation) {
-        float deltaX = otherLocation.x - location.x;
-        float deltaY = otherLocation.y - location.y;
-        return (Mathf.Abs(deltaX) + Mathf.Abs(deltaY)) * 2.5f;
+        return GetGTraversalCost(location, new Vector2(otherLocation.x, otherLocation.y));
     }
 
     internal static float GetGTraversalCost(Vector2I location, Vector2 otherLocation) {
