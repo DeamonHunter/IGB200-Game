@@ -8,6 +8,7 @@ using UnityEngine;
 public class TileController : MonoBehaviour {
     public GameObject TileMarker;
     public GameObject WallMarker;
+    public GameObject Enemy;
 
     public Vector2 TileSize;
     public Vector2 BottomLeftPosition;
@@ -49,8 +50,10 @@ public class TileController : MonoBehaviour {
 
         foreach (var start in StartPos) {
             var path = PF.CalculatePath(start);
+            var enemy = Instantiate(Enemy, TileToWorldPosition(start), transform.rotation).GetComponent<BasicEnemy>();
+            enemy.SetPath(TileToWorldPosition(path));
             foreach (var pos in path) {
-                Instantiate(TileMarker, new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y), transform.rotation, markerParent.transform);
+                Instantiate(TileMarker, TileToWorldPosition(pos), transform.rotation, markerParent.transform);
             }
         }
 
@@ -78,6 +81,19 @@ public class TileController : MonoBehaviour {
         //Enable to allow saving of walls
         //if (Input.GetKeyDown(KeyCode.P))
         //    SaveWallsToFile();
+    }
+
+    private Vector3 TileToWorldPosition(Vector2I pos) {
+        var worldPos = new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y);
+        return worldPos;
+    }
+
+    private List<Vector3> TileToWorldPosition(List<Vector2I> pos) {
+        var worldPos = new List<Vector3>();
+        foreach (var tile in pos) {
+            worldPos.Add(TileToWorldPosition(tile));
+        }
+        return worldPos;
     }
 
     private void SetToWall(Vector2I pos) {

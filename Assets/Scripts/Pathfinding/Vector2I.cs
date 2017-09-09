@@ -12,8 +12,13 @@ public class Vector2I {
         this.x = x;
         this.y = y;
     }
-    public override string ToString()
-    {
+
+    public static Vector2 Difference(Vector3 left, Vector2I right) {
+        var vec2 = new Vector3(left.x - right.x, left.z - right.y);
+        return vec2;
+    }
+
+    public override string ToString() {
         return "{" + x + ", " + y + "}";
     }
 }

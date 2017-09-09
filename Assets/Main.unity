@@ -402,6 +402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TileMarker: {fileID: 1204797450352144, guid: 8e05e5b016108364584235cc351d0a2a, type: 2}
   WallMarker: {fileID: 1204797450352144, guid: 6074ca5f3c60f95438e9c32f24f0152b, type: 2}
+  Enemy: {fileID: 1111502535089744, guid: cce6ad5cd657e1340b280b35671d1849, type: 2}
   TileSize: {x: 1, y: 1}
   BottomLeftPosition: {x: -44.5, y: -44.5}
   EndLocation: {x: -1, y: -5}
@@ -409,13 +410,13 @@ MonoBehaviour:
     x: 90
     y: 90
   StartPos:
-  - x: 0
+  - x: 10
     y: 0
-  - x: 89
+  - x: 79
     y: 89
-  - x: 0
+  - x: 10
     y: 89
-  - x: 89
+  - x: 75
     y: 0
 --- !u!4 &1922567585
 Transform:
