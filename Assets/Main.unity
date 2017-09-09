@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 1026783342}
   - component: {fileID: 1026783341}
   - component: {fileID: 1026783340}
+  - component: {fileID: 1026783345}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -360,6 +361,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 60.44, y: 0, z: 0}
+--- !u!114 &1026783345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1026783339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ade049e625ce63b45a3cda4796f4ac23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraSpeed: 10
 --- !u!1 &1922567583
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,6 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TileMarker: {fileID: 1204797450352144, guid: 8e05e5b016108364584235cc351d0a2a, type: 2}
+  WallMarker: {fileID: 1204797450352144, guid: 6074ca5f3c60f95438e9c32f24f0152b, type: 2}
   TileSize: {x: 1, y: 1}
   BottomLeftPosition: {x: -44.5, y: -44.5}
   EndLocation: {x: -1, y: -5}
