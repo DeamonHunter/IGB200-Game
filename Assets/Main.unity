@@ -265,7 +265,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 431165156}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 46.053913, y: -37.1558, z: 17.791885}
+  m_LocalPosition: {x: 46.053913, y: 90, z: 17.791885}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -354,13 +354,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1026783339}
-  m_LocalRotation: {x: 0.50332165, y: 0, z: 0, w: 0.8640992}
-  m_LocalPosition: {x: 0, y: 20, z: -18.95}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 30, z: -18.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 60.44, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &1026783345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,9 +400,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd12d2b3b141504e845a8af99ae99e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TileMarker: {fileID: 1204797450352144, guid: 8e05e5b016108364584235cc351d0a2a, type: 2}
-  WallMarker: {fileID: 1204797450352144, guid: 6074ca5f3c60f95438e9c32f24f0152b, type: 2}
-  Enemy: {fileID: 1111502535089744, guid: cce6ad5cd657e1340b280b35671d1849, type: 2}
+  TileMarkerPrefab: {fileID: 1204797450352144, guid: 8e05e5b016108364584235cc351d0a2a,
+    type: 2}
+  WallMarkerPreFab: {fileID: 1204797450352144, guid: 6074ca5f3c60f95438e9c32f24f0152b,
+    type: 2}
+  EnemyPrefab: {fileID: 1111502535089744, guid: cce6ad5cd657e1340b280b35671d1849,
+    type: 2}
+  CursorPrefab: {fileID: 1809252438287118, guid: 3f6fa0dc7f6502c47a9f774c1f2b4e32,
+    type: 2}
   TileSize: {x: 1, y: 1}
   BottomLeftPosition: {x: -44.5, y: -44.5}
   EndLocation: {x: -1, y: -5}

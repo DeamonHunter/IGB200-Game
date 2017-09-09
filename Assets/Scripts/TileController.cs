@@ -6,9 +6,10 @@ using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class TileController : MonoBehaviour {
-    public GameObject TileMarker;
-    public GameObject WallMarker;
-    public GameObject Enemy;
+    public GameObject TileMarkerPrefab;
+    public GameObject WallMarkerPreFab;
+    public GameObject EnemyPrefab;
+    public GameObject CursorPrefab;
 
     public Vector2 TileSize;
     public Vector2 BottomLeftPosition;
@@ -24,6 +25,8 @@ public class TileController : MonoBehaviour {
     private Plane mapFloor;
 
     private GameObject markerParent;
+    private GameObject cursor;
+    private Renderer cursorRenderer;
 
     // Use this for initialization
     private void Start() {
@@ -34,7 +37,7 @@ public class TileController : MonoBehaviour {
         for (int i = 0; i < NumTiles.x; i++) {
             for (int j = 0; j < NumTiles.y; j++) {
                 Tiles[i, j] = new Tile(new Vector2I(i, j), false, 1, EndLocation - BottomLeftPosition);
-                //Markers[i, j] = Instantiate(TileMarker, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
+                //Markers[i, j] = Instantiate(TileMarkerPrefab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
             }
         }
         LoadWallFromFile();
@@ -50,37 +53,48 @@ public class TileController : MonoBehaviour {
 
         foreach (var start in StartPos) {
             var path = PF.CalculatePath(start);
-            var enemy = Instantiate(Enemy, TileToWorldPosition(start), transform.rotation).GetComponent<BasicEnemy>();
+            var enemy = Instantiate(EnemyPrefab, TileToWorldPosition(start), transform.rotation).GetComponent<BasicEnemy>();
             enemy.SetPath(TileToWorldPosition(path));
             foreach (var pos in path) {
-                Instantiate(TileMarker, TileToWorldPosition(pos), transform.rotation, markerParent.transform);
+                Instantiate(TileMarkerPrefab, TileToWorldPosition(pos), transform.rotation, markerParent.transform);
             }
         }
 
         mapFloor = new Plane(Vector3.up, Vector3.zero);
+
+        cursor = Instantiate(CursorPrefab);
+        cursorRenderer = cursor.GetComponent<Renderer>();
     }
 
     // Update is called once per frame
     private void Update() {
+        var hoveredPos = GetHoveredTilePosition();
         if (Input.GetMouseButtonDown(0)) {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            float distance;
-            if (mapFloor.Raycast(ray, out distance)) {
-                Vector3 tilePos = ray.GetPoint(distance);
-                Debug.Log("Position: " + tilePos);
-                tilePos -= new Vector3(BottomLeftPosition.x, 0, BottomLeftPosition.y);
-                Debug.Log("Tile Position: " + tilePos);
-
-                Vector2I tile = new Vector2I(Mathf.FloorToInt(tilePos.x + TileSize.x / 2), Mathf.FloorToInt(tilePos.z + TileSize.y / 2));
-                Debug.Log("Tile: " + tile);
-
-                //Enable to allow editing of walls.
-                //SetToWall(tile);
-            }
+            //Enable to allow editing of walls.
+            //SetToWall(tile);
         }
+        cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.01f, 0);
+        if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y || Tiles[hoveredPos.x, hoveredPos.y].IsWall) {
+            cursorRenderer.material.color = Color.red;
+        }
+        else
+            cursorRenderer.material.color = Color.white;
         //Enable to allow saving of walls
         //if (Input.GetKeyDown(KeyCode.P))
         //    SaveWallsToFile();
+    }
+
+    private Vector2I GetHoveredTilePosition() {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        float distance;
+        if (mapFloor.Raycast(ray, out distance)) {
+            Vector3 tilePos = ray.GetPoint(distance);
+            tilePos -= new Vector3(BottomLeftPosition.x, 0, BottomLeftPosition.y);
+
+            Vector2I tile = new Vector2I(Mathf.FloorToInt(tilePos.x + TileSize.x / 2), Mathf.FloorToInt(tilePos.z + TileSize.y / 2));
+            return tile;
+        }
+        return new Vector2I(-1, -1);
     }
 
     private Vector3 TileToWorldPosition(Vector2I pos) {
@@ -99,7 +113,7 @@ public class TileController : MonoBehaviour {
     private void SetToWall(Vector2I pos) {
         Tiles[pos.x, pos.y].IsWall = !Tiles[pos.x, pos.y].IsWall;
         if (Markers[pos.x, pos.y] == null)
-            Markers[pos.x, pos.y] = Instantiate(WallMarker, new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y), transform.rotation);
+            Markers[pos.x, pos.y] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y), transform.rotation);
         else
             Destroy(Markers[pos.x, pos.y]);
         foreach (Transform child in markerParent.transform) {
@@ -109,7 +123,7 @@ public class TileController : MonoBehaviour {
         foreach (var start in StartPos) {
             var path = PF.CalculatePath(start);
             foreach (var point in path) {
-                Instantiate(TileMarker, new Vector3(BottomLeftPosition.x + point.x * TileSize.x, 0, BottomLeftPosition.y + point.y * TileSize.y), transform.rotation, markerParent.transform);
+                Instantiate(TileMarkerPrefab, new Vector3(BottomLeftPosition.x + point.x * TileSize.x, 0, BottomLeftPosition.y + point.y * TileSize.y), transform.rotation, markerParent.transform);
             }
         }
     }
@@ -132,7 +146,7 @@ public class TileController : MonoBehaviour {
                     Tiles[i, j].IsWall = sr.Read() == char.Parse("1");
                     //Enable to see walls when loading
                     //if (Tiles[i, j].IsWall)
-                    //    Markers[i, j] = Instantiate(WallMarker, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
+                    //    Markers[i, j] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
                 }
         }
     }
