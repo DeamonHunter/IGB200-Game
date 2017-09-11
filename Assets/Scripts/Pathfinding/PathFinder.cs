@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Policy;
 using Priority_Queue;
-using UnityEditor.IMGUI.Controls;
-using UnityEngine;
-using UnityEngine.VR;
 
 public class PathFinder {
     private Tile[,] tiles;
@@ -74,7 +68,7 @@ public class PathFinder {
             TileNode node = tiles[location.x, location.y].Node;
             if (!node.IsWalkable || node.State == TileNode.NodeState.Closed)
                 continue;
-            
+
             //Has it already been traversed at least once
             if (node.State == TileNode.NodeState.Open) {
                 float traversalCost = TileNode.GetGTraversalCost(node.Location, node.Parent.Location);

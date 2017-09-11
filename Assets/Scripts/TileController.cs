@@ -10,6 +10,7 @@ public class TileController : MonoBehaviour {
     public GameObject WallMarkerPreFab;
     public GameObject EnemyPrefab;
     public GameObject CursorPrefab;
+    public GameObject TestTower;
 
     public Vector2 TileSize;
     public Vector2 BottomLeftPosition;
@@ -72,9 +73,10 @@ public class TileController : MonoBehaviour {
         if (Input.GetMouseButtonDown(0)) {
             //Enable to allow editing of walls.
             //SetToWall(tile);
+            PlaceTower(hoveredPos);
         }
         cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.01f, 0);
-        if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y || Tiles[hoveredPos.x, hoveredPos.y].IsWall) {
+        if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y || Tiles[hoveredPos.x, hoveredPos.y].IsWall || Tiles[hoveredPos.x, hoveredPos.y].HasTower) {
             cursorRenderer.material.color = Color.red;
         }
         else
@@ -126,6 +128,14 @@ public class TileController : MonoBehaviour {
                 Instantiate(TileMarkerPrefab, new Vector3(BottomLeftPosition.x + point.x * TileSize.x, 0, BottomLeftPosition.y + point.y * TileSize.y), transform.rotation, markerParent.transform);
             }
         }
+    }
+
+    private void PlaceTower(Vector2I pos) {
+        if (Tiles[pos.x, pos.y].HasTower)
+            return;
+        //Need to check resources/money
+        Instantiate(TestTower, TileToWorldPosition(pos), Quaternion.identity);
+        //Need to update pathfinding
     }
 
     private void SaveWallsToFile() {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Tile {
     public bool IsWall;
+    public bool HasTower;
     public int PathFindingPenalty;
     public bool IsGoal;
     public TileNode Node;
