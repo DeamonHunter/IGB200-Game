@@ -9,7 +9,6 @@ using UnityEngine.EventSystems;
 public class TileController : MonoBehaviour {
     public GameObject TileMarkerPrefab;
     public GameObject WallMarkerPreFab;
-    public GameObject EnemyPrefab;
     public GameObject CursorPrefab;
     public GameObject TestTower;
 
@@ -20,9 +19,9 @@ public class TileController : MonoBehaviour {
     public Vector2I NumTiles;
     public Tile[,] Tiles;
     public GameObject[,] Markers;
-    public Vector2I[] StartPos;
 
     public PathFinder PF;
+
 
     private Plane mapFloor;
 
@@ -31,7 +30,7 @@ public class TileController : MonoBehaviour {
     private Renderer cursorRenderer;
 
     // Use this for initialization
-    private void Start() {
+    public void Setup() {
         markerParent = new GameObject();
 
         Tiles = new Tile[NumTiles.x, NumTiles.y];
@@ -53,14 +52,6 @@ public class TileController : MonoBehaviour {
 
         PF = new PathFinder(Tiles);
 
-        foreach (var start in StartPos) {
-            var path = PF.CalculatePath(start);
-            var enemy = Instantiate(EnemyPrefab, TileToWorldPosition(start), transform.rotation).GetComponent<BasicEnemy>();
-            enemy.SetPath(TileToWorldPosition(path));
-            foreach (var pos in path) {
-                Instantiate(TileMarkerPrefab, TileToWorldPosition(pos), transform.rotation, markerParent.transform);
-            }
-        }
 
         mapFloor = new Plane(Vector3.up, Vector3.zero);
 
@@ -100,12 +91,12 @@ public class TileController : MonoBehaviour {
         return new Vector2I(-1, -1);
     }
 
-    private Vector3 TileToWorldPosition(Vector2I pos) {
+    public Vector3 TileToWorldPosition(Vector2I pos) {
         var worldPos = new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y);
         return worldPos;
     }
 
-    private List<Vector3> TileToWorldPosition(List<Vector2I> pos) {
+    public List<Vector3> TileToWorldPosition(List<Vector2I> pos) {
         var worldPos = new List<Vector3>();
         foreach (var tile in pos) {
             worldPos.Add(TileToWorldPosition(tile));
@@ -121,13 +112,6 @@ public class TileController : MonoBehaviour {
             Destroy(Markers[pos.x, pos.y]);
         foreach (Transform child in markerParent.transform) {
             Destroy(child.gameObject);
-        }
-
-        foreach (var start in StartPos) {
-            var path = PF.CalculatePath(start);
-            foreach (var point in path) {
-                Instantiate(TileMarkerPrefab, new Vector3(BottomLeftPosition.x + point.x * TileSize.x, 0, BottomLeftPosition.y + point.y * TileSize.y), transform.rotation, markerParent.transform);
-            }
         }
     }
 

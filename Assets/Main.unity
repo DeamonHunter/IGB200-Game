@@ -760,7 +760,62 @@ Transform:
   m_LocalScale: {x: 9, y: 9, z: 9}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &323949230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 323949232}
+  - component: {fileID: 323949231}
+  m_Layer: 0
+  m_Name: Game Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &323949231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 323949230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a51f2b356c3006f4284dcd16907bca17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TileControlPreFab: {fileID: 1828649530041634, guid: 8f49ee8a7deac56498566244bb2ae93a,
+    type: 2}
+  TC: {fileID: 0}
+  SpawnerPreFab: {fileID: 1904620830439178, guid: b0283f9d3e9dcb64faa68cf2c236c714,
+    type: 2}
+  Spawners: []
+  StartPos:
+  - x: 12
+    y: 5
+  - x: 79
+    y: 86
+  - x: 15
+    y: 84
+  - x: 75
+    y: 10
+--- !u!4 &323949232
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 323949230}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 32.77594, y: 5.8203125, z: -48.27539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &325083472
 GameObject:
@@ -886,7 +941,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.00012207031, y: 0}
-  m_SizeDelta: {x: 1000, y: 300}
+  m_SizeDelta: {x: 600, y: 150}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &363163335
 MonoBehaviour:
@@ -1189,7 +1244,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &471477576
 GameObject:
@@ -2424,12 +2479,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 949088445}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 1080358749}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &971074531
 GameObject:
@@ -2679,7 +2734,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &1026783345
 MonoBehaviour:
@@ -2946,6 +3001,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 219466307}
+  - {fileID: 949088448}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4266,70 +4322,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1916978769}
---- !u!1 &1922567583
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1922567585}
-  - component: {fileID: 1922567584}
-  m_Layer: 0
-  m_Name: Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1922567584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1922567583}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd12d2b3b141504e845a8af99ae99e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TileMarkerPrefab: {fileID: 1204797450352144, guid: 8e05e5b016108364584235cc351d0a2a,
-    type: 2}
-  WallMarkerPreFab: {fileID: 1204797450352144, guid: 6074ca5f3c60f95438e9c32f24f0152b,
-    type: 2}
-  EnemyPrefab: {fileID: 1111502535089744, guid: cce6ad5cd657e1340b280b35671d1849,
-    type: 2}
-  CursorPrefab: {fileID: 1809252438287118, guid: 3f6fa0dc7f6502c47a9f774c1f2b4e32,
-    type: 2}
-  TestTower: {fileID: 1832577890227186, guid: 108b4b95a10cd104ab70505d532469c7, type: 2}
-  TileSize: {x: 1, y: 1}
-  BottomLeftPosition: {x: -44.5, y: -44.5}
-  EndLocation: {x: -1, y: -5}
-  NumTiles:
-    x: 90
-    y: 90
-  StartPos:
-  - x: 10
-    y: 0
-  - x: 79
-    y: 89
-  - x: 10
-    y: 89
-  - x: 75
-    y: 0
---- !u!4 &1922567585
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1922567583}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.62}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2022397677
 GameObject:
   m_ObjectHideFlags: 0
