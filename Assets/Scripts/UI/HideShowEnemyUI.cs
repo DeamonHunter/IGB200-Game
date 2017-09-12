@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HideShowUI : MonoBehaviour {
+public class HideShowEnemyUI : MonoBehaviour {
     public KeyCode UIShowKey;
-    public GameObject UI;
-    public GameObject CloseWhenEnabled;
+    public GameObject EnemyUI;
+    public GameObject WeaponUI;
 
     // Update is called once per frame
     private void Update() {
@@ -14,8 +14,7 @@ public class HideShowUI : MonoBehaviour {
     }
 
     public void ToggleUI() {
-        UI.SetActive(!UI.activeSelf);
-        if (UI.activeSelf && CloseWhenEnabled.activeSelf)
-            CloseWhenEnabled.SetActive(false);
+        EnemyUI.SetActive(!EnemyUI.activeSelf);
+        WeaponUI.SetActive(!EnemyUI.activeSelf);
     }
 }
