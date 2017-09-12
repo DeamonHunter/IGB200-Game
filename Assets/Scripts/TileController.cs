@@ -4,6 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEditor;
 using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TileController : MonoBehaviour {
     public GameObject TileMarkerPrefab;
@@ -70,7 +71,7 @@ public class TileController : MonoBehaviour {
     // Update is called once per frame
     private void Update() {
         var hoveredPos = GetHoveredTilePosition();
-        if (Input.GetMouseButtonDown(0)) {
+        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) {
             //Enable to allow editing of walls.
             //SetToWall(tile);
             PlaceTower(hoveredPos);
