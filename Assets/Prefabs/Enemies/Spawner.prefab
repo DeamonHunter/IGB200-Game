@@ -549,10 +549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemies:
   - {fileID: 1111502535089744, guid: cce6ad5cd657e1340b280b35671d1849, type: 2}
-  DoneSpawning: 0
-  StartPos:
-    x: 0
-    y: 0
+  Spawning: 0
 --- !u!120 &120124916368116316
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -566,7 +563,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -590,7 +587,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 1
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:
