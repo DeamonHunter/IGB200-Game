@@ -7,8 +7,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class TileController : MonoBehaviour {
-    public GameObject TileMarkerPrefab;
-    public GameObject WallMarkerPreFab;
     public GameObject CursorPrefab;
     public GameObject TestTower;
 
@@ -18,10 +16,8 @@ public class TileController : MonoBehaviour {
 
     public Vector2I NumTiles;
     public Tile[,] Tiles;
-    public GameObject[,] Markers;
 
     public PathFinder PF;
-
 
     private Plane mapFloor;
 
@@ -29,12 +25,17 @@ public class TileController : MonoBehaviour {
     private GameObject cursor;
     private Renderer cursorRenderer;
 
+    //Debug for walls
+    //public GameObject TileMarkerPrefab;
+    //public GameObject WallMarkerPreFab;
+    //public GameObject[,] Markers;
+
     // Use this for initialization
     public void Setup() {
         markerParent = new GameObject();
 
         Tiles = new Tile[NumTiles.x, NumTiles.y];
-        Markers = new GameObject[NumTiles.x, NumTiles.y];
+        //Markers = new GameObject[NumTiles.x, NumTiles.y];
         for (int i = 0; i < NumTiles.x; i++) {
             for (int j = 0; j < NumTiles.y; j++) {
                 Tiles[i, j] = new Tile(new Vector2I(i, j), false, 1, EndLocation - BottomLeftPosition);
@@ -49,9 +50,7 @@ public class TileController : MonoBehaviour {
         Tiles[43, 40].IsGoal = true;
         Tiles[43, 39].IsGoal = true;
 
-
         PF = new PathFinder(Tiles);
-
 
         mapFloor = new Plane(Vector3.up, Vector3.zero);
 
@@ -104,16 +103,16 @@ public class TileController : MonoBehaviour {
         return worldPos;
     }
 
-    private void SetToWall(Vector2I pos) {
-        Tiles[pos.x, pos.y].IsWall = !Tiles[pos.x, pos.y].IsWall;
-        if (Markers[pos.x, pos.y] == null)
-            Markers[pos.x, pos.y] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y), transform.rotation);
-        else
-            Destroy(Markers[pos.x, pos.y]);
-        foreach (Transform child in markerParent.transform) {
-            Destroy(child.gameObject);
-        }
-    }
+    //private void SetToWall(Vector2I pos) {
+    //    Tiles[pos.x, pos.y].IsWall = !Tiles[pos.x, pos.y].IsWall;
+    //    if (Markers[pos.x, pos.y] == null)
+    //        Markers[pos.x, pos.y] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y), transform.rotation);
+    //    else
+    //        Destroy(Markers[pos.x, pos.y]);
+    //    foreach (Transform child in markerParent.transform) {
+    //        Destroy(child.gameObject);
+    //    }
+    //}
 
     private void PlaceTower(Vector2I pos) {
         if (Tiles[pos.x, pos.y].HasTower)
