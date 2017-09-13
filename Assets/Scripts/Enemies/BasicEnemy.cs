@@ -10,7 +10,7 @@ public class BasicEnemy : MonoBehaviour {
     public float Damage;
     public float AttackSpeed;
 
-	public int carriedGold = 10;
+	public int carriedGold = 5;
 
     private float attackTimer;
     private List<Vector3> path;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
     //Singleton Setup
@@ -19,6 +20,10 @@ public class GameController : MonoBehaviour {
     [HideInInspector]
     public GameObject EnemyParent;
 
+    public GameObject StartWaveText;
+	public Text waveText; 
+	private int currentWave = 0;
+	private bool spawning = false;
 
     // Awake Checks - Singleton setup
     void Awake() {
@@ -41,6 +46,8 @@ public class GameController : MonoBehaviour {
         TC.Setup();
         EnemyParent = new GameObject();
 
+		waveText.text = currentWave.ToString();
+
         Spawners = new SpawnerScript[StartPos.Length];
         for (int i = 0; i < StartPos.Length; i++) {
             Spawners[i] = Instantiate(SpawnerPreFab, TC.TileToWorldPosition(StartPos[i]), transform.rotation).GetComponent<SpawnerScript>();
@@ -51,13 +58,21 @@ public class GameController : MonoBehaviour {
 
     // Update is called once per frame
     private void Update() {
+
+		waveText.text = currentWave.ToString();
+
         if (EnemyParent.transform.childCount <= 0) {
-            bool spawning = false;
+            spawning = false;
             foreach (var spawner in Spawners) {
                 spawning = spawning || spawner.Spawning;
             }
-            if (!spawning)
-                CreateNewWave();
+			if (!spawning && Input.GetKeyDown (KeyCode.Space)) {
+				CreateNewWave ();
+				currentWave++;
+				spawning = true;
+			} else if (!spawning) {
+				StartWaveText.SetActive (true);
+			}
         }
     }
 
@@ -76,10 +91,16 @@ public class GameController : MonoBehaviour {
     }
 
     private void CreateNewWave() {
+        StartWaveText.SetActive(false);
         List<int> enemies = new List<int>();
         enemies.AddRange(new[] { 0, 0, 0, 0, 0, 0, 0 });
         foreach (var spawner in Spawners) {
             spawner.NewWave(enemies, 1, 1);
         }
     }
+
+	public bool IsSpawning() {
+		return spawning;
+	}
+
 }
