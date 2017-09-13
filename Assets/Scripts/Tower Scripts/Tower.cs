@@ -15,8 +15,8 @@ namespace Assets.Scripts.Tower_Scripts {
         public float BulletsPerSecond;
         public float BulletSpeed; //Shouldn't this be in the bullet?
         public float RotateSpeed;
-        public float Cost;
-        public float PathFindingCost; //For Enemy Pathfinding purposes
+        public int Cost;
+        public int PathFindingCost; //For Enemy Pathfinding purposes
         public float Health;
         //public int Level // If we need it
 
@@ -86,16 +86,11 @@ namespace Assets.Scripts.Tower_Scripts {
         protected virtual bool LookAtEnemy(GameObject target) {
             Vector3 targetDir = target.transform.position - transform.position;
 			targetDir.y = 0;
-            curLookDir = Vector3.RotateTowards(curLookDir, targetDir, RotateSpeed * Time.fixedDeltaTime, 0.0F);
-            //TODO: Need logic for turning actual tower here
-
+            curLookDir = Vector3.RotateTowards(curLookDir, targetDir, RotateSpeed * Time.fixedDeltaTime * Mathf.Deg2Rad, 0.0F);
+            
+			//TODO: Need logic for turning actual tower here
 			Vector3 targetLocation = curLookDir + transform.position;
 			TowerObject.transform.LookAt (targetLocation);
-
-			//Vector3 rotationDirection = (curLookDir + transform.position + new Vector3 (0, 0.5f, 0));
-			//TowerObject.transform.LookAt(rotationDirection);
-			//TowerObject.transform.eulerAngles = new Vector3 (0, rotationDirection.y, 0);
-
 
             return Vector3.Angle(curLookDir, targetDir) < 5;
         }
@@ -119,5 +114,20 @@ namespace Assets.Scripts.Tower_Scripts {
                 return;
             targets.Add(other.gameObject);
         }
+
+        public bool TakeDamage(float damage) {
+            Health -= damage;
+            if (Health <= 0) {
+                Vector2I pos = GameController.instance.TC.WorldToTilePosition(transform.position);
+                GameController.instance.TC.Tiles[pos.x, pos.y].DeleteTower();
+                return true;
+            }
+            return false;
+        }
+
+		public float GetCost() {
+			return Cost;
+		}
+
     }
 }

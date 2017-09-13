@@ -215,20 +215,6 @@ Light:
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
-  m_FalloffTable:
-    m_Table[0]: 0
-    m_Table[1]: 0
-    m_Table[2]: 0
-    m_Table[3]: 0
-    m_Table[4]: 0
-    m_Table[5]: 0
-    m_Table[6]: 0
-    m_Table[7]: 0
-    m_Table[8]: 0
-    m_Table[9]: 0
-    m_Table[10]: 0
-    m_Table[11]: 0
-    m_Table[12]: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
@@ -246,12 +232,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletEmitter: {fileID: 4492831641867712}
   Bullet: {fileID: 1045205105010708, guid: 4f32850751752cb448a7d6d8b12c14c9, type: 2}
+  TowerObject: {fileID: 1854480867767032}
   BulletsPerSecond: 1
   BulletSpeed: 0
-  RotateSpeed: 10
-  Cost: 0
+  RotateSpeed: 220
+  Cost: 30
   PathFindingCost: 0
-  Health: 0
+  Health: 3
 --- !u!135 &135164606585251012
 SphereCollider:
   m_ObjectHideFlags: 1

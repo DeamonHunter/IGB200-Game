@@ -253,12 +253,12 @@ MonoBehaviour:
   BulletEmitter: {fileID: 4451975204423100}
   Bullet: {fileID: 1045205105010708, guid: 4f32850751752cb448a7d6d8b12c14c9, type: 2}
   TowerObject: {fileID: 1415326081254862}
-  BulletsPerSecond: 10
+  BulletsPerSecond: 3
   BulletSpeed: 0
-  RotateSpeed: 1
-  Cost: 0
-  PathFindingCost: 0
-  Health: 0
+  RotateSpeed: 180
+  Cost: 25
+  PathFindingCost: 12
+  Health: 3
 --- !u!135 &135921331885199774
 SphereCollider:
   m_ObjectHideFlags: 1

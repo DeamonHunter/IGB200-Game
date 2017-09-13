@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4855729488575832}
   - component: {fileID: 33594676107464118}
-  - component: {fileID: 65243564234871798}
   - component: {fileID: 23864975484734998}
+  - component: {fileID: 114775106324123442}
   m_Layer: 0
   m_Name: QuantumWall
   m_TagString: Untagged
@@ -36,8 +36,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095018311432066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11, y: 2, z: -11}
-  m_LocalScale: {x: 1, y: 2.5, z: 6}
+  m_LocalPosition: {x: 11, y: 0.5, z: -33.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -81,15 +81,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095018311432066}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65243564234871798
-BoxCollider:
+--- !u!114 &114775106324123442
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095018311432066}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98ae83efa760c544eb077f0ccd1b39a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BulletEmitter: {fileID: 0}
+  Bullet: {fileID: 0}
+  TowerObject: {fileID: 0}
+  BulletsPerSecond: 0
+  BulletSpeed: 0
+  RotateSpeed: 0
+  Cost: 50
+  PathFindingCost: 30
+  Health: 8

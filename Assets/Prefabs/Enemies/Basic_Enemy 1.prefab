@@ -172,3 +172,6 @@ MonoBehaviour:
   MinDistance: 0.02
   Health: 0
   Speed: 5
+  Damage: 0
+  AttackSpeed: 0
+  carriedGold: 10
