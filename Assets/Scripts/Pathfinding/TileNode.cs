@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Priority_Queue;
 using UnityEngine;
 
-public class TileNode : FastPriorityQueueNode {
+
+public class TileNode {
     private TileNode parent;
     private Tile tile;
     public Vector2I Location;
