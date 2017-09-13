@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TileNode : FastPriorityQueueNode {
     private TileNode parent;
+    private Tile tile;
     public Vector2I Location;
     public bool IsWalkable;
 
@@ -34,16 +35,18 @@ public class TileNode : FastPriorityQueueNode {
         get { return parent; }
         set {
             parent = value;
-            G = parent.G + GetGTraversalCost(Location, parent.Location);
+            if (parent != null)
+                G = parent.G + tile.PathFindingPenalty;
         }
     }
 
-    public TileNode(int x, int y, bool isWalkable, Vector2 endLocation) {
+    public TileNode(int x, int y, bool isWalkable, Vector2 endLocation, Tile tile) {
         this.Location = new Vector2I(x, y);
         this.State = NodeState.Untested;
         this.IsWalkable = isWalkable;
         this.H = GetGTraversalCost(Location, endLocation);
         this.G = 0;
+        this.tile = tile;
     }
 
     /// <summary>
@@ -64,6 +67,7 @@ public class TileNode : FastPriorityQueueNode {
 
     public void ResetNode() {
         this.State = NodeState.Untested;
+        this.Parent = null;
         this.G = 0;
     }
 

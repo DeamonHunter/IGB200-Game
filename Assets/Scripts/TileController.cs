@@ -82,10 +82,7 @@ public class TileController : MonoBehaviour {
         float distance;
         if (mapFloor.Raycast(ray, out distance)) {
             Vector3 tilePos = ray.GetPoint(distance);
-            tilePos -= new Vector3(BottomLeftPosition.x, 0, BottomLeftPosition.y);
-
-            Vector2I tile = new Vector2I(Mathf.FloorToInt(tilePos.x + TileSize.x / 2), Mathf.FloorToInt(tilePos.z + TileSize.y / 2));
-            return tile;
+            return WorldToTilePosition(tilePos);
         }
         return new Vector2I(-1, -1);
     }
@@ -103,6 +100,16 @@ public class TileController : MonoBehaviour {
         return worldPos;
     }
 
+    public Vector2I WorldToTilePosition(Vector3 pos) {
+        pos -= new Vector3(BottomLeftPosition.x, 0, BottomLeftPosition.y);
+        return new Vector2I(Mathf.FloorToInt(pos.x + TileSize.x / 2), Mathf.FloorToInt(pos.z + TileSize.y / 2));
+    }
+
+    public Tile GetTileAtWorldPos(Vector3 pos) {
+        var tilePos = WorldToTilePosition(pos);
+        return Tiles[tilePos.x, tilePos.y];
+    }
+
     //private void SetToWall(Vector2I pos) {
     //    Tiles[pos.x, pos.y].IsWall = !Tiles[pos.x, pos.y].IsWall;
     //    if (Markers[pos.x, pos.y] == null)
@@ -115,11 +122,12 @@ public class TileController : MonoBehaviour {
     //}
 
     private void PlaceTower(Vector2I pos) {
+        //Early return if tile already has tower
         if (Tiles[pos.x, pos.y].HasTower)
             return;
+
         //Need to check resources/money
-        Instantiate(TestTower, TileToWorldPosition(pos), Quaternion.identity);
-        //Need to update pathfinding
+        Tiles[pos.x, pos.y].SetTower(Instantiate(TestTower, TileToWorldPosition(pos), Quaternion.identity));
     }
 
     private void SaveWallsToFile() {

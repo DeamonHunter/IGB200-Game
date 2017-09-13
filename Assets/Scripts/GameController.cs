@@ -61,6 +61,15 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    public void UpdatePathFinding() {
+        foreach (var spawner in Spawners) {
+            spawner.UpdatePath();
+        }
+        for (int i = 0; i < EnemyParent.transform.childCount; i++) {
+            EnemyParent.transform.GetChild(i).GetComponent<BasicEnemy>().UpdatePath();
+        }
+    }
+
     private void CreateNewWave() {
         List<int> enemies = new List<int>();
         enemies.AddRange(new[] { 0, 0, 0, 0, 0, 0, 0 });

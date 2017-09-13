@@ -248,10 +248,10 @@ MonoBehaviour:
   Bullet: {fileID: 1045205105010708, guid: 4f32850751752cb448a7d6d8b12c14c9, type: 2}
   BulletsPerSecond: 1
   BulletSpeed: 0
-  RotateSpeed: 10
-  Cost: 0
-  PathFindingCost: 0
-  Health: 0
+  RotateSpeed: 220
+  Cost: 15
+  PathFindingCost: 20
+  Health: 3
 --- !u!135 &135164606585251012
 SphereCollider:
   m_ObjectHideFlags: 1

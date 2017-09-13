@@ -15,7 +15,7 @@ namespace Assets.Scripts.Tower_Scripts {
         public float BulletSpeed; //Shouldn't this be in the bullet?
         public float RotateSpeed;
         public float Cost;
-        public float PathFindingCost; //For Enemy Pathfinding purposes
+        public int PathFindingCost; //For Enemy Pathfinding purposes
         public float Health;
         //public int Level // If we need it
 
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Tower_Scripts {
         /// <returns>Is tower successfully alligned to target.</returns>
         protected virtual bool LookAtEnemy(GameObject target) {
             Vector3 targetDir = target.transform.position - transform.position;
-            curLookDir = Vector3.RotateTowards(curLookDir, targetDir, RotateSpeed * Time.fixedDeltaTime, 0.0F);
+            curLookDir = Vector3.RotateTowards(curLookDir, targetDir, RotateSpeed * Time.fixedDeltaTime * Mathf.Deg2Rad, 0.0F);
             //TODO: Need logic for turning actual tower here
 
             return Vector3.Angle(curLookDir, targetDir) < 5;
@@ -108,6 +108,16 @@ namespace Assets.Scripts.Tower_Scripts {
             if (!other.transform.CompareTag("Enemy"))
                 return;
             targets.Add(other.gameObject);
+        }
+
+        public bool TakeDamage(float damage) {
+            Health -= damage;
+            if (Health <= 0) {
+                Vector2I pos = GameController.instance.TC.WorldToTilePosition(transform.position);
+                GameController.instance.TC.Tiles[pos.x, pos.y].DeleteTower();
+                return true;
+            }
+            return false;
         }
     }
 }

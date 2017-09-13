@@ -1,16 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Tower_Scripts;
 using UnityEngine;
 
-public class QuantumWall : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public class QuantumWall : Tower {
+    protected override void FixedUpdate() {
+        //Don't do anything
+    }
 }

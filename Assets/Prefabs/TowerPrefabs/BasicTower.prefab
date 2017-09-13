@@ -166,12 +166,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletEmitter: {fileID: 4714921988632380}
   Bullet: {fileID: 1045205105010708, guid: 4f32850751752cb448a7d6d8b12c14c9, type: 2}
-  BulletsPerSecond: 10
+  BulletsPerSecond: 3
   BulletSpeed: 0
-  RotateSpeed: 10
+  RotateSpeed: 180
   Cost: 0
-  PathFindingCost: 0
-  Health: 0
+  PathFindingCost: 12
+  Health: 3
 --- !u!135 &135975425616368096
 SphereCollider:
   m_ObjectHideFlags: 1

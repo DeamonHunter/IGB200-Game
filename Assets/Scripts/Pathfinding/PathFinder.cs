@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Priority_Queue;
 
 public class PathFinder {
@@ -15,7 +16,7 @@ public class PathFinder {
         ResetNodes();
 
         TileNode finalNode = Search(tiles[position.x, position.y].Node);
-
+        Debug.Assert(tiles[position.x, position.y].Node.Parent == null);
         if (finalNode == null || finalNode.Parent == null)
             throw new Exception("Path was not found.");
 
@@ -71,7 +72,7 @@ public class PathFinder {
 
             //Has it already been traversed at least once
             if (node.State == TileNode.NodeState.Open) {
-                float traversalCost = TileNode.GetGTraversalCost(node.Location, node.Parent.Location);
+                float traversalCost = tiles[location.x, location.y].PathFindingPenalty;
                 float gTemp = fromNode.G + traversalCost;
                 if (gTemp < node.G) {
                     node.Parent = fromNode;
