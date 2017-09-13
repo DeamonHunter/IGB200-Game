@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor;
-using UnityEditor.VersionControl;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Assets.Scripts.Tower_Scripts;
@@ -32,9 +28,9 @@ public class TileController : MonoBehaviour {
     private GameObject cursor;
     private Renderer cursorRenderer;
 
-	private GameObject gameController;
-	private int towerCost = 0;
-	private int money;
+    private GameObject gameController;
+    private int towerCost = 0;
+    private int money;
 
     //Debug for walls
     //public GameObject TileMarkerPrefab;
@@ -47,7 +43,7 @@ public class TileController : MonoBehaviour {
         //markerParent = new GameObject();
         //Markers = new GameObject[NumTiles.x, NumTiles.y];
 
-		gameController = GameObject.FindGameObjectWithTag ("GameController");
+        gameController = GameObject.FindGameObjectWithTag("GameController");
 
         Tiles = new Tile[NumTiles.x, NumTiles.y];
         for (int i = 0; i < NumTiles.x; i++) {
@@ -139,14 +135,14 @@ public class TileController : MonoBehaviour {
         //Early return if tile already has tower
         if (Tiles[pos.x, pos.y].HasTower)
             return;
-		
-	    towerCost = Towers [SelectedTower].GetComponent<Tower>().Cost;
-		Debug.Log (Towers [SelectedTower].GetComponent<Tower>().Cost);
-		money = gameController.GetComponent<ResourceScript>().GetTotalMoney();
-		if (money >= towerCost) {
-			Tiles[pos.x, pos.y].SetTower(Instantiate(Towers[SelectedTower], TileToWorldPosition(pos), Quaternion.identity));
-			gameController.GetComponent<ResourceScript>().PurchaseItem(towerCost);
-		}
+
+        towerCost = Towers[SelectedTower].GetComponent<Tower>().Cost;
+        Debug.Log(Towers[SelectedTower].GetComponent<Tower>().Cost);
+        money = gameController.GetComponent<ResourceScript>().GetTotalMoney();
+        if (money >= towerCost) {
+            Tiles[pos.x, pos.y].SetTower(Instantiate(Towers[SelectedTower], TileToWorldPosition(pos), Quaternion.identity));
+            gameController.GetComponent<ResourceScript>().PurchaseItem(towerCost);
+        }
     }
 
     private void SaveWallsToFile() {

@@ -21,9 +21,9 @@ public class GameController : MonoBehaviour {
     public GameObject EnemyParent;
 
     public GameObject StartWaveText;
-	public Text waveText; 
-	private int currentWave = 0;
-	private bool spawning = false;
+    public Text waveText;
+    private int currentWave = 0;
+    private bool spawning = false;
 
     // Awake Checks - Singleton setup
     void Awake() {
@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour {
         else if (instance != this)
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
+
+        //Screen.SetResolution(Screen.height * 9 / 16, Screen.height, false);
     }
 
     // Use this for initialization
@@ -46,7 +48,7 @@ public class GameController : MonoBehaviour {
         TC.Setup();
         EnemyParent = new GameObject();
 
-		waveText.text = currentWave.ToString();
+        waveText.text = currentWave.ToString();
 
         Spawners = new SpawnerScript[StartPos.Length];
         for (int i = 0; i < StartPos.Length; i++) {
@@ -59,20 +61,21 @@ public class GameController : MonoBehaviour {
     // Update is called once per frame
     private void Update() {
 
-		waveText.text = currentWave.ToString();
+        waveText.text = currentWave.ToString();
 
         if (EnemyParent.transform.childCount <= 0) {
             spawning = false;
             foreach (var spawner in Spawners) {
                 spawning = spawning || spawner.Spawning;
             }
-			if (!spawning && Input.GetKeyDown (KeyCode.Space)) {
-				CreateNewWave ();
-				currentWave++;
-				spawning = true;
-			} else if (!spawning) {
-				StartWaveText.SetActive (true);
-			}
+            if (!spawning && Input.GetKeyDown(KeyCode.G)) {
+                CreateNewWave();
+                currentWave++;
+                spawning = true;
+            }
+            else if (!spawning) {
+                StartWaveText.SetActive(true);
+            }
         }
     }
 
@@ -85,7 +88,7 @@ public class GameController : MonoBehaviour {
         }
     }
 
-	public void ChangeTower(int towerNum) {
+    public void ChangeTower(int towerNum) {
         Debug.Log(towerNum);
         TC.SelectedTower = towerNum;
     }
@@ -99,8 +102,8 @@ public class GameController : MonoBehaviour {
         }
     }
 
-	public bool IsSpawning() {
-		return spawning;
-	}
+    public bool IsSpawning() {
+        return spawning;
+    }
 
 }
