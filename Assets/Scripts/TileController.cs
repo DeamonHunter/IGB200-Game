@@ -7,21 +7,27 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class TileController : MonoBehaviour {
+    //public Inspector variables
     public GameObject CursorPrefab;
-    public GameObject TestTower;
-
+    public GameObject[] Towers;
     public Vector2 TileSize;
     public Vector2 BottomLeftPosition;
     public Vector2 EndLocation;
-
     public Vector2I NumTiles;
+
+
+    //public non inspector variables
+    [HideInInspector]
+    public int SelectedTower;
+
+    [HideInInspector]
     public Tile[,] Tiles;
 
+    [HideInInspector]
     public PathFinder PF;
 
+    //Private Variables
     private Plane mapFloor;
-
-    private GameObject markerParent;
     private GameObject cursor;
     private Renderer cursorRenderer;
 
@@ -29,13 +35,14 @@ public class TileController : MonoBehaviour {
     //public GameObject TileMarkerPrefab;
     //public GameObject WallMarkerPreFab;
     //public GameObject[,] Markers;
+    //private GameObject markerParent;
 
     // Use this for initialization
     public void Setup() {
-        markerParent = new GameObject();
+        //markerParent = new GameObject();
+        //Markers = new GameObject[NumTiles.x, NumTiles.y];
 
         Tiles = new Tile[NumTiles.x, NumTiles.y];
-        //Markers = new GameObject[NumTiles.x, NumTiles.y];
         for (int i = 0; i < NumTiles.x; i++) {
             for (int j = 0; j < NumTiles.y; j++) {
                 Tiles[i, j] = new Tile(new Vector2I(i, j), false, 1, EndLocation - BottomLeftPosition);
@@ -127,7 +134,7 @@ public class TileController : MonoBehaviour {
             return;
 
         //Need to check resources/money
-        Tiles[pos.x, pos.y].SetTower(Instantiate(TestTower, TileToWorldPosition(pos), Quaternion.identity));
+        Tiles[pos.x, pos.y].SetTower(Instantiate(Towers[SelectedTower], TileToWorldPosition(pos), Quaternion.identity));
     }
 
     private void SaveWallsToFile() {

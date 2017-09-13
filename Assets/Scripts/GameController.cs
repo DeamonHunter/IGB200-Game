@@ -70,6 +70,11 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    public void ChangeTower(int towerNum) {
+        Debug.Log(towerNum);
+        TC.SelectedTower = towerNum;
+    }
+
     private void CreateNewWave() {
         List<int> enemies = new List<int>();
         enemies.AddRange(new[] { 0, 0, 0, 0, 0, 0, 0 });
