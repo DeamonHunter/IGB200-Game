@@ -54,7 +54,7 @@ MonoBehaviour:
   CursorPrefab: {fileID: 1809252438287118, guid: 3f6fa0dc7f6502c47a9f774c1f2b4e32,
     type: 2}
   Towers:
-  - {fileID: 1010900577609572, guid: f830b0b809f4f6549907895dfde9388b, type: 2}
+  - {fileID: 1832577890227186, guid: 108b4b95a10cd104ab70505d532469c7, type: 2}
   - {fileID: 1991536455840994, guid: 6885946277b764749a4b1abb0ad99282, type: 2}
   - {fileID: 1901960229977084, guid: 67376148672c3634aa40d0c526430f99, type: 2}
   - {fileID: 1095018311432066, guid: 7f9dbfed27d7eca4b9a2479d2414cd0c, type: 2}
