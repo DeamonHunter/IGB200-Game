@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour {
             //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
 
-        //Screen.SetResolution(Screen.height * 9 / 16, Screen.height, false);
+        Screen.SetResolution(Screen.height * 9 / 16, Screen.height, false);
     }
 
     // Use this for initialization
