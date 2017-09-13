@@ -9,6 +9,7 @@ namespace Assets.Scripts.Tower_Scripts {
         //Tower Setup
         public Transform BulletEmitter;
         public GameObject Bullet;
+		public GameObject TowerObject;
 
         //Tower Properties
         public float BulletsPerSecond;
@@ -84,8 +85,17 @@ namespace Assets.Scripts.Tower_Scripts {
         /// <returns>Is tower successfully alligned to target.</returns>
         protected virtual bool LookAtEnemy(GameObject target) {
             Vector3 targetDir = target.transform.position - transform.position;
+			targetDir.y = 0;
             curLookDir = Vector3.RotateTowards(curLookDir, targetDir, RotateSpeed * Time.fixedDeltaTime, 0.0F);
             //TODO: Need logic for turning actual tower here
+
+			Vector3 targetLocation = curLookDir + transform.position;
+			TowerObject.transform.LookAt (targetLocation);
+
+			//Vector3 rotationDirection = (curLookDir + transform.position + new Vector3 (0, 0.5f, 0));
+			//TowerObject.transform.LookAt(rotationDirection);
+			//TowerObject.transform.eulerAngles = new Vector3 (0, rotationDirection.y, 0);
+
 
             return Vector3.Angle(curLookDir, targetDir) < 5;
         }
