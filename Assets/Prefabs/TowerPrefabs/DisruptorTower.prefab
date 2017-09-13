@@ -166,6 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletEmitter: {fileID: 4820112776934908}
   Bullet: {fileID: 1045205105010708, guid: 4f32850751752cb448a7d6d8b12c14c9, type: 2}
+  TowerObject: {fileID: 1271855048012942}
   BulletsPerSecond: 2
   BulletSpeed: 0
   RotateSpeed: 160
