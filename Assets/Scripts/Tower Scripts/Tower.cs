@@ -87,7 +87,6 @@ namespace Assets.Scripts.Tower_Scripts {
             Vector3 targetDir = target.transform.position - transform.position;
 
             curLookDir = Vector3.RotateTowards(curLookDir, targetDir, RotateSpeed * Time.fixedDeltaTime * Mathf.Deg2Rad, 0.0F);
-            targetDir.y = 0;
             //TODO: Need logic for turning actual tower here
 
             Vector3 targetLocation = curLookDir + transform.position;

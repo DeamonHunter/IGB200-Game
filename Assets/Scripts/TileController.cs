@@ -140,7 +140,7 @@ public class TileController : MonoBehaviour {
         Debug.Log(Towers[SelectedTower].GetComponent<Tower>().Cost);
         money = gameController.GetComponent<ResourceScript>().GetTotalMoney();
         if (money >= towerCost) {
-            Tiles[pos.x, pos.y].SetTower(Instantiate(Towers[SelectedTower], TileToWorldPosition(pos), Quaternion.identity));
+            Tiles[pos.x, pos.y].SetTower(Instantiate(Towers[SelectedTower], TileToWorldPosition(pos) + Vector3.up, Quaternion.identity));
             gameController.GetComponent<ResourceScript>().PurchaseItem(towerCost);
         }
     }
