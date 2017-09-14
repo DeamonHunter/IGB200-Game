@@ -237,7 +237,7 @@ MonoBehaviour:
   BulletSpeed: 0
   RotateSpeed: 220
   Cost: 60
-  PathFindingCost: 0
+  PathFindingCost: 10
   Health: 3
 --- !u!135 &135164606585251012
 SphereCollider:
