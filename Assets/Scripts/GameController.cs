@@ -72,7 +72,6 @@ public class GameController : MonoBehaviour {
             }
             if (!spawning && Input.GetKeyDown(KeyCode.G)) {
                 CreateNewWave();
-                currentWave++;
                 spawning = true;
             }
             else if (!spawning) {
@@ -96,12 +95,22 @@ public class GameController : MonoBehaviour {
     }
 
     private void CreateNewWave() {
-        StartWaveText.SetActive(false);
-        List<int> enemies = new List<int>();
-        enemies.AddRange(new[] { 0, 0, 0, 0, 0, 0, 0 });
-        foreach (var spawner in Spawners) {
-            spawner.NewWave(enemies, 1, 1);
+        currentWave++;
+        int numEnemies = currentWave * 4 + 4;
+        int numActiveSpawners = Random.Range(1, 4);
+        int spawnersSet = 0;
+        while (spawnersSet < numActiveSpawners) {
+            int num = Random.Range(0, 4);
+            if (!Spawners[num].Spawning) {
+                List<int> enemies = new List<int>();
+                spawnersSet++;
+                for (int i = 0; i < (numEnemies + 1) / numActiveSpawners; i++)
+                    enemies.Add(0);
+                Spawners[num].NewWave(enemies, 1, 1f / (4 - numActiveSpawners));
+            }
         }
+
+        StartWaveText.SetActive(false);
     }
 
     public bool IsSpawning() {
