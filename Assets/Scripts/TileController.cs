@@ -133,14 +133,15 @@ public class TileController : MonoBehaviour {
 
     private void PlaceTower(Vector2I pos) {
         //Early return if tile already has tower
-        if (Tiles[pos.x, pos.y].HasTower)
+        var tile = Tiles[pos.x, pos.y];
+        if (tile.HasTower || tile.IsWall)
             return;
 
         towerCost = Towers[SelectedTower].GetComponent<Tower>().Cost;
         Debug.Log(Towers[SelectedTower].GetComponent<Tower>().Cost);
         money = gameController.GetComponent<ResourceScript>().GetTotalMoney();
         if (money >= towerCost) {
-            Tiles[pos.x, pos.y].SetTower(Instantiate(Towers[SelectedTower], TileToWorldPosition(pos), Quaternion.identity));
+            tile.SetTower(Instantiate(Towers[SelectedTower], TileToWorldPosition(pos), Quaternion.identity));
             gameController.GetComponent<ResourceScript>().PurchaseItem(towerCost);
         }
     }
