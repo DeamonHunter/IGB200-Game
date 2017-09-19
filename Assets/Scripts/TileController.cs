@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Assets.Scripts.Tower_Scripts;
+using UnityEditor;
+using UnityEditor.VersionControl;
 
 public class TileController : MonoBehaviour {
     //public Inspector variables
@@ -158,14 +160,14 @@ public class TileController : MonoBehaviour {
 
     private void LoadWallFromFile() {
         //Need to double check this works when building
-        using (var sr = new System.IO.StreamReader(Application.dataPath + @"\SaveData\Walls.txt", false)) {
-            for (int i = 0; i < NumTiles.x; i++)
-                for (int j = 0; j < NumTiles.x; j++) {
-                    Tiles[i, j].IsWall = sr.Read() == char.Parse("1");
-                    //Enable to see walls when loading
-                    //if (Tiles[i, j].IsWall)
-                    //    Markers[i, j] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
-                }
-        }
+        var file = AssetDatabase.LoadAssetAtPath("Assets/SaveData/Walls.txt", typeof(TextAsset)) as TextAsset;
+        string text = file.text;
+        for (int i = 0; i < NumTiles.x; i++)
+            for (int j = 0; j < NumTiles.x; j++) {
+                Tiles[i, j].IsWall = text[i * NumTiles.x + j] == char.Parse("1");
+                //Enable to see walls when loading
+                //if (Tiles[i, j].IsWall)
+                //    Markers[i, j] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
+            }
     }
 }
