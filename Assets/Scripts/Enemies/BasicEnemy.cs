@@ -5,7 +5,7 @@ using UnityEngine;
 public class BasicEnemy : MonoBehaviour {
     public bool AllowMove;
     public float MinDistance;
-    public float Health;
+    public float BaseHealth;
     public float Speed;
     public float Damage;
     public float AttackSpeed;
@@ -17,6 +17,7 @@ public class BasicEnemy : MonoBehaviour {
     private int pathNum = 0;
     private bool Attacking;
     private float curSpeed;
+    private float curHealth;
 
     private GameObject gameController;
 
@@ -61,6 +62,9 @@ public class BasicEnemy : MonoBehaviour {
         curSpeed = percent * Speed;
     }
 
+    public void SetHealth(int wave) {
+        curHealth = BaseHealth * (wave * 0.5f) + 1;
+    }
 
     public void SetPath(List<Vector3> positions) {
         AllowMove = true;
@@ -69,8 +73,8 @@ public class BasicEnemy : MonoBehaviour {
     }
 
     public void TakeDamage(float amount) {
-        Health -= amount;
-        if (Health <= 0) {
+        curHealth -= amount;
+        if (curHealth <= 0) {
             //Gain resources.
             gameController.GetComponent<ResourceScript>().GainMoney(carriedGold);
             Destroy(gameObject);

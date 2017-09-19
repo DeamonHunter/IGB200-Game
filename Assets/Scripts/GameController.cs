@@ -106,7 +106,7 @@ public class GameController : MonoBehaviour {
                 spawnersSet++;
                 for (int i = 0; i < (numEnemies + 1) / numActiveSpawners; i++)
                     enemies.Add(0);
-                Spawners[num].NewWave(enemies, 1, 1f / (4 - numActiveSpawners));
+                Spawners[num].NewWave(enemies, 1, 1f / (4 - numActiveSpawners), currentWave);
             }
         }
 

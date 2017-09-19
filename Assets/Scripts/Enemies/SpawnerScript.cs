@@ -11,6 +11,7 @@ public class SpawnerScript : MonoBehaviour {
     private List<Vector3> BasePath;
     private List<int> enemiesToSpawn;
     private float delayEnemies;
+    private int curWave;
 
     // Use this for initialization
     public void Setup(Vector2I start) {
@@ -23,10 +24,11 @@ public class SpawnerScript : MonoBehaviour {
 
     }
 
-    public void NewWave(List<int> enemies, float initialDelay, float delayBetweenEnemies) {
+    public void NewWave(List<int> enemies, float initialDelay, float delayBetweenEnemies, int wave) {
         enemiesToSpawn = new List<int>();
         enemiesToSpawn.AddRange(enemies); //Needed to be done. Copies pointer otherwise leading to null refs later.
         delayEnemies = delayBetweenEnemies;
+        curWave = wave;
         Spawning = true;
         Invoke("Spawn", initialDelay);
     }
@@ -35,6 +37,7 @@ public class SpawnerScript : MonoBehaviour {
         int enemyID = enemiesToSpawn[0];
         enemiesToSpawn.Remove(0);
         var enemy = Instantiate(Enemies[enemyID], transform.position, transform.rotation, GameController.instance.EnemyParent.transform).GetComponent<BasicEnemy>();
+        enemy.SetHealth(curWave);
         enemy.SetPath(BasePath);
         if (enemiesToSpawn.Count > 0)
             Invoke("Spawn", delayEnemies);

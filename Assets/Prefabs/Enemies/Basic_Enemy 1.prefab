@@ -170,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AllowMove: 0
   MinDistance: 0.02
-  Health: 0
+  BaseHealth: 1
   Speed: 5
   Damage: 0
   AttackSpeed: 0
