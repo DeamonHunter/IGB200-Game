@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour {
 
     //Global References
     public GameObject TileControlPreFab;
+    public MinimapController Minimap;
     [HideInInspector]
     public TileController TC;
 
@@ -46,6 +47,7 @@ public class GameController : MonoBehaviour {
     private void Start() {
         TC = Instantiate(TileControlPreFab).GetComponent<TileController>();
         TC.Setup();
+        Minimap.Setup(TC.NumTiles);
         EnemyParent = new GameObject();
 
         waveText.text = currentWave.ToString();

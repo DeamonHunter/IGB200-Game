@@ -10,7 +10,7 @@ public class BasicEnemy : MonoBehaviour {
     public float Damage;
     public float AttackSpeed;
 
-	public int carriedGold = 5;
+    public int carriedGold = 5;
 
     private float attackTimer;
     private List<Vector3> path;
@@ -18,12 +18,12 @@ public class BasicEnemy : MonoBehaviour {
     private bool Attacking;
     private float curSpeed;
 
-	private GameObject gameController;
+    private GameObject gameController;
 
     // Use this for initialization
     private void Start() {
         curSpeed = Speed;
-		gameController = GameObject.FindGameObjectWithTag ("GameController");
+        gameController = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Update is called once per frame
@@ -72,7 +72,7 @@ public class BasicEnemy : MonoBehaviour {
         Health -= amount;
         if (Health <= 0) {
             //Gain resources.
-			gameController.GetComponent<ResourceScript>().GainMoney(carriedGold);
+            gameController.GetComponent<ResourceScript>().GainMoney(carriedGold);
             Destroy(gameObject);
         }
     }
