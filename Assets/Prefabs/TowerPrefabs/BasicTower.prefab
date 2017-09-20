@@ -230,6 +230,7 @@ MonoBehaviour:
   Cost: 50
   PathFindingCost: 10
   Health: 3
+  HeightOffset: 0.8
 --- !u!135 &135975425616368096
 SphereCollider:
   m_ObjectHideFlags: 1

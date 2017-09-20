@@ -133,14 +133,15 @@ public class TileController : MonoBehaviour {
 
     private void PlaceTower(Vector2I pos) {
         //Early return if tile already has tower
-        if (Tiles[pos.x, pos.y].HasTower)
+        var tile = Tiles[pos.x, pos.y];
+        if (tile.HasTower || tile.IsWall)
             return;
 
         towerCost = Towers[SelectedTower].GetComponent<Tower>().Cost;
         Debug.Log(Towers[SelectedTower].GetComponent<Tower>().Cost);
         money = gameController.GetComponent<ResourceScript>().GetTotalMoney();
         if (money >= towerCost) {
-            Tiles[pos.x, pos.y].SetTower(Instantiate(Towers[SelectedTower], TileToWorldPosition(pos) + Vector3.up, Quaternion.identity));
+            tile.SetTower(Instantiate(Towers[SelectedTower], TileToWorldPosition(pos), Quaternion.identity));
             gameController.GetComponent<ResourceScript>().PurchaseItem(towerCost);
         }
     }
@@ -157,14 +158,14 @@ public class TileController : MonoBehaviour {
 
     private void LoadWallFromFile() {
         //Need to double check this works when building
-        using (var sr = new System.IO.StreamReader(Application.dataPath + @"\SaveData\Walls.txt", false)) {
-            for (int i = 0; i < NumTiles.x; i++)
-                for (int j = 0; j < NumTiles.x; j++) {
-                    Tiles[i, j].IsWall = sr.Read() == char.Parse("1");
-                    //Enable to see walls when loading
-                    //if (Tiles[i, j].IsWall)
-                    //    Markers[i, j] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
-                }
-        }
+        var file = Resources.Load("SaveData/Walls") as TextAsset;
+        string text = file.text;
+        for (int i = 0; i < NumTiles.x; i++)
+            for (int j = 0; j < NumTiles.x; j++) {
+                Tiles[i, j].IsWall = text[i * NumTiles.x + j] == char.Parse("1");
+                //Enable to see walls when loading
+                //if (Tiles[i, j].IsWall)
+                //    Markers[i, j] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
+            }
     }
 }

@@ -18,12 +18,13 @@ namespace Assets.Scripts.Tower_Scripts {
         public int Cost;
         public int PathFindingCost; //For Enemy Pathfinding purposes
         public float Health;
+        public float HeightOffset;
         //public int Level // If we need it
 
         //private variables
         private List<GameObject> targets = new List<GameObject>();
         private SphereCollider collider; //Will we ever have a non sphere collider?
-        protected Vector3 curLookDir = Vector3.forward;
+        protected Vector2 curLookDir = Vector2.right;
         private float fireTimer;
         private float fireRate;
 
@@ -33,6 +34,7 @@ namespace Assets.Scripts.Tower_Scripts {
         protected virtual void Start() {
             fireRate = 1 / BulletsPerSecond;
             collider = GetComponent<SphereCollider>();
+            transform.position += Vector3.up * HeightOffset;
         }
 
         /// <summary>
@@ -84,16 +86,15 @@ namespace Assets.Scripts.Tower_Scripts {
         /// <param name="target">Gameobject to aim tower at.</param>
         /// <returns>Is tower successfully alligned to target.</returns>
         protected virtual bool LookAtEnemy(GameObject target) {
-            Vector3 targetDir = target.transform.position - transform.position;
+            Vector2 targetDir = new Vector2(target.transform.position.x - transform.position.x, target.transform.position.z - transform.position.z);
 
             curLookDir = Vector3.RotateTowards(curLookDir, targetDir, RotateSpeed * Time.fixedDeltaTime * Mathf.Deg2Rad, 0.0F);
-            //TODO: Need logic for turning actual tower here
 
-            Vector3 targetLocation = curLookDir + transform.position;
+            Vector3 targetLocation = new Vector3(curLookDir.x, 0f, curLookDir.y) + transform.position;
             TowerObject.transform.LookAt(targetLocation);
             TowerObject.transform.eulerAngles = new Vector3(-90, TowerObject.transform.eulerAngles.y, 0);
 
-            return Vector3.Angle(curLookDir, targetDir) < 5;
+            return Vector2.Angle(curLookDir, targetDir) < 5;
         }
 
 

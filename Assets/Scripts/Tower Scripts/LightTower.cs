@@ -13,7 +13,7 @@ public class LightTower : Tower {
 
     protected override bool LookAtEnemy(GameObject target) {
         bool result = base.LookAtEnemy(target);
-        light.transform.LookAt(curLookDir + transform.position + new Vector3(0, 0.5f, 0));
+        light.transform.LookAt(new Vector3(curLookDir.x, 0f, curLookDir.y) + transform.position + new Vector3(0, 0.5f, 0));
         return result;
     }
 }

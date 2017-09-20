@@ -5,25 +5,26 @@ using UnityEngine;
 public class BasicEnemy : MonoBehaviour {
     public bool AllowMove;
     public float MinDistance;
-    public float Health;
+    public float BaseHealth;
     public float Speed;
     public float Damage;
     public float AttackSpeed;
 
-	public int carriedGold = 5;
+    public int carriedGold = 5;
 
     private float attackTimer;
     private List<Vector3> path;
     private int pathNum = 0;
     private bool Attacking;
     private float curSpeed;
+    private float curHealth;
 
-	private GameObject gameController;
+    private GameObject gameController;
 
     // Use this for initialization
     private void Start() {
         curSpeed = Speed;
-		gameController = GameObject.FindGameObjectWithTag ("GameController");
+        gameController = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Update is called once per frame
@@ -61,6 +62,9 @@ public class BasicEnemy : MonoBehaviour {
         curSpeed = percent * Speed;
     }
 
+    public void SetHealth(int wave) {
+        curHealth = BaseHealth * (wave * 0.5f) + 1;
+    }
 
     public void SetPath(List<Vector3> positions) {
         AllowMove = true;
@@ -69,10 +73,10 @@ public class BasicEnemy : MonoBehaviour {
     }
 
     public void TakeDamage(float amount) {
-        Health -= amount;
-        if (Health <= 0) {
+        curHealth -= amount;
+        if (curHealth <= 0) {
             //Gain resources.
-			gameController.GetComponent<ResourceScript>().GainMoney(carriedGold);
+            gameController.GetComponent<ResourceScript>().GainMoney(carriedGold);
             Destroy(gameObject);
         }
     }

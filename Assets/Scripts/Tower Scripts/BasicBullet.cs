@@ -15,6 +15,8 @@ public class BasicBullet : MonoBehaviour {
     void Update() {
         if (Target != null)
             lastKnownLocation = Target.transform.position;
+        else if (lastKnownLocation == Vector3.zero)
+            Destroy(gameObject);
 
         MoveTowardsTarget();
         if ((lastKnownLocation - transform.position).magnitude < 0.1f)
