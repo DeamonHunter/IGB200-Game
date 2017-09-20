@@ -21,7 +21,7 @@ public class ResourceScript : MonoBehaviour {
     // UI Objects
     public Text livesText;
     public Text moneyText;
-    public Text gameOverText;
+    public GameObject GameOverImage;
 
     private GameObject gameController;
 
@@ -39,12 +39,10 @@ public class ResourceScript : MonoBehaviour {
         moneyText.text = money.ToString();
 
         if (lives <= 0) {
-            gameOverText.enabled = true;
-            timer += Time.deltaTime;
-            Debug.Log(timer);
+            timer += Time.unscaledDeltaTime;
             if (timer > 3.0f) {
+                Time.timeScale = 1;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                Debug.Log("Restarted");
             }
         }
 
@@ -70,9 +68,15 @@ public class ResourceScript : MonoBehaviour {
     }
 
     public void LoseLife(int lostLives) {
-        if (lives > 0) {
-            lives -= lostLives;
-        }
+        lives -= lostLives;
+        if (lives <= 0)
+            GameOver();
+    }
+
+    private void GameOver() {
+        GameOverImage.SetActive(true);
+        timer = 0;
+        Time.timeScale = 0.1f;
     }
 
     public void GainMoney(int gainedMoney) {
