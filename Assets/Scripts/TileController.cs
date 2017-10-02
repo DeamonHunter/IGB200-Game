@@ -2,8 +2,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Assets.Scripts.Tower_Scripts;
-using UnityEditor;
-using UnityEditor.VersionControl;
 
 public class TileController : MonoBehaviour {
     //public Inspector variables
@@ -160,7 +158,7 @@ public class TileController : MonoBehaviour {
 
     private void LoadWallFromFile() {
         //Need to double check this works when building
-        var file = AssetDatabase.LoadAssetAtPath("Assets/SaveData/Walls.txt", typeof(TextAsset)) as TextAsset;
+        var file = Resources.Load("SaveData/Walls") as TextAsset;
         string text = file.text;
         for (int i = 0; i < NumTiles.x; i++)
             for (int j = 0; j < NumTiles.x; j++) {
