@@ -136,8 +136,8 @@ public class GameController : MonoBehaviour {
                 Spawners[num].NewWave(enemies, 1, 1f / (4 - numActiveSpawners), currentWave);
             }
         }
-
-        StartWaveText.SetActive(false);
+        if (!afkMode)
+            StartWaveText.SetActive(false);
     }
 
     public bool IsSpawning() {
