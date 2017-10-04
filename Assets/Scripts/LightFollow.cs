@@ -22,10 +22,10 @@ public class LightFollow : MonoBehaviour {
 
         if (Physics.Raycast(camRay, out floorHit, camRayLength)) {
 
-            Vector3 lightToMouse = floorHit.point - transform.position;
-            lightToMouse.y = -transform.position.y;
+            Vector3 lightToMouse = floorHit.point - Light.transform.position;
+            lightToMouse.y = -Light.transform.position.y;
             Quaternion rotation = Quaternion.LookRotation(lightToMouse);
-            transform.rotation = rotation;
+            Light.transform.rotation = rotation;
 
         }
 
