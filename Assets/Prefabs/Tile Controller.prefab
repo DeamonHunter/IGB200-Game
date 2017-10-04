@@ -55,8 +55,8 @@ MonoBehaviour:
     type: 2}
   Towers:
   - {fileID: 1832577890227186, guid: 108b4b95a10cd104ab70505d532469c7, type: 2}
-  - {fileID: 1991536455840994, guid: 6885946277b764749a4b1abb0ad99282, type: 2}
-  - {fileID: 1901960229977084, guid: 67376148672c3634aa40d0c526430f99, type: 2}
+  - {fileID: 1710876076608880, guid: 40d4d43abcad7d94982b4b62e60bd25b, type: 2}
+  - {fileID: 1907760995147132, guid: 9af1b9f51c6deb542822455d6f39de16, type: 2}
   - {fileID: 1095018311432066, guid: 7f9dbfed27d7eca4b9a2479d2414cd0c, type: 2}
   TileSize: {x: 1, y: 1}
   BottomLeftPosition: {x: -44.5, y: -44.5}
