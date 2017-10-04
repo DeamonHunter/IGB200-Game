@@ -78,7 +78,7 @@ public class GameController : MonoBehaviour {
 			if (!spawning && Input.GetKeyDown(KeyCode.G)) {
 				CreateNewWave();
 				spawning = true;
-				if (currentWave < 5) {
+				if (currentWave <= 5) {
 					dimLight = true;
 				}
 			}
