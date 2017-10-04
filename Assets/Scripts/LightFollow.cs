@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class LightFollow : MonoBehaviour {
 
-    public GameObject Light;
+    public GameObject GO;
+    private Light light;
+    private Plane plane;
 
     float camRayLength = 100f;
+
+    private void Start() {
+        light = GO.GetComponent<Light>();
+        plane = new Plane(Vector3.up, Vector3.zero);
+    }
 
     void Update() {
 
@@ -20,12 +27,14 @@ public class LightFollow : MonoBehaviour {
 
         RaycastHit floorHit;
 
-        if (Physics.Raycast(camRay, out floorHit, camRayLength)) {
+        float distance;
+        if (plane.Raycast(camRay, out distance)) {
 
-            Vector3 lightToMouse = floorHit.point - Light.transform.position;
-            lightToMouse.y = -Light.transform.position.y;
+            Vector3 lightToMouse = camRay.GetPoint(distance) - GO.transform.position;
+            light.spotAngle = Mathf.Min(50, 90 / Mathf.Log(lightToMouse.magnitude));
+            lightToMouse.y = -GO.transform.position.y;
             Quaternion rotation = Quaternion.LookRotation(lightToMouse);
-            Light.transform.rotation = rotation;
+            GO.transform.rotation = rotation;
 
         }
 

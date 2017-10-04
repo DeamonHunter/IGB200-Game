@@ -3383,7 +3383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fadf711386353a47aba9a9f7f42070f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Light: {fileID: 1530516829}
+  GO: {fileID: 1530516829}
 --- !u!23 &1389289331
 MeshRenderer:
   m_ObjectHideFlags: 0
