@@ -22,16 +22,13 @@ public class LightFollow : MonoBehaviour {
     }
 
     void LookAtMouseRay() {
-
         Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit floorHit;
 
         float distance;
         if (plane.Raycast(camRay, out distance)) {
 
             Vector3 lightToMouse = camRay.GetPoint(distance) - GO.transform.position;
-            light.spotAngle = Mathf.Min(50, 90 / Mathf.Log(lightToMouse.magnitude));
+            light.spotAngle = Mathf.Min(50, 150 / Mathf.Log(lightToMouse.magnitude * 3));
             lightToMouse.y = -GO.transform.position.y;
             Quaternion rotation = Quaternion.LookRotation(lightToMouse);
             GO.transform.rotation = rotation;
