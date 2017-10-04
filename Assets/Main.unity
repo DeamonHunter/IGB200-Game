@@ -2326,6 +2326,7 @@ MonoBehaviour:
   EnemyParent: {fileID: 0}
   StartWaveText: {fileID: 1762747954}
   waveText: {fileID: 690095544}
+  mainLight: {fileID: 0}
 --- !u!4 &891365511
 Transform:
   m_ObjectHideFlags: 0
@@ -2766,6 +2767,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraSpeed: 20
+  LowerLeftCorner: {x: -34, y: -28}
+  UpperRightCorner: {x: 34, y: 28}
 --- !u!1 &1065246757
 GameObject:
   m_ObjectHideFlags: 0
