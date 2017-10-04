@@ -4,138 +4,146 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
-	//Singleton Setup
-	public static GameController instance = null;
+    //Singleton Setup
+    public static GameController instance = null;
 
-	//Global References
-	public GameObject TileControlPreFab;
-	public MinimapController Minimap;
-	[HideInInspector]
-	public TileController TC;
+    //Global References
+    public GameObject TileControlPreFab;
+    public MinimapController Minimap;
+    [HideInInspector]
+    public TileController TC;
 
-	public GameObject SpawnerPreFab;
-	[HideInInspector]
-	public SpawnerScript[] Spawners;
-	public Vector2I[] StartPos;
+    public GameObject SpawnerPreFab;
+    [HideInInspector]
+    public SpawnerScript[] Spawners;
+    public Vector2I[] StartPos;
 
-	[HideInInspector]
-	public GameObject EnemyParent;
+    [HideInInspector]
+    public GameObject EnemyParent;
 
-	public GameObject StartWaveText;
-	public Text waveText;
-	private int currentWave = 0;
-	private bool spawning = false;
+    public GameObject StartWaveText;
+    public Text waveText;
+    private int currentWave = 0;
+    private bool spawning = false;
 
-	public Light mainLight;
-	private bool dimLight = false;
+    public Light mainLight;
+    private bool dimLight = false;
 
-	// Awake Checks - Singleton setup
-	void Awake() {
+    public GameObject AFKManager;
+    private bool afkMode;
 
-		//Check if instance already exists
-		if (instance == null)
+    // Awake Checks - Singleton setup
+    void Awake() {
 
-			//if not, set instance to this
-			instance = this;
+        //Check if instance already exists
+        if (instance == null)
 
-		//If instance already exists and it's not this:
-		else if (instance != this)
-			//Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
-			Destroy(gameObject);
+            //if not, set instance to this
+            instance = this;
 
-		Screen.SetResolution(Screen.height * 9 / 16, Screen.height, false);
-	}
+        //If instance already exists and it's not this:
+        else if (instance != this)
+            //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+            Destroy(gameObject);
 
-	// Use this for initialization
-	private void Start() {
-		TC = Instantiate(TileControlPreFab).GetComponent<TileController>();
-		TC.Setup();
-		Minimap.Setup(TC.NumTiles);
-		EnemyParent = new GameObject();
+        Screen.SetResolution(Screen.height * 9 / 16, Screen.height, false);
+    }
 
-		waveText.text = currentWave.ToString();
+    // Use this for initialization
+    private void Start() {
+        TC = Instantiate(TileControlPreFab).GetComponent<TileController>();
+        TC.Setup();
+        Minimap.Setup(TC.NumTiles);
+        EnemyParent = new GameObject();
 
-		Spawners = new SpawnerScript[StartPos.Length];
-		for (int i = 0; i < StartPos.Length; i++) {
-			Spawners[i] = Instantiate(SpawnerPreFab, TC.TileToWorldPosition(StartPos[i]), transform.rotation).GetComponent<SpawnerScript>();
-			Spawners[i].Setup(StartPos[i]);
-			Spawners[i].UpdatePath();
-		}
-	}
+        waveText.text = currentWave.ToString();
 
-	// Update is called once per frame
-	private void Update() {
+        Spawners = new SpawnerScript[StartPos.Length];
+        for (int i = 0; i < StartPos.Length; i++) {
+            Spawners[i] = Instantiate(SpawnerPreFab, TC.TileToWorldPosition(StartPos[i]), transform.rotation).GetComponent<SpawnerScript>();
+            Spawners[i].Setup(StartPos[i]);
+            Spawners[i].UpdatePath();
+        }
 
-		ControlLight();
+        if (AFKManager != null) {
+            afkMode = true;
+        }
+    }
 
-		waveText.text = currentWave.ToString();
+    // Update is called once per frame
+    private void Update() {
 
-		if (EnemyParent.transform.childCount <= 0) {
-			spawning = false;
-			foreach (var spawner in Spawners) {
-				spawning = spawning || spawner.Spawning;
-			}
-			if (!spawning && Input.GetKeyDown(KeyCode.G)) {
-				CreateNewWave();
-				spawning = true;
-				if (currentWave <= 5) {
-					dimLight = true;
-				}
-			}
-			else if (!spawning) {
-				StartWaveText.SetActive(true);
-			}
-		}
-	}
+        ControlLight();
 
-	public void UpdatePathFinding() {
-		foreach (var spawner in Spawners) {
-			spawner.UpdatePath();
-		}
-		for (int i = 0; i < EnemyParent.transform.childCount; i++) {
-			EnemyParent.transform.GetChild(i).GetComponent<BasicEnemy>().UpdatePath();
-		}
-	}
+        waveText.text = currentWave.ToString();
 
-	public void ChangeTower(int towerNum) {
-		Debug.Log(towerNum);
-		TC.SelectedTower = towerNum;
-	}
+        if (EnemyParent.transform.childCount <= 0) {
+            spawning = false;
+            foreach (var spawner in Spawners) {
+                spawning = spawning || spawner.Spawning;
+            }
+            if (!spawning && Input.GetKeyDown(KeyCode.G)) {
+                CreateNewWave();
+                spawning = true;
+                if (currentWave <= 5) {
+                    dimLight = true;
+                }
+            }
+            else if (!spawning) {
+                StartWaveText.SetActive(true);
+            }
+        }
+    }
 
-	private void CreateNewWave() {
-		currentWave++;
-		int numEnemies = currentWave * 4 + 4;
-		int numActiveSpawners = Random.Range(1, 4);
-		int spawnersSet = 0;
-		while (spawnersSet < numActiveSpawners) {
-			int num = Random.Range(0, 4);
-			if (!Spawners[num].Spawning) {
-				List<int> enemies = new List<int>();
-				spawnersSet++;
-				for (int i = 0; i < (numEnemies + 1) / numActiveSpawners; i++)
-					enemies.Add(0);
-				Spawners[num].NewWave(enemies, 1, 1f / (4 - numActiveSpawners), currentWave);
-			}
-		}
+    public void UpdatePathFinding() {
+        foreach (var spawner in Spawners) {
+            spawner.UpdatePath();
+        }
+        for (int i = 0; i < EnemyParent.transform.childCount; i++) {
+            EnemyParent.transform.GetChild(i).GetComponent<BasicEnemy>().UpdatePath();
+        }
+    }
 
-		StartWaveText.SetActive(false);
-	}
+    public void ChangeTower(int towerNum) {
+        Debug.Log(towerNum);
+        TC.SelectedTower = towerNum;
+    }
 
-	public bool IsSpawning() {
-		return spawning;
-	}
+    private void CreateNewWave() {
+        currentWave++;
+        int numEnemies = currentWave * 4 + 4;
+        int numActiveSpawners = Random.Range(1, 4);
+        int spawnersSet = 0;
+        while (spawnersSet < numActiveSpawners) {
+            int num = Random.Range(0, 4);
+            if (!Spawners[num].Spawning) {
+                List<int> enemies = new List<int>();
+                spawnersSet++;
+                for (int i = 0; i < (numEnemies + 1) / numActiveSpawners; i++)
+                    enemies.Add(0);
+                Spawners[num].NewWave(enemies, 1, 1f / (4 - numActiveSpawners), currentWave);
+            }
+        }
 
-	void ControlLight() {
-		if (dimLight) {
-			if (mainLight.intensity > 0 && currentWave < 5 && currentWave > 1) {
-				mainLight.intensity = mainLight.intensity / 2;
-			} else if (currentWave >= 5) {
-				mainLight.intensity = 0;
-			}
+        StartWaveText.SetActive(false);
+    }
 
-			dimLight = false;
-		}
+    public bool IsSpawning() {
+        return spawning;
+    }
 
-	}
+    void ControlLight() {
+        if (dimLight) {
+            if (mainLight.intensity > 0 && currentWave < 5 && currentWave > 1) {
+                mainLight.intensity = mainLight.intensity / 2;
+            }
+            else if (currentWave >= 5) {
+                mainLight.intensity = 0;
+            }
+
+            dimLight = false;
+        }
+
+    }
 
 }
