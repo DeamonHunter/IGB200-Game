@@ -17,12 +17,25 @@ public class AFKManager : MonoBehaviour {
 
 
     IEnumerator AFKScript() {
-        yield return new WaitForSeconds(3);
-        camera.SetNewCameraMovePosition(new Vector3(10, 0, 10), 2);
-        cursor.SetNewCameraMovePosition(new Vector3(10, 0, 10), 2);
-        yield return new WaitForSeconds(3);
-        camera.SetNewCameraMovePosition(new Vector3(-10, 0, 10), 2);
-        cursor.SetNewCameraMovePosition(new Vector3(-10, 0, 10), 2);
+        camera.SetNewCameraMovePosition(new Vector3(-1, 0, -5), 2);
+        yield return new WaitForSeconds(0.5f);
+        cursor.SetNewCameraMovePosition(GameController.instance.TC.TileToWorldPosition(new Vector2I(40, 38)), 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        GameController.instance.TC.PlaceTower(new Vector2I(40, 38));
+        cursor.SetNewCameraMovePosition(GameController.instance.TC.TileToWorldPosition(new Vector2I(40, 42)), 0.2f);
+        yield return new WaitForSeconds(0.2f);
+        GameController.instance.TC.PlaceTower(new Vector2I(40, 42));
+        cursor.SetNewCameraMovePosition(GameController.instance.TC.TileToWorldPosition(new Vector2I(46, 42)), 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        GameController.instance.TC.PlaceTower(new Vector2I(46, 42));
+        cursor.SetNewCameraMovePosition(GameController.instance.TC.TileToWorldPosition(new Vector2I(46, 38)), 0.2f);
+        yield return new WaitForSeconds(0.2f);
+        GameController.instance.TC.PlaceTower(new Vector2I(46, 38));
+        cursor.SetNewCameraMovePosition(GameController.instance.TC.TileToWorldPosition(new Vector2I(45, 35)), 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        GameController.instance.TC.PlaceTower(new Vector2I(45, 35));
+        yield return new WaitForSeconds(1.5f);
+        GameController.instance.CreateNewWave();
         Debug.Log("Hello");
     }
     // Update is called once per frame

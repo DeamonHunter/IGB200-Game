@@ -75,7 +75,7 @@ public class TileController : MonoBehaviour {
     // Update is called once per frame
     private void Update() {
         var hoveredPos = GetHoveredTilePosition();
-        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) {
+        if (!EventSystem.current.IsPointerOverGameObject() && AllowPlayerMovement && Input.GetMouseButtonDown(0)) {
             //Enable to allow editing of walls.
             //SetToWall(tile);
             PlaceTower(hoveredPos);
@@ -138,7 +138,7 @@ public class TileController : MonoBehaviour {
     //    }
     //}
 
-    private void PlaceTower(Vector2I pos) {
+    public void PlaceTower(Vector2I pos) {
         //Early return if tile already has tower
         var tile = Tiles[pos.x, pos.y];
         if (tile.HasTower || tile.IsWall)

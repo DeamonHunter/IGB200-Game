@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
@@ -28,6 +29,7 @@ public class GameController : MonoBehaviour {
 
     public Light mainLight;
     private bool dimLight = false;
+    private float newIntensity;
 
     public AFKManager AFK;
     private bool afkMode;
@@ -68,6 +70,7 @@ public class GameController : MonoBehaviour {
         if (AFK != null) {
             afkMode = true;
             TC.AllowPlayerMovement = false;
+            StartWaveText.GetComponent<Text>().text = "Press G to Start the game!";
         }
     }
 
@@ -78,6 +81,10 @@ public class GameController : MonoBehaviour {
 
         waveText.text = currentWave.ToString();
 
+        if (afkMode && Input.GetKeyDown(KeyCode.G)) {
+            SceneManager.LoadScene("Main");
+        }
+
         if (EnemyParent.transform.childCount <= 0) {
             spawning = false;
             foreach (var spawner in Spawners) {
@@ -86,7 +93,11 @@ public class GameController : MonoBehaviour {
             if (!spawning && Input.GetKeyDown(KeyCode.G)) {
                 CreateNewWave();
                 spawning = true;
-                if (currentWave <= 5) {
+                if (currentWave <= 5 && currentWave > 1) {
+                    if (currentWave == 5)
+                        newIntensity = 0;
+                    else
+                        newIntensity = mainLight.intensity / 2;
                     dimLight = true;
                 }
             }
@@ -110,7 +121,7 @@ public class GameController : MonoBehaviour {
         TC.SelectedTower = towerNum;
     }
 
-    private void CreateNewWave() {
+    public void CreateNewWave() {
         currentWave++;
         int numEnemies = currentWave * 4 + 4;
         int numActiveSpawners = Random.Range(1, 4);
@@ -133,18 +144,12 @@ public class GameController : MonoBehaviour {
         return spawning;
     }
 
-    void ControlLight() {
-        if (dimLight) {
-            if (mainLight.intensity > 0 && currentWave < 5 && currentWave > 1) {
-                mainLight.intensity = mainLight.intensity / 2;
-            }
-            else if (currentWave >= 5) {
-                mainLight.intensity = 0;
-            }
-
+    private void ControlLight() {
+        if (!dimLight)
+            return;
+        mainLight.intensity = Mathf.MoveTowards(mainLight.intensity, newIntensity, Time.deltaTime / 10);
+        if (Mathf.Abs(newIntensity - mainLight.intensity) <= 0.01)
             dimLight = false;
-        }
-
     }
 
 }
