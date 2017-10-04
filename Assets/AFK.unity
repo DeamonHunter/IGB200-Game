@@ -940,6 +940,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &284726801
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 284726803}
+  - component: {fileID: 284726802}
+  m_Layer: 0
+  m_Name: Cursor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &284726802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 284726801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ade049e625ce63b45a3cda4796f4ac23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CameraSpeed: 20
+  LowerLeftCorner: {x: -34, y: -28}
+  UpperRightCorner: {x: 34, y: 28}
+  AllowPayerControl: 1
+--- !u!4 &284726803
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 284726801}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &325083472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2327,7 +2371,7 @@ MonoBehaviour:
   StartWaveText: {fileID: 1762747954}
   waveText: {fileID: 690095544}
   mainLight: {fileID: 431165157}
-  AFKManager: {fileID: 1303070181}
+  AFK: {fileID: 1303070182}
 --- !u!4 &891365511
 Transform:
   m_ObjectHideFlags: 0
@@ -2770,6 +2814,7 @@ MonoBehaviour:
   CameraSpeed: 20
   LowerLeftCorner: {x: -34, y: -28}
   UpperRightCorner: {x: 34, y: 28}
+  AllowPayerControl: 1
 --- !u!1 &1065246757
 GameObject:
   m_ObjectHideFlags: 0
@@ -3293,6 +3338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1026783345}
+  Cursor: {fileID: 284726801}
 --- !u!4 &1303070183
 Transform:
   m_ObjectHideFlags: 0

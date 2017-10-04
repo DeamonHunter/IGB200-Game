@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Assets.Scripts.Tower_Scripts;
@@ -22,6 +23,9 @@ public class TileController : MonoBehaviour {
 
     [HideInInspector]
     public PathFinder PF;
+
+    [HideInInspector]
+    public bool AllowPlayerMovement = true;
 
     //Private Variables
     private Plane mapFloor;
@@ -88,13 +92,16 @@ public class TileController : MonoBehaviour {
     }
 
     public Vector2I GetHoveredTilePosition() {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float distance;
-        if (mapFloor.Raycast(ray, out distance)) {
-            Vector3 tilePos = ray.GetPoint(distance);
-            return WorldToTilePosition(tilePos);
+        if (AllowPlayerMovement) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            float distance;
+            if (mapFloor.Raycast(ray, out distance)) {
+                Vector3 tilePos = ray.GetPoint(distance);
+                return WorldToTilePosition(tilePos);
+            }
+            return new Vector2I(-1, -1);
         }
-        return new Vector2I(-1, -1);
+        return WorldToTilePosition(GameController.instance.AFK.Cursor.transform.position);
     }
 
     public Vector3 TileToWorldPosition(Vector2I pos) {

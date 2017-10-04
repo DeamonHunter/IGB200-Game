@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour {
     public Light mainLight;
     private bool dimLight = false;
 
-    public GameObject AFKManager;
+    public AFKManager AFK;
     private bool afkMode;
 
     // Awake Checks - Singleton setup
@@ -65,8 +65,9 @@ public class GameController : MonoBehaviour {
             Spawners[i].UpdatePath();
         }
 
-        if (AFKManager != null) {
+        if (AFK != null) {
             afkMode = true;
+            TC.AllowPlayerMovement = false;
         }
     }
 
