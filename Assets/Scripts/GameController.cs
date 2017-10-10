@@ -145,6 +145,8 @@ public class GameController : MonoBehaviour
         if (currentWave < Waves.Length)
         {
             List<int>[] enemies = new List<int>[Spawners.Length];
+            for (int i = 0; i < Spawners.Length; i++)
+                enemies[i] = new List<int>();
             for (int i = 0; i < Waves[currentWave].Enemies.Length; i++)
             {
                 enemies[Waves[currentWave].Spawner[i]].Add(Waves[currentWave].Enemies[i]);

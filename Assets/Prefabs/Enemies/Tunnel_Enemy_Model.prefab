@@ -19,9 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4878045275185586}
-  - component: {fileID: 114239091124289856}
   - component: {fileID: 54336887875020732}
   - component: {fileID: 65443934362996406}
+  - component: {fileID: 114644701126553830}
   m_Layer: 0
   m_Name: Tunnel_Enemy_Model
   m_TagString: Enemy
@@ -139,7 +139,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.3, y: 1, z: 4.4}
   m_Center: {x: 0, y: 0.2, z: 0.2}
---- !u!114 &114239091124289856
+--- !u!114 &114644701126553830
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -147,13 +147,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1779184333209246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab8bfa3c54168d349803a4775fc65bd5, type: 3}
+  m_Script: {fileID: 11500000, guid: 65a1418156120224fb81edede80d02fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AllowMove: 0
   MinDistance: 0.02
-  BaseHealth: 2
-  Speed: 10
+  BaseHealth: 0.5
+  Speed: 3
   Damage: 1
-  AttackSpeed: 1
+  AttackSpeed: 0.5
   carriedGold: 10

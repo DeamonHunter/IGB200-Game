@@ -10,6 +10,7 @@ public class SpawnerScript : MonoBehaviour
     private Vector2I startPos;
     private LineRenderer lr;
     private List<Vector3> BasePath;
+    private List<Vector3> BaseIgnorePath;
     private List<int> enemiesToSpawn;
     private float delayEnemies;
     public float[] EnemyHealthMultipliers;
@@ -39,10 +40,13 @@ public class SpawnerScript : MonoBehaviour
     private void Spawn()
     {
         int enemyID = enemiesToSpawn[0];
-        enemiesToSpawn.Remove(0);
+        enemiesToSpawn.RemoveAt(0);
         var enemy = Instantiate(Enemies[enemyID], transform.position, transform.rotation, GameController.instance.EnemyParent.transform).GetComponent<BasicEnemy>();
         enemy.SetHealth(EnemyHealthMultipliers[enemyID]);
-        enemy.SetPath(BasePath);
+        if (enemy.IgnoresWalls)
+            enemy.SetPath(BaseIgnorePath);
+        else
+            enemy.SetPath(BasePath);
         if (enemiesToSpawn.Count > 0)
             Invoke("Spawn", delayEnemies);
         else
@@ -52,6 +56,7 @@ public class SpawnerScript : MonoBehaviour
     public void UpdatePath()
     {
         BasePath = GameController.instance.TC.TileToWorldPosition(GameController.instance.TC.PF.CalculatePath(startPos));
+        BaseIgnorePath = GameController.instance.TC.TileToWorldPosition(GameController.instance.TC.PF.CalculatePath(startPos, true));
         var linePos = BasePath;
         for (int i = 0; i < linePos.Count; i++)
         {

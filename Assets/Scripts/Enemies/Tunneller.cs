@@ -15,6 +15,7 @@ public class Tunneller : BasicEnemy
                 return;
         }
         transform.position = Vector3.MoveTowards(pos, path[pathNum], curSpeed * Time.deltaTime);
+        transform.LookAt(path[pathNum]);
     }
 
     public override void UpdatePath()

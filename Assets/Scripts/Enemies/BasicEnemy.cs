@@ -10,6 +10,7 @@ public class BasicEnemy : MonoBehaviour
     public float Speed;
     public float Damage;
     public float AttackSpeed;
+    public bool IgnoresWalls;
 
     public int carriedGold = 5;
 
@@ -53,6 +54,7 @@ public class BasicEnemy : MonoBehaviour
             }
         }
         transform.position = Vector3.MoveTowards(pos, path[pathNum], curSpeed * Time.deltaTime);
+        transform.LookAt(path[pathNum]);
     }
 
     private void AttackNextPos()
