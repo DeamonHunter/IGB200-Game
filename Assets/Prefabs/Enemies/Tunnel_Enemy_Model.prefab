@@ -156,4 +156,5 @@ MonoBehaviour:
   Speed: 3
   Damage: 1
   AttackSpeed: 0.5
+  IgnoresWalls: 1
   carriedGold: 10
