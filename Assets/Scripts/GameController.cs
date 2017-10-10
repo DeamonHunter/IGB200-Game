@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.Enemies;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour
+{
     //Singleton Setup
     public static GameController instance = null;
 
@@ -34,8 +36,11 @@ public class GameController : MonoBehaviour {
     public AFKManager AFK;
     private bool afkMode;
 
+    public Wave[] Waves;
+
     // Awake Checks - Singleton setup
-    void Awake() {
+    void Awake()
+    {
 
         //Check if instance already exists
         if (instance == null)
@@ -52,7 +57,8 @@ public class GameController : MonoBehaviour {
     }
 
     // Use this for initialization
-    private void Start() {
+    private void Start()
+    {
         TC = Instantiate(TileControlPreFab).GetComponent<TileController>();
         TC.Setup();
         Minimap.Setup(TC.NumTiles);
@@ -61,13 +67,15 @@ public class GameController : MonoBehaviour {
         waveText.text = currentWave.ToString();
 
         Spawners = new SpawnerScript[StartPos.Length];
-        for (int i = 0; i < StartPos.Length; i++) {
+        for (int i = 0; i < StartPos.Length; i++)
+        {
             Spawners[i] = Instantiate(SpawnerPreFab, TC.TileToWorldPosition(StartPos[i]), transform.rotation).GetComponent<SpawnerScript>();
             Spawners[i].Setup(StartPos[i]);
             Spawners[i].UpdatePath();
         }
 
-        if (AFK != null) {
+        if (AFK != null)
+        {
             afkMode = true;
             TC.AllowPlayerMovement = false;
             StartWaveText.GetComponent<Text>().text = "Press G to Start the game!";
@@ -75,25 +83,31 @@ public class GameController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    private void Update() {
+    private void Update()
+    {
 
         ControlLight();
 
         waveText.text = currentWave.ToString();
 
-        if (afkMode && Input.GetKeyDown(KeyCode.G)) {
+        if (afkMode && Input.GetKeyDown(KeyCode.G))
+        {
             SceneManager.LoadScene("Main");
         }
 
-        if (EnemyParent.transform.childCount <= 0) {
+        if (EnemyParent.transform.childCount <= 0)
+        {
             spawning = false;
-            foreach (var spawner in Spawners) {
+            foreach (var spawner in Spawners)
+            {
                 spawning = spawning || spawner.Spawning;
             }
-            if (!spawning && Input.GetKeyDown(KeyCode.G)) {
+            if (!spawning && Input.GetKeyDown(KeyCode.G))
+            {
                 CreateNewWave();
                 spawning = true;
-                if (currentWave <= 5 && currentWave > 1) {
+                if (currentWave <= 5 && currentWave > 1)
+                {
                     if (currentWave == 5)
                         newIntensity = 0;
                     else
@@ -101,50 +115,78 @@ public class GameController : MonoBehaviour {
                     dimLight = true;
                 }
             }
-            else if (!spawning) {
+            else if (!spawning)
+            {
                 StartWaveText.SetActive(true);
             }
         }
     }
 
-    public void UpdatePathFinding() {
-        foreach (var spawner in Spawners) {
+    public void UpdatePathFinding()
+    {
+        foreach (var spawner in Spawners)
+        {
             spawner.UpdatePath();
         }
-        for (int i = 0; i < EnemyParent.transform.childCount; i++) {
+        for (int i = 0; i < EnemyParent.transform.childCount; i++)
+        {
             EnemyParent.transform.GetChild(i).GetComponent<BasicEnemy>().UpdatePath();
         }
     }
 
-    public void ChangeTower(int towerNum) {
+    public void ChangeTower(int towerNum)
+    {
         Debug.Log(towerNum);
         TC.SelectedTower = towerNum;
     }
 
-    public void CreateNewWave() {
-        currentWave++;
-        int numEnemies = currentWave * 4 + 4;
-        int numActiveSpawners = Random.Range(1, 4);
-        int spawnersSet = 0;
-        while (spawnersSet < numActiveSpawners) {
-            int num = Random.Range(0, 4);
-            if (!Spawners[num].Spawning) {
-                List<int> enemies = new List<int>();
-                spawnersSet++;
-                for (int i = 0; i < (numEnemies + 1) / numActiveSpawners; i++)
-                    enemies.Add(0);
-                Spawners[num].NewWave(enemies, 1, 1f / (4 - numActiveSpawners), currentWave);
+    public void CreateNewWave()
+    {
+        if (currentWave < Waves.Length)
+        {
+            List<int>[] enemies = new List<int>[Spawners.Length];
+            for (int i = 0; i < Waves[currentWave].Enemies.Length; i++)
+            {
+                enemies[Waves[currentWave].Spawner[i]].Add(Waves[currentWave].Enemies[i]);
+            }
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                if (enemies[i].Count <= 0)
+                    continue;
+                Spawners[i].NewWave(enemies[i], 1, Waves[currentWave].SecondsBetweenEnemies);
+                Spawners[i].EnemyHealthMultipliers = Waves[currentWave].HealthMultipliers;
             }
         }
+        else
+        {
+            int numEnemies = currentWave * 4 + 4;
+            int numActiveSpawners = Random.Range(1, 4);
+            int spawnersSet = 0;
+            while (spawnersSet < numActiveSpawners)
+            {
+                int num = Random.Range(0, 4);
+                if (!Spawners[num].Spawning)
+                {
+                    List<int> enemies = new List<int>();
+                    spawnersSet++;
+                    for (int i = 0; i < (numEnemies + 1) / numActiveSpawners; i++)
+                        enemies.Add(0);
+                    Spawners[num].NewWave(enemies, 1, 1f / (4 - numActiveSpawners));
+                }
+            }
+        }
+        currentWave++;
         if (!afkMode)
             StartWaveText.SetActive(false);
     }
 
-    public bool IsSpawning() {
+    public bool IsSpawning()
+    {
         return spawning;
     }
 
-    private void ControlLight() {
+    private void ControlLight()
+    {
         if (!dimLight)
             return;
         mainLight.intensity = Mathf.MoveTowards(mainLight.intensity, newIntensity, Time.deltaTime / 10);

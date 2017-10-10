@@ -2372,6 +2372,12 @@ MonoBehaviour:
   waveText: {fileID: 690095544}
   mainLight: {fileID: 431165157}
   AFK: {fileID: 1303070182}
+  Waves:
+  - Enemies: 00000000000000000000000001000000
+    Spawner: 00000000010000000200000003000000
+    Health:
+    - 3
+    - 1
 --- !u!4 &891365511
 Transform:
   m_ObjectHideFlags: 0
