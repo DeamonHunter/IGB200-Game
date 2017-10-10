@@ -17,9 +17,13 @@ public class BasicEnemy : MonoBehaviour
     private float attackTimer;
     protected List<Vector3> path;
     protected int pathNum = 0;
-    private bool Attacking;
-    protected float curSpeed;
+    protected bool Attacking;
+	public float curSpeed;
     private float curHealth;
+
+	protected bool slowed = false;
+
+	protected float baseSpeed;
 
     private GameObject gameController;
 
@@ -27,11 +31,12 @@ public class BasicEnemy : MonoBehaviour
     private void Start()
     {
         curSpeed = Speed;
+		baseSpeed = curSpeed;
         gameController = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Update is called once per frame
-    private void Update()
+	protected virtual void Update()
     {
         if (AllowMove && !Attacking && pathNum < path.Count)
             MoveToNextPath();
@@ -68,9 +73,10 @@ public class BasicEnemy : MonoBehaviour
         }
     }
 
-    public void ChangeSpeed(float percent)
+	public void ChangeSpeed(float percent, bool isSlowed)
     {
         curSpeed = percent * Speed;
+		slowed = isSlowed;
     }
 
     public void SetHealth(float healthMultiplier)

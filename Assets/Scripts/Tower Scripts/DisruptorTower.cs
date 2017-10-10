@@ -11,11 +11,11 @@ using UnityEngine;
 public class DisruptorTower : Tower {
     //Code will need to be altered for different enemy types
     private void SlowEnemy(BasicEnemy enemy) {
-        enemy.ChangeSpeed(0.5f);
+        enemy.ChangeSpeed(0.5f, true);
     }
 
     private void ResetEnemy(BasicEnemy enemy) {
-        enemy.ChangeSpeed(1);
+        enemy.ChangeSpeed(1, false);
     }
 
     private void OnTriggerExit(Collider other) {
