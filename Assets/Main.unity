@@ -12283,14 +12283,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   StartPos:
-  - x: 12
-    y: 5
-  - x: 75
-    y: 10
-  - x: 8
-    y: 82
-  - x: 82
-    y: 83
+  - x: 0
+    y: 0
+  - x: 0
+    y: 0
+  - x: 0
+    y: 0
+  - x: 0
+    y: 0
   EnemyParent: {fileID: 0}
   StartWaveText: {fileID: 639671675}
   waveText: {fileID: 690095544}
@@ -19128,7 +19128,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1389289329}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 4.81, z: -5}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 10, z: 1}
   m_Children:
   - {fileID: 1530516831}
