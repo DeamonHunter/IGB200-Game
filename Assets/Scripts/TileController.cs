@@ -78,7 +78,7 @@ public class TileController : MonoBehaviour {
             SetToWall(hoveredPos);
             //PlaceTower(hoveredPos);
         }
-        cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.5f, 0);
+        cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.2f, 0);
         if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y || Tiles[hoveredPos.x, hoveredPos.y].IsWall || Tiles[hoveredPos.x, hoveredPos.y].HasTower) {
             cursorRenderer.material.color = Color.red;
         }

@@ -66,5 +66,5 @@ MonoBehaviour:
     y: 62
   SelectedTower: 0
   AllowPlayerMovement: 1
-  WallMarkerPreFab: {fileID: 1559099669427178, guid: 5e45fedeb84f5c449a11818880d5501b,
+  WallMarkerPreFab: {fileID: 1891884345600440, guid: 5e45fedeb84f5c449a11818880d5501b,
     type: 2}
