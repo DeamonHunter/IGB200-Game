@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerScript : MonoBehaviour
-{
+public class SpawnerScript : MonoBehaviour {
     public GameObject[] Enemies;
     public bool Spawning = false;
 
@@ -16,20 +15,17 @@ public class SpawnerScript : MonoBehaviour
     public float[] EnemyHealthMultipliers;
 
     // Use this for initialization
-    public void Setup(Vector2I start)
-    {
+    public void Setup(Vector2I start) {
         lr = GetComponent<LineRenderer>();
         startPos = start;
     }
 
     // Update is called once per frame
-    private void Update()
-    {
+    private void Update() {
 
     }
 
-    public void NewWave(List<int> enemies, float initialDelay, float delayBetweenEnemies)
-    {
+    public void NewWave(List<int> enemies, float initialDelay, float delayBetweenEnemies) {
         enemiesToSpawn = new List<int>();
         enemiesToSpawn.AddRange(enemies); //Needed to be done. Copies pointer otherwise leading to null refs later.
         delayEnemies = delayBetweenEnemies;
@@ -37,8 +33,7 @@ public class SpawnerScript : MonoBehaviour
         Invoke("Spawn", initialDelay);
     }
 
-    private void Spawn()
-    {
+    private void Spawn() {
         int enemyID = enemiesToSpawn[0];
         enemiesToSpawn.RemoveAt(0);
         var enemy = Instantiate(Enemies[enemyID], transform.position, transform.rotation, GameController.instance.EnemyParent.transform).GetComponent<BasicEnemy>();
@@ -53,13 +48,11 @@ public class SpawnerScript : MonoBehaviour
             Spawning = false;
     }
 
-    public void UpdatePath()
-    {
+    public void UpdatePath() {
         BasePath = GameController.instance.TC.TileToWorldPosition(GameController.instance.TC.PF.CalculatePath(startPos));
         BaseIgnorePath = GameController.instance.TC.TileToWorldPosition(GameController.instance.TC.PF.CalculatePath(startPos, true));
         var linePos = BasePath;
-        for (int i = 0; i < linePos.Count; i++)
-        {
+        for (int i = 0; i < linePos.Count; i++) {
             linePos[i] += new Vector3(0, 0.5f, 0);
         }
         lr.positionCount = linePos.Count;

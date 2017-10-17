@@ -37,15 +37,14 @@ public class TileController : MonoBehaviour {
     private int money;
 
     //Debug for walls
-    //public GameObject TileMarkerPrefab;
-    //public GameObject WallMarkerPreFab;
-    //public GameObject[,] Markers;
-    //private GameObject markerParent;
+    public GameObject WallMarkerPreFab;
+    public GameObject[,] Markers;
+    private GameObject markerParent;
 
     // Use this for initialization
     public void Setup() {
-        //markerParent = new GameObject();
-        //Markers = new GameObject[NumTiles.x, NumTiles.y];
+        markerParent = new GameObject();
+        Markers = new GameObject[NumTiles.x, NumTiles.y];
 
         gameController = GameObject.FindGameObjectWithTag("GameController");
 
@@ -53,16 +52,15 @@ public class TileController : MonoBehaviour {
         for (int i = 0; i < NumTiles.x; i++) {
             for (int j = 0; j < NumTiles.y; j++) {
                 Tiles[i, j] = new Tile(new Vector2I(i, j), false, 1, EndLocation - BottomLeftPosition);
-                //Markers[i, j] = Instantiate(TileMarkerPrefab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
             }
         }
         LoadWallFromFile();
 
         //Temporary until we get level loading
-        Tiles[44, 40].IsGoal = true;
-        Tiles[44, 39].IsGoal = true;
-        Tiles[43, 40].IsGoal = true;
-        Tiles[43, 39].IsGoal = true;
+        Tiles[29, 29].IsGoal = true;
+        Tiles[29, 30].IsGoal = true;
+        Tiles[30, 29].IsGoal = true;
+        Tiles[30, 30].IsGoal = true;
 
         PF = new PathFinder(Tiles);
 
@@ -77,18 +75,18 @@ public class TileController : MonoBehaviour {
         var hoveredPos = GetHoveredTilePosition();
         if (!EventSystem.current.IsPointerOverGameObject() && AllowPlayerMovement && Input.GetMouseButtonDown(0)) {
             //Enable to allow editing of walls.
-            //SetToWall(tile);
-            PlaceTower(hoveredPos);
+            SetToWall(hoveredPos);
+            //PlaceTower(hoveredPos);
         }
-        cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.01f, 0);
+        cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.2f, 0);
         if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y || Tiles[hoveredPos.x, hoveredPos.y].IsWall || Tiles[hoveredPos.x, hoveredPos.y].HasTower) {
             cursorRenderer.material.color = Color.red;
         }
         else
             cursorRenderer.material.color = Color.green;
         //Enable to allow saving of walls
-        //if (Input.GetKeyDown(KeyCode.P))
-        //    SaveWallsToFile();
+        if (Input.GetKeyDown(KeyCode.P))
+            SaveWallsToFile();
     }
 
     public Vector2I GetHoveredTilePosition() {
@@ -127,16 +125,16 @@ public class TileController : MonoBehaviour {
         return Tiles[tilePos.x, tilePos.y];
     }
 
-    //private void SetToWall(Vector2I pos) {
-    //    Tiles[pos.x, pos.y].IsWall = !Tiles[pos.x, pos.y].IsWall;
-    //    if (Markers[pos.x, pos.y] == null)
-    //        Markers[pos.x, pos.y] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y), transform.rotation);
-    //    else
-    //        Destroy(Markers[pos.x, pos.y]);
-    //    foreach (Transform child in markerParent.transform) {
-    //        Destroy(child.gameObject);
-    //    }
-    //}
+    private void SetToWall(Vector2I pos) {
+        Tiles[pos.x, pos.y].IsWall = !Tiles[pos.x, pos.y].IsWall;
+        if (Markers[pos.x, pos.y] == null)
+            Markers[pos.x, pos.y] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y), transform.rotation);
+        else
+            Destroy(Markers[pos.x, pos.y]);
+        foreach (Transform child in markerParent.transform) {
+            Destroy(child.gameObject);
+        }
+    }
 
     public void PlaceTower(Vector2I pos) {
         //Early return if tile already has tower
@@ -154,13 +152,15 @@ public class TileController : MonoBehaviour {
     }
 
     private void SaveWallsToFile() {
+        Debug.Log("Save Started");
         string Walls = "";
         for (int i = 0; i < NumTiles.x; i++)
             for (int j = 0; j < NumTiles.x; j++)
                 Walls += Tiles[i, j].IsWall ? "1" : "0";
-        using (var sw = new System.IO.StreamWriter(Application.dataPath + @"\SaveData\Walls.txt", false)) {
+        using (var sw = new System.IO.StreamWriter(Application.dataPath + @"\Resources\SaveData\Walls.txt", false)) {
             sw.Write(Walls);
         }
+        Debug.Log("Save Done.");
     }
 
     private void LoadWallFromFile() {
@@ -171,8 +171,8 @@ public class TileController : MonoBehaviour {
             for (int j = 0; j < NumTiles.x; j++) {
                 Tiles[i, j].IsWall = text[i * NumTiles.x + j] == char.Parse("1");
                 //Enable to see walls when loading
-                //if (Tiles[i, j].IsWall)
-                //    Markers[i, j] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
+                if (Tiles[i, j].IsWall)
+                    Markers[i, j] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
             }
     }
 }
