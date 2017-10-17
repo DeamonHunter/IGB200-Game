@@ -10,6 +10,7 @@ public class BasicBullet : MonoBehaviour {
     //Bullet Variables
     public float Damage;
     public float Speed;
+	private bool hitEnemy;
 
     // Update is called once per frame
     void Update() {
@@ -31,11 +32,13 @@ public class BasicBullet : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        var enemy = other.gameObject.GetComponent<BasicEnemy>();
-        if (enemy == null)
-            return;
-        enemy.TakeDamage(Damage);
-        Destroy(gameObject);
+		if (other.tag == "Enemy" && !hitEnemy) {
+			hitEnemy = true;
+			var enemy = other.gameObject.GetComponent<BasicEnemy>();
+			if (enemy == null)
+				return;
+			enemy.TakeDamage(Damage);
+			Destroy(gameObject);
+		}
     }
-
 }

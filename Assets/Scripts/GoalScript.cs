@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GoalScript : MonoBehaviour {
 
-	public int damagePerEnemy = 1;
+	public int damagePerEnemy;
 	private GameObject gameController;
 
 	// Use this for initialization
@@ -15,6 +15,7 @@ public class GoalScript : MonoBehaviour {
     protected virtual void OnTriggerEnter(Collider other) {
         if (!other.transform.CompareTag("Enemy"))
             return;
+		damagePerEnemy = other.gameObject.GetComponent<BasicEnemy> ().BaseDamage;
 		gameController.GetComponent<ResourceScript>().LoseLife(damagePerEnemy);
         Destroy(other.gameObject);
     }

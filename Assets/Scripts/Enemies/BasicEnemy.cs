@@ -9,6 +9,7 @@ public class BasicEnemy : MonoBehaviour
     public float BaseHealth;
     public float Speed;
     public float Damage;
+	public int BaseDamage = 1;
     public float AttackSpeed;
     public bool IgnoresWalls;
 
@@ -19,13 +20,13 @@ public class BasicEnemy : MonoBehaviour
     protected int pathNum = 0;
     protected bool Attacking;
 	public float curSpeed;
-    private float curHealth;
+	protected float curHealth;
 
 	protected bool slowed = false;
 
 	protected float baseSpeed;
 
-    private GameObject gameController;
+    protected GameObject gameController;
 
     // Use this for initialization
     private void Start()
@@ -84,21 +85,21 @@ public class BasicEnemy : MonoBehaviour
         curHealth = BaseHealth * healthMultiplier;
     }
 
-    public void SetPath(List<Vector3> positions)
+	public void SetPath(List<Vector3> positions, int curPathNum)
     {
         AllowMove = true;
         path = positions;
-        pathNum = 0;
+		pathNum = curPathNum;
     }
 
-    public void TakeDamage(float amount)
+    public virtual void TakeDamage(float amount)
     {
         curHealth -= amount;
         if (curHealth <= 0)
         {
             //Gain resources.
             gameController.GetComponent<ResourceScript>().GainMoney(carriedGold);
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 
@@ -110,4 +111,8 @@ public class BasicEnemy : MonoBehaviour
         if (GameController.instance.TC.GetTileAtWorldPos(path[pathNum]).HasTower)
             Attacking = true;
     }
+
+	public int GetBaseDamage() {
+		return BaseDamage;
+	}
 }

@@ -39,9 +39,9 @@ public class SpawnerScript : MonoBehaviour {
         var enemy = Instantiate(Enemies[enemyID], transform.position, transform.rotation, GameController.instance.EnemyParent.transform).GetComponent<BasicEnemy>();
         enemy.SetHealth(EnemyHealthMultipliers[enemyID]);
         if (enemy.IgnoresWalls)
-            enemy.SetPath(BaseIgnorePath);
+            enemy.SetPath(BaseIgnorePath, 0);
         else
-            enemy.SetPath(BasePath);
+            enemy.SetPath(BasePath, 0);
         if (enemiesToSpawn.Count > 0)
             Invoke("Spawn", delayEnemies);
         else
