@@ -153,12 +153,20 @@ MonoBehaviour:
   AllowMove: 0
   MinDistance: 0.02
   BaseHealth: 30
-  Speed: 3
+  LightSpeed: 2
+  DarkSpeed: 3
   Damage: 5
   BaseDamage: 4
   AttackSpeed: 1
   IgnoresWalls: 0
+  IsInDark: 0
   carriedGold: 0
   curSpeed: 0
-  cloneSpawned: {fileID: 1696976231823492, guid: cdb0905de27503947bf764a349b1157c,
+  cloneSpawned1: {fileID: 1145837515334542, guid: 8378b2f312395904981ebb4470cdd4f9,
+    type: 2}
+  cloneSpawned2: {fileID: 1761192725499136, guid: 04489b29bda414445b44da4e34591f1f,
+    type: 2}
+  cloneSpawned3: {fileID: 1394450346014454, guid: dafc2a7e0c797e143a55c7f8da44901d,
+    type: 2}
+  cloneSpawned4: {fileID: 1833084152645476, guid: 2b228ed70d7385a46a99163caad6155d,
     type: 2}

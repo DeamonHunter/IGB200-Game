@@ -40,6 +40,16 @@ public class GameController : MonoBehaviour {
 
     public Wave[] Waves;
 
+	// UI Elements
+	public GameObject enemyMenu;
+	public GameObject crawlerInfo;
+	public GameObject tunnelerInfo;
+	public GameObject superposInfo;
+	public GameObject swarmerInfo;
+
+	public GameObject openButton;
+	public GameObject closeButton;
+
     // Awake Checks - Singleton setup
     void Awake() {
 
@@ -98,6 +108,27 @@ public class GameController : MonoBehaviour {
                 spawning = spawning || spawner.Spawning;
             }
             if (!spawning && Input.GetKeyDown(KeyCode.G)) {
+
+				// Enemy Information
+				if (currentWave == 0) {
+					Debug.Log ("Wave 1 start");
+					closeButton.SetActive (true);
+					enemyMenu.SetActive(true);
+					crawlerInfo.SetActive(true);
+				} else if (currentWave == 2) {
+					closeButton.SetActive (true);
+					enemyMenu.SetActive(true);
+					tunnelerInfo.SetActive(true);
+				} else if (currentWave == 4) {
+					closeButton.SetActive (true);
+					enemyMenu.SetActive(true);
+					superposInfo.SetActive(true);
+				} else if (currentWave == 7) {
+					closeButton.SetActive (true);
+					enemyMenu.SetActive(true);
+					swarmerInfo.SetActive(true);
+				}
+
                 CreateNewWave();
                 spawning = true;
                 if (currentWave <= 5 && currentWave > 1) {

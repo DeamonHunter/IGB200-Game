@@ -58,6 +58,7 @@ MonoBehaviour:
   - {fileID: 1710876076608880, guid: 40d4d43abcad7d94982b4b62e60bd25b, type: 2}
   - {fileID: 1907760995147132, guid: 9af1b9f51c6deb542822455d6f39de16, type: 2}
   - {fileID: 1095018311432066, guid: 7f9dbfed27d7eca4b9a2479d2414cd0c, type: 2}
+  - {fileID: 1907881181746302, guid: 7ee40df097394214abc9ecc689c2721b, type: 2}
   TileSize: {x: 1, y: 1}
   BottomLeftPosition: {x: -30.5, y: -30.5}
   EndLocation: {x: 0, y: 0}
@@ -66,5 +67,3 @@ MonoBehaviour:
     y: 62
   SelectedTower: 0
   AllowPlayerMovement: 1
-  WallMarkerPreFab: {fileID: 1891884345600440, guid: 5e45fedeb84f5c449a11818880d5501b,
-    type: 2}

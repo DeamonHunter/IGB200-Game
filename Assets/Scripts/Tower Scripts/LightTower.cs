@@ -4,16 +4,27 @@ using Assets.Scripts.Tower_Scripts;
 using UnityEngine;
 
 public class LightTower : Tower {
-    private GameObject light;
-
-    protected override void Start() {
-        base.Start();
-        light = transform.GetChild(0).gameObject;
-    }
+    public GameObject Light;
+    public GameObject LightTarget;
+    private int Reach = 1;
+    private Plane pl = new Plane(Vector3.up, Vector3.zero);
 
     protected override bool LookAtEnemy(GameObject target) {
-        bool result = base.LookAtEnemy(target);
-        light.transform.LookAt(new Vector3(curLookDir.x, 0f, curLookDir.y) + transform.position + new Vector3(0, 0.5f, 0));
-        return result;
+        TowerObject.transform.LookAt(target.transform.position);
+        TowerObject.transform.eulerAngles = new Vector3(-90, TowerObject.transform.eulerAngles.y, 0);
+        Light.transform.LookAt(target.transform);
+
+        //Light.transform.LookAt(new Vector3(curLookDir.x, 0, curLookDir.y) * (target.transform.position - transform.position).magnitude + new Vector3(transform.position.x, 0, transform.position.y));
+
+        Ray ray = new Ray(transform.position, Light.transform.forward);
+        float distance;
+        if (pl.Raycast(ray, out distance)) {
+            LightTarget.transform.position = ray.GetPoint(distance);
+        }
+
+        return true;
+    }
+
+    private void Update() {
     }
 }
