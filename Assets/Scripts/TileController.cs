@@ -85,8 +85,8 @@ public class TileController : MonoBehaviour {
         else
             cursorRenderer.material.color = Color.green;
         //Enable to allow saving of walls
-        if (Input.GetKeyDown(KeyCode.P))
-            SaveWallsToFile();
+        //if (Input.GetKeyDown(KeyCode.P))
+        //    SaveWallsToFile();
     }
 
     public Vector2I GetHoveredTilePosition() {
