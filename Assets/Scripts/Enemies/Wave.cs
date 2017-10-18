@@ -20,5 +20,6 @@ namespace Assets.Scripts.Enemies {
         public float[] HealthMultipliers;
         public float SecondsBetweenEnemies;
         public bool IsWaveDark;
+        public int WaveBonus = 30;
     }
 }

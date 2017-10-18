@@ -35,6 +35,9 @@ public class GameController : MonoBehaviour {
     public AFKManager AFK;
     private bool afkMode;
 
+    private ResourceScript rs;
+    private bool waveActive;
+
     public Wave[] Waves;
 
     // Awake Checks - Singleton setup
@@ -57,6 +60,7 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     private void Start() {
         TC = Instantiate(TileControlPreFab).GetComponent<TileController>();
+        rs = GetComponent<ResourceScript>();
         TC.Setup();
         Minimap.Setup(TC.NumTiles);
         EnemyParent = new GameObject();
@@ -103,9 +107,12 @@ public class GameController : MonoBehaviour {
                         newIntensity = mainLight.intensity / 2;
                     dimLight = true;
                 }
+                waveActive = true;
             }
-            else if (!spawning) {
+            else if (!spawning && waveActive) {
                 StartWaveText.SetActive(true);
+                rs.GainMoney(Waves[currentWave].WaveBonus);
+                waveActive = false;
             }
         }
     }

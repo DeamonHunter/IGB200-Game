@@ -50,13 +50,6 @@ public class ResourceScript : MonoBehaviour {
 
         spawning = gameController.GetComponent<GameController>().IsSpawning();
 
-        if (spawning) {
-            timeCount = Time.time;
-            if (timeCount - lastUpdate >= moneyTime) {
-                money += moneyIncrease;
-                lastUpdate = Time.time;
-            }
-        }
     }
 
     public int GetTotalLives() {
