@@ -46,6 +46,7 @@ public class SpawnerScript : MonoBehaviour {
         var enemy = Instantiate(Enemies[enemyID], transform.position, transform.rotation, GameController.instance.EnemyParent.transform).GetComponent<BasicEnemy>();
         enemy.SetHealth(EnemyHealthMultipliers[enemyID]);
         enemy.IsInDark = spawnInDark;
+        enemy.SetSpeed();
         if (enemy.IgnoresWalls)
             enemy.SetPath(BaseIgnorePath, 0);
         else
