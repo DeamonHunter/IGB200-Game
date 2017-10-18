@@ -14,7 +14,7 @@ public class CloneEnemy : BasicEnemy {
 		{
 			//Gain resources.
 			gameController.GetComponent<ResourceScript>().GainMoney(carriedGold);
-			var enemy = Instantiate (cloneSpawned, transform.position, transform.rotation);
+			var enemy = Instantiate (cloneSpawned, transform.position, transform.rotation, GameController.instance.EnemyParent.transform);
 			for (int i = 0; i < 4; i++) {
 				enemy.transform.GetChild(i).GetComponent<BasicEnemy>().SetPath(path, pathNum);
 				enemy.transform.GetChild(i).GetComponent<BasicEnemy>().SetHealth(1);
