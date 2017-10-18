@@ -62,7 +62,7 @@ public class SpawnerScript : MonoBehaviour {
         BaseIgnorePath = GameController.instance.TC.TileToWorldPosition(GameController.instance.TC.PF.CalculatePath(startPos, true));
         var linePos = BasePath;
         for (int i = 0; i < linePos.Count; i++) {
-            linePos[i] += new Vector3(0, 0.5f, 0);
+            linePos[i] += new Vector3(0, 0.1f, 0);
         }
         if (linePos.Count > TilesToShow) {
             lr.positionCount = TilesToShow;

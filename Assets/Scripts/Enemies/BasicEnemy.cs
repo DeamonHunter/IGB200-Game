@@ -125,6 +125,9 @@ public class BasicEnemy : MonoBehaviour {
         catch (Exception) {
             path = GameController.instance.TC.TileToWorldPosition(GameController.instance.TC.PF.CalculatePath(tile, true, true));
         }
+        for (int i = 0; i < path.Count; i++) {
+            path[i] += new Vector3(0, 0.1f, 0);
+        }
         pathNum = 0;
         if (GameController.instance.TC.GetTileAtWorldPos(path[pathNum]).HasTower)
             Attacking = true;
