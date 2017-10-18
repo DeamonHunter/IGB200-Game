@@ -20,6 +20,7 @@ public class SpawnerScript : MonoBehaviour {
     // Use this for initialization
     public void Setup(Vector2I start) {
         lr = GetComponent<LineRenderer>();
+        lr.enabled = false;
         startPos = start;
     }
 
@@ -72,4 +73,7 @@ public class SpawnerScript : MonoBehaviour {
         }
     }
 
+    public void ToggleLR() {
+        lr.enabled = !lr.enabled;
+    }
 }

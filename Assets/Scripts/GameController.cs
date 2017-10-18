@@ -178,4 +178,9 @@ public class GameController : MonoBehaviour {
             dimLight = false;
     }
 
+    public void FlipLineRenderers() {
+        foreach (var spawner in Spawners) {
+            spawner.ToggleLR();
+        }
+    }
 }
