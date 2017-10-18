@@ -75,8 +75,8 @@ public class TileController : MonoBehaviour {
         var hoveredPos = GetHoveredTilePosition();
         if (!EventSystem.current.IsPointerOverGameObject() && AllowPlayerMovement && Input.GetMouseButtonDown(0)) {
             //Enable to allow editing of walls.
-            SetToWall(hoveredPos);
-            //PlaceTower(hoveredPos);
+            //SetToWall(hoveredPos);
+            PlaceTower(hoveredPos);
         }
         cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.2f, 0);
         if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y || Tiles[hoveredPos.x, hoveredPos.y].IsWall || Tiles[hoveredPos.x, hoveredPos.y].HasTower) {
@@ -85,8 +85,8 @@ public class TileController : MonoBehaviour {
         else
             cursorRenderer.material.color = Color.green;
         //Enable to allow saving of walls
-        if (Input.GetKeyDown(KeyCode.P))
-            SaveWallsToFile();
+        //if (Input.GetKeyDown(KeyCode.P))
+        //    SaveWallsToFile();
     }
 
     public Vector2I GetHoveredTilePosition() {
