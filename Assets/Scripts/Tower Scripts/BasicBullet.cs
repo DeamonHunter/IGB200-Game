@@ -31,7 +31,7 @@ public class BasicBullet : MonoBehaviour {
         transform.eulerAngles += new Vector3(0, 0, 90);
     }
 
-    private void OnTriggerEnter(Collider other) {
+    protected virtual void OnTriggerEnter(Collider other) {
         if (other.tag == "Enemy" && !hitEnemy) {
             hitEnemy = true;
             var enemy = other.gameObject.GetComponent<BasicEnemy>();

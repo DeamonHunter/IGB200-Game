@@ -25,8 +25,8 @@ namespace Assets.Scripts.Tower_Scripts {
         private List<GameObject> targets = new List<GameObject>();
         private SphereCollider collider; //Will we ever have a non sphere collider?
         protected Vector2 curLookDir = Vector2.right;
-        private float fireTimer;
-        private float fireRate;
+		protected float fireTimer;
+		protected float fireRate;
 
         /// <summary>
         /// Set a couple variables.
