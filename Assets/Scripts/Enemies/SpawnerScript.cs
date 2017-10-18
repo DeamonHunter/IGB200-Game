@@ -7,16 +7,17 @@ public class SpawnerScript : MonoBehaviour {
     public bool Spawning = false;
 
     private Vector2I startPos;
-    private LineRenderer lr;
+    //private LineRenderer lr;
     private List<Vector3> BasePath;
     private List<Vector3> BaseIgnorePath;
     private List<int> enemiesToSpawn;
     private float delayEnemies;
+    private bool spawnInDark;
     public float[] EnemyHealthMultipliers;
 
     // Use this for initialization
     public void Setup(Vector2I start) {
-        lr = GetComponent<LineRenderer>();
+        // lr = GetComponent<LineRenderer>();
         startPos = start;
     }
 
@@ -25,12 +26,15 @@ public class SpawnerScript : MonoBehaviour {
 
     }
 
-    public void NewWave(List<int> enemies, float initialDelay, float delayBetweenEnemies) {
+    public void NewWave(List<int> enemies, float initialDelay, float delayBetweenEnemies, bool dark) {
         enemiesToSpawn = new List<int>();
         enemiesToSpawn.AddRange(enemies); //Needed to be done. Copies pointer otherwise leading to null refs later.
         delayEnemies = delayBetweenEnemies;
         Spawning = true;
         Invoke("Spawn", initialDelay);
+        spawnInDark = dark;
+        //if (dark)
+        //    lr.enabled = false;
     }
 
     private void Spawn() {
@@ -38,6 +42,7 @@ public class SpawnerScript : MonoBehaviour {
         enemiesToSpawn.RemoveAt(0);
         var enemy = Instantiate(Enemies[enemyID], transform.position, transform.rotation, GameController.instance.EnemyParent.transform).GetComponent<BasicEnemy>();
         enemy.SetHealth(EnemyHealthMultipliers[enemyID]);
+        enemy.IsInDark = spawnInDark;
         if (enemy.IgnoresWalls)
             enemy.SetPath(BaseIgnorePath, 0);
         else
@@ -55,8 +60,8 @@ public class SpawnerScript : MonoBehaviour {
         for (int i = 0; i < linePos.Count; i++) {
             linePos[i] += new Vector3(0, 0.5f, 0);
         }
-        lr.positionCount = linePos.Count;
-        lr.SetPositions(linePos.ToArray());
+        //lr.positionCount = linePos.Count;
+        //lr.SetPositions(linePos.ToArray());
     }
 
 }

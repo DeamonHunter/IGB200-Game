@@ -135,7 +135,7 @@ public class GameController : MonoBehaviour {
             for (int i = 0; i < enemies.Length; i++) {
                 if (enemies[i].Count <= 0)
                     continue;
-                Spawners[i].NewWave(enemies[i], 1, Waves[currentWave].SecondsBetweenEnemies);
+                Spawners[i].NewWave(enemies[i], 1, Waves[currentWave].SecondsBetweenEnemies, Waves[currentWave].IsWaveDark);
                 Spawners[i].EnemyHealthMultipliers = Waves[currentWave].HealthMultipliers;
             }
         }
@@ -150,7 +150,7 @@ public class GameController : MonoBehaviour {
                     spawnersSet++;
                     for (int i = 0; i < (numEnemies + 1) / numActiveSpawners; i++)
                         enemies.Add(0);
-                    Spawners[num].NewWave(enemies, 1, 1f / (4 - numActiveSpawners));
+                    Spawners[num].NewWave(enemies, 1, 1f / (4 - numActiveSpawners), true);
                 }
             }
         }

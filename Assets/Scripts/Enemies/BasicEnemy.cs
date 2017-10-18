@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicEnemy : MonoBehaviour
-{
+public class BasicEnemy : MonoBehaviour {
     public bool AllowMove;
     public float MinDistance;
     public float BaseHealth;
     public float Speed;
     public float Damage;
-	public int BaseDamage = 1;
+    public int BaseDamage = 1;
     public float AttackSpeed;
     public bool IgnoresWalls;
+    public bool IsInDark = false;
 
     public int carriedGold = 5;
 
@@ -19,42 +19,37 @@ public class BasicEnemy : MonoBehaviour
     protected List<Vector3> path;
     protected int pathNum = 0;
     protected bool Attacking;
-	public float curSpeed;
-	protected float curHealth;
+    public float curSpeed;
+    protected float curHealth;
 
-	protected bool slowed = false;
+    protected bool slowed = false;
 
-	protected float baseSpeed;
+    protected float baseSpeed;
 
     protected GameObject gameController;
 
     // Use this for initialization
-    private void Start()
-    {
+    private void Start() {
         curSpeed = Speed;
-		baseSpeed = curSpeed;
+        baseSpeed = curSpeed;
         gameController = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Update is called once per frame
-	protected virtual void Update()
-    {
+    protected virtual void Update() {
         if (AllowMove && !Attacking && pathNum < path.Count)
             MoveToNextPath();
         if (Attacking)
             AttackNextPos();
     }
 
-    protected virtual void MoveToNextPath()
-    {
+    protected virtual void MoveToNextPath() {
         var pos = transform.position;
-        if ((path[pathNum] - pos).sqrMagnitude <= MinDistance)
-        {
+        if ((path[pathNum] - pos).sqrMagnitude <= MinDistance) {
             pathNum++;
             if (pathNum >= path.Count)
                 return;
-            if (GameController.instance.TC.GetTileAtWorldPos(path[pathNum]).HasTower)
-            {
+            if (GameController.instance.TC.GetTileAtWorldPos(path[pathNum]).HasTower) {
                 Attacking = true;
                 return;
             }
@@ -63,48 +58,40 @@ public class BasicEnemy : MonoBehaviour
         transform.LookAt(path[pathNum]);
     }
 
-    private void AttackNextPos()
-    {
+    private void AttackNextPos() {
         if (Time.time < attackTimer)
             return;
         Tile tile = GameController.instance.TC.GetTileAtWorldPos(path[pathNum]);
-        if (tile.DamageTower(Damage))
-        {
+        if (tile.DamageTower(Damage)) {
             Attacking = false;
         }
     }
 
-	public void ChangeSpeed(float percent, bool isSlowed)
-    {
+    public void ChangeSpeed(float percent, bool isSlowed) {
         curSpeed = percent * Speed;
-		slowed = isSlowed;
+        slowed = isSlowed;
     }
 
-    public void SetHealth(float healthMultiplier)
-    {
+    public void SetHealth(float healthMultiplier) {
         curHealth = BaseHealth * healthMultiplier;
     }
 
-	public void SetPath(List<Vector3> positions, int curPathNum)
-    {
+    public void SetPath(List<Vector3> positions, int curPathNum) {
         AllowMove = true;
         path = positions;
-		pathNum = curPathNum;
+        pathNum = curPathNum;
     }
 
-    public virtual void TakeDamage(float amount)
-    {
+    public virtual void TakeDamage(float amount) {
         curHealth -= amount;
-        if (curHealth <= 0)
-        {
+        if (curHealth <= 0) {
             //Gain resources.
             gameController.GetComponent<ResourceScript>().GainMoney(carriedGold);
             Destroy(this.gameObject);
         }
     }
 
-    public virtual void UpdatePath()
-    {
+    public virtual void UpdatePath() {
         var tile = GameController.instance.TC.WorldToTilePosition(transform.position);
         path = GameController.instance.TC.TileToWorldPosition(GameController.instance.TC.PF.CalculatePath(tile));
         pathNum = 0;
@@ -112,7 +99,7 @@ public class BasicEnemy : MonoBehaviour
             Attacking = true;
     }
 
-	public int GetBaseDamage() {
-		return BaseDamage;
-	}
+    public int GetBaseDamage() {
+        return BaseDamage;
+    }
 }
