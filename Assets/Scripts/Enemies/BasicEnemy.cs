@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,6 +28,7 @@ public class BasicEnemy : MonoBehaviour {
     protected float baseSpeed;
 
     protected GameObject gameController;
+    protected bool CalculatePathOnNextMovement;
 
     // Use this for initialization
     private void Start() {
@@ -47,6 +49,8 @@ public class BasicEnemy : MonoBehaviour {
         var pos = transform.position;
         if ((path[pathNum] - pos).sqrMagnitude <= MinDistance) {
             pathNum++;
+            if (CalculatePathOnNextMovement)
+                UpdatePath();
             if (pathNum >= path.Count)
                 return;
             if (GameController.instance.TC.GetTileAtWorldPos(path[pathNum]).HasTower) {
@@ -93,7 +97,12 @@ public class BasicEnemy : MonoBehaviour {
 
     public virtual void UpdatePath() {
         var tile = GameController.instance.TC.WorldToTilePosition(transform.position);
-        path = GameController.instance.TC.TileToWorldPosition(GameController.instance.TC.PF.CalculatePath(tile));
+        try {
+            path = GameController.instance.TC.TileToWorldPosition(GameController.instance.TC.PF.CalculatePath(tile));
+        }
+        catch (Exception) {
+            path = GameController.instance.TC.TileToWorldPosition(GameController.instance.TC.PF.CalculatePath(tile, true, true));
+        }
         pathNum = 0;
         if (GameController.instance.TC.GetTileAtWorldPos(path[pathNum]).HasTower)
             Attacking = true;

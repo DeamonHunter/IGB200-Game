@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpawnerScript : MonoBehaviour {
     public GameObject[] Enemies;
     public bool Spawning = false;
+    public int TilesToShow;
 
     private Vector2I startPos;
-    //private LineRenderer lr;
+    private LineRenderer lr;
     private List<Vector3> BasePath;
     private List<Vector3> BaseIgnorePath;
     private List<int> enemiesToSpawn;
@@ -17,7 +19,7 @@ public class SpawnerScript : MonoBehaviour {
 
     // Use this for initialization
     public void Setup(Vector2I start) {
-        // lr = GetComponent<LineRenderer>();
+        lr = GetComponent<LineRenderer>();
         startPos = start;
     }
 
@@ -33,8 +35,8 @@ public class SpawnerScript : MonoBehaviour {
         Spawning = true;
         Invoke("Spawn", initialDelay);
         spawnInDark = dark;
-        //if (dark)
-        //    lr.enabled = false;
+        if (dark)
+            lr.enabled = false;
     }
 
     private void Spawn() {
@@ -60,8 +62,14 @@ public class SpawnerScript : MonoBehaviour {
         for (int i = 0; i < linePos.Count; i++) {
             linePos[i] += new Vector3(0, 0.5f, 0);
         }
-        //lr.positionCount = linePos.Count;
-        //lr.SetPositions(linePos.ToArray());
+        if (linePos.Count > TilesToShow) {
+            lr.positionCount = TilesToShow;
+            lr.SetPositions(linePos.Skip(Mathf.Max(0, linePos.Count - TilesToShow)).ToArray());
+        }
+        else {
+            lr.positionCount = linePos.Count;
+            lr.SetPositions(linePos.ToArray());
+        }
     }
 
 }
