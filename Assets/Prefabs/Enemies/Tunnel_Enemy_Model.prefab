@@ -153,10 +153,12 @@ MonoBehaviour:
   AllowMove: 0
   MinDistance: 0.02
   BaseHealth: 0.5
-  Speed: 3
+  LightSpeed: 2
+  DarkSpeed: 3
   Damage: 1
   BaseDamage: 2
   AttackSpeed: 0.5
   IgnoresWalls: 1
+  IsInDark: 0
   carriedGold: 10
   curSpeed: 0

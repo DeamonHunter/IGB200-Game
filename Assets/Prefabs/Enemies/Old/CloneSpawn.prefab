@@ -569,11 +569,13 @@ MonoBehaviour:
   AllowMove: 0
   MinDistance: 0.02
   BaseHealth: 3
-  Speed: 5
+  LightSpeed: 3
+  DarkSpeed: 5
   Damage: 1
   BaseDamage: 1
   AttackSpeed: 1
   IgnoresWalls: 0
+  IsInDark: 0
   carriedGold: 10
   curSpeed: 0
 --- !u!114 &114495125342747870
@@ -590,11 +592,13 @@ MonoBehaviour:
   AllowMove: 0
   MinDistance: 0.02
   BaseHealth: 3
-  Speed: 5
+  LightSpeed: 3
+  DarkSpeed: 5
   Damage: 1
   BaseDamage: 1
   AttackSpeed: 1
   IgnoresWalls: 0
+  IsInDark: 0
   carriedGold: 10
   curSpeed: 0
 --- !u!114 &114713331233551688
@@ -611,11 +615,13 @@ MonoBehaviour:
   AllowMove: 0
   MinDistance: 0.02
   BaseHealth: 3
-  Speed: 5
+  LightSpeed: 3
+  DarkSpeed: 5
   Damage: 1
   BaseDamage: 1
   AttackSpeed: 1
   IgnoresWalls: 0
+  IsInDark: 0
   carriedGold: 10
   curSpeed: 0
 --- !u!114 &114867195074267830
@@ -632,10 +638,12 @@ MonoBehaviour:
   AllowMove: 0
   MinDistance: 0.02
   BaseHealth: 3
-  Speed: 5
+  LightSpeed: 3
+  DarkSpeed: 5
   Damage: 1
   BaseDamage: 1
   AttackSpeed: 1
   IgnoresWalls: 0
+  IsInDark: 0
   carriedGold: 10
   curSpeed: 0
