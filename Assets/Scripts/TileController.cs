@@ -1,64 +1,68 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using Assets.Scripts.Tower_Scripts;
 
 public class TileController : MonoBehaviour {
-    public GameObject TileMarkerPrefab;
-    public GameObject WallMarkerPreFab;
-    public GameObject EnemyPrefab;
+    //public Inspector variables
     public GameObject CursorPrefab;
-
+    public GameObject[] Towers;
     public Vector2 TileSize;
     public Vector2 BottomLeftPosition;
     public Vector2 EndLocation;
-
     public Vector2I NumTiles;
-    public Tile[,] Tiles;
-    public GameObject[,] Markers;
-    public Vector2I[] StartPos;
 
+
+    //public non inspector variables
+    [HideInInspector]
+    public int SelectedTower;
+
+    [HideInInspector]
+    public Tile[,] Tiles;
+
+    [HideInInspector]
     public PathFinder PF;
 
-    private Plane mapFloor;
+    [HideInInspector]
+    public bool AllowPlayerMovement = true;
 
-    private GameObject markerParent;
+    //Private Variables
+    private Plane mapFloor;
     private GameObject cursor;
     private Renderer cursorRenderer;
 
+    private GameObject gameController;
+    private int towerCost = 0;
+    private int money;
+
+    //Debug for walls
+    public GameObject WallMarkerPreFab;
+    public GameObject[,] Markers;
+    private GameObject markerParent;
+
     // Use this for initialization
-    private void Start() {
+    public void Setup() {
         markerParent = new GameObject();
+        Markers = new GameObject[NumTiles.x, NumTiles.y];
+
+        gameController = GameObject.FindGameObjectWithTag("GameController");
 
         Tiles = new Tile[NumTiles.x, NumTiles.y];
-        Markers = new GameObject[NumTiles.x, NumTiles.y];
         for (int i = 0; i < NumTiles.x; i++) {
             for (int j = 0; j < NumTiles.y; j++) {
                 Tiles[i, j] = new Tile(new Vector2I(i, j), false, 1, EndLocation - BottomLeftPosition);
-                //Markers[i, j] = Instantiate(TileMarkerPrefab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
             }
         }
         LoadWallFromFile();
 
         //Temporary until we get level loading
-        Tiles[44, 40].IsGoal = true;
-        Tiles[44, 39].IsGoal = true;
-        Tiles[43, 40].IsGoal = true;
-        Tiles[43, 39].IsGoal = true;
-
+        Tiles[29, 29].IsGoal = true;
+        Tiles[29, 30].IsGoal = true;
+        Tiles[30, 29].IsGoal = true;
+        Tiles[30, 30].IsGoal = true;
 
         PF = new PathFinder(Tiles);
-
-        foreach (var start in StartPos) {
-            var path = PF.CalculatePath(start);
-            var enemy = Instantiate(EnemyPrefab, TileToWorldPosition(start), transform.rotation).GetComponent<BasicEnemy>();
-            enemy.SetPath(TileToWorldPosition(path));
-            foreach (var pos in path) {
-                Instantiate(TileMarkerPrefab, TileToWorldPosition(pos), transform.rotation, markerParent.transform);
-            }
-        }
 
         mapFloor = new Plane(Vector3.up, Vector3.zero);
 
@@ -69,45 +73,56 @@ public class TileController : MonoBehaviour {
     // Update is called once per frame
     private void Update() {
         var hoveredPos = GetHoveredTilePosition();
-        if (Input.GetMouseButtonDown(0)) {
+        if (!EventSystem.current.IsPointerOverGameObject() && AllowPlayerMovement && Input.GetMouseButtonDown(0)) {
             //Enable to allow editing of walls.
-            //SetToWall(tile);
+            //SetToWall(hoveredPos);
+            PlaceTower(hoveredPos);
         }
-        cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.01f, 0);
-        if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y || Tiles[hoveredPos.x, hoveredPos.y].IsWall) {
+        cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.2f, 0);
+        if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y || Tiles[hoveredPos.x, hoveredPos.y].IsWall || Tiles[hoveredPos.x, hoveredPos.y].HasTower) {
             cursorRenderer.material.color = Color.red;
         }
         else
-            cursorRenderer.material.color = Color.white;
+            cursorRenderer.material.color = Color.green;
         //Enable to allow saving of walls
         //if (Input.GetKeyDown(KeyCode.P))
         //    SaveWallsToFile();
     }
 
-    private Vector2I GetHoveredTilePosition() {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float distance;
-        if (mapFloor.Raycast(ray, out distance)) {
-            Vector3 tilePos = ray.GetPoint(distance);
-            tilePos -= new Vector3(BottomLeftPosition.x, 0, BottomLeftPosition.y);
-
-            Vector2I tile = new Vector2I(Mathf.FloorToInt(tilePos.x + TileSize.x / 2), Mathf.FloorToInt(tilePos.z + TileSize.y / 2));
-            return tile;
+    public Vector2I GetHoveredTilePosition() {
+        if (AllowPlayerMovement) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            float distance;
+            if (mapFloor.Raycast(ray, out distance)) {
+                Vector3 tilePos = ray.GetPoint(distance);
+                return WorldToTilePosition(tilePos);
+            }
+            return new Vector2I(-1, -1);
         }
-        return new Vector2I(-1, -1);
+        return WorldToTilePosition(GameController.instance.AFK.Cursor.transform.position);
     }
 
-    private Vector3 TileToWorldPosition(Vector2I pos) {
+    public Vector3 TileToWorldPosition(Vector2I pos) {
         var worldPos = new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y);
         return worldPos;
     }
 
-    private List<Vector3> TileToWorldPosition(List<Vector2I> pos) {
+    public List<Vector3> TileToWorldPosition(List<Vector2I> pos) {
         var worldPos = new List<Vector3>();
         foreach (var tile in pos) {
             worldPos.Add(TileToWorldPosition(tile));
         }
         return worldPos;
+    }
+
+    public Vector2I WorldToTilePosition(Vector3 pos) {
+        pos -= new Vector3(BottomLeftPosition.x, 0, BottomLeftPosition.y);
+        return new Vector2I(Mathf.FloorToInt(pos.x + TileSize.x / 2), Mathf.FloorToInt(pos.z + TileSize.y / 2));
+    }
+
+    public Tile GetTileAtWorldPos(Vector3 pos) {
+        var tilePos = WorldToTilePosition(pos);
+        return Tiles[tilePos.x, tilePos.y];
     }
 
     private void SetToWall(Vector2I pos) {
@@ -119,35 +134,45 @@ public class TileController : MonoBehaviour {
         foreach (Transform child in markerParent.transform) {
             Destroy(child.gameObject);
         }
+    }
 
-        foreach (var start in StartPos) {
-            var path = PF.CalculatePath(start);
-            foreach (var point in path) {
-                Instantiate(TileMarkerPrefab, new Vector3(BottomLeftPosition.x + point.x * TileSize.x, 0, BottomLeftPosition.y + point.y * TileSize.y), transform.rotation, markerParent.transform);
-            }
+    public void PlaceTower(Vector2I pos) {
+        //Early return if tile already has tower
+        var tile = Tiles[pos.x, pos.y];
+        if (tile.HasTower || tile.IsWall)
+            return;
+
+        towerCost = Towers[SelectedTower].GetComponent<Tower>().Cost;
+        //Debug.Log(Towers[SelectedTower].GetComponent<Tower>().Cost);
+        money = gameController.GetComponent<ResourceScript>().GetTotalMoney();
+        if (money >= towerCost) {
+            tile.SetTower(Instantiate(Towers[SelectedTower], TileToWorldPosition(pos), Quaternion.identity));
+            gameController.GetComponent<ResourceScript>().PurchaseItem(towerCost);
         }
     }
 
     private void SaveWallsToFile() {
+        Debug.Log("Save Started");
         string Walls = "";
         for (int i = 0; i < NumTiles.x; i++)
             for (int j = 0; j < NumTiles.x; j++)
                 Walls += Tiles[i, j].IsWall ? "1" : "0";
-        using (var sw = new System.IO.StreamWriter(Application.dataPath + @"\SaveData\Walls.txt", false)) {
+        using (var sw = new System.IO.StreamWriter(Application.dataPath + @"\Resources\SaveData\Walls.txt", false)) {
             sw.Write(Walls);
         }
+        Debug.Log("Save Done.");
     }
 
     private void LoadWallFromFile() {
         //Need to double check this works when building
-        using (var sr = new System.IO.StreamReader(Application.dataPath + @"\SaveData\Walls.txt", false)) {
-            for (int i = 0; i < NumTiles.x; i++)
-                for (int j = 0; j < NumTiles.x; j++) {
-                    Tiles[i, j].IsWall = sr.Read() == char.Parse("1");
-                    //Enable to see walls when loading
-                    //if (Tiles[i, j].IsWall)
-                    //    Markers[i, j] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
-                }
-        }
+        var file = Resources.Load("SaveData/Walls") as TextAsset;
+        string text = file.text;
+        for (int i = 0; i < NumTiles.x; i++)
+            for (int j = 0; j < NumTiles.x; j++) {
+                Tiles[i, j].IsWall = text[i * NumTiles.x + j] == char.Parse("1");
+                //Enable to see walls when loading
+                if (Tiles[i, j].IsWall)
+                    Markers[i, j] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
+            }
     }
 }

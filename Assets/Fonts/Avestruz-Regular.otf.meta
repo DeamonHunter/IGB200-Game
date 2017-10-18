@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: fbb789fd1b9baf2408fd5efeda01e576
+timeCreated: 1505180134
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Avestruz
+  fontNames:
+  - Avestruz
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
