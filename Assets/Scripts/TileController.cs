@@ -37,14 +37,14 @@ public class TileController : MonoBehaviour {
     private int money;
 
     //Debug for walls
-    public GameObject WallMarkerPreFab;
-    public GameObject[,] Markers;
-    private GameObject markerParent;
+    //public GameObject WallMarkerPreFab;
+    //public GameObject[,] Markers;
+    //private GameObject markerParent;
 
     // Use this for initialization
     public void Setup() {
-        markerParent = new GameObject();
-        Markers = new GameObject[NumTiles.x, NumTiles.y];
+        //markerParent = new GameObject();
+        //Markers = new GameObject[NumTiles.x, NumTiles.y];
 
         gameController = GameObject.FindGameObjectWithTag("GameController");
 
@@ -125,16 +125,16 @@ public class TileController : MonoBehaviour {
         return Tiles[tilePos.x, tilePos.y];
     }
 
-    private void SetToWall(Vector2I pos) {
-        Tiles[pos.x, pos.y].IsWall = !Tiles[pos.x, pos.y].IsWall;
-        if (Markers[pos.x, pos.y] == null)
-            Markers[pos.x, pos.y] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y), transform.rotation);
-        else
-            Destroy(Markers[pos.x, pos.y]);
-        foreach (Transform child in markerParent.transform) {
-            Destroy(child.gameObject);
-        }
-    }
+    //private void SetToWall(Vector2I pos) {
+    //    Tiles[pos.x, pos.y].IsWall = !Tiles[pos.x, pos.y].IsWall;
+    //    if (Markers[pos.x, pos.y] == null)
+    //        Markers[pos.x, pos.y] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + pos.x * TileSize.x, 0, BottomLeftPosition.y + pos.y * TileSize.y), transform.rotation);
+    //    else
+    //        Destroy(Markers[pos.x, pos.y]);
+    //    foreach (Transform child in markerParent.transform) {
+    //        Destroy(child.gameObject);
+    //    }
+    //}
 
     public void PlaceTower(Vector2I pos) {
         //Early return if tile already has tower
@@ -171,8 +171,8 @@ public class TileController : MonoBehaviour {
             for (int j = 0; j < NumTiles.x; j++) {
                 Tiles[i, j].IsWall = text[i * NumTiles.x + j] == char.Parse("1");
                 //Enable to see walls when loading
-                if (Tiles[i, j].IsWall)
-                    Markers[i, j] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
+                //if (Tiles[i, j].IsWall)
+                //    Markers[i, j] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
             }
     }
 }
