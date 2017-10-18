@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 65123645480223030}
   m_Layer: 0
   m_Name: Base_Enemy_Model
-  m_TagString: Enemy
+  m_TagString: Base_Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,5 +155,9 @@ MonoBehaviour:
   BaseHealth: 3
   Speed: 5
   Damage: 1
+  BaseDamage: 1
   AttackSpeed: 1
+  IgnoresWalls: 0
+  IsInDark: 0
   carriedGold: 10
+  curSpeed: 0
