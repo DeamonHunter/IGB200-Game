@@ -162,3 +162,4 @@ MonoBehaviour:
   IsInDark: 0
   carriedGold: 10
   curSpeed: 0
+  Halo: {fileID: 0}

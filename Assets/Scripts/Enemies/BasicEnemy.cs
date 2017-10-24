@@ -35,16 +35,20 @@ public class BasicEnemy : MonoBehaviour {
     protected GameObject gameController;
     protected bool CalculatePathOnNextMovement;
 
+    public Behaviour Halo;
+
     // Use this for initialization
     private void Start() {
         gameController = GameObject.FindGameObjectWithTag("GameController");
     }
 
     public void SetSpeed() {
-        if (IsInDark)
+        if (IsInDark) {
             curSpeed = DarkSpeed;
-        else
+        } else {
             curSpeed = LightSpeed;
+        }
+            
         baseSpeed = curSpeed;
     }
 

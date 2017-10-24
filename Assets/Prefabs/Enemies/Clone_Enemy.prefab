@@ -162,6 +162,7 @@ MonoBehaviour:
   IsInDark: 0
   carriedGold: 0
   curSpeed: 0
+  Halo: {fileID: 0}
   cloneSpawned1: {fileID: 1145837515334542, guid: 8378b2f312395904981ebb4470cdd4f9,
     type: 2}
   cloneSpawned2: {fileID: 1761192725499136, guid: 04489b29bda414445b44da4e34591f1f,
