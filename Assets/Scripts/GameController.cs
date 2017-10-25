@@ -40,15 +40,15 @@ public class GameController : MonoBehaviour {
 
     public Wave[] Waves;
 
-	// UI Elements
-	public GameObject enemyMenu;
-	public GameObject crawlerInfo;
-	public GameObject tunnelerInfo;
-	public GameObject superposInfo;
-	public GameObject swarmerInfo;
+    // UI Elements
+    public GameObject enemyMenu;
+    public GameObject crawlerInfo;
+    public GameObject tunnelerInfo;
+    public GameObject superposInfo;
+    public GameObject swarmerInfo;
 
-	public GameObject openButton;
-	public GameObject closeButton;
+    public GameObject openButton;
+    public GameObject closeButton;
 
     // Awake Checks - Singleton setup
     void Awake() {
@@ -72,6 +72,7 @@ public class GameController : MonoBehaviour {
         TC = Instantiate(TileControlPreFab).GetComponent<TileController>();
         rs = GetComponent<ResourceScript>();
         TC.Setup();
+        TC.Cursor.GetComponent<ParticleSystem>().Stop();
         Minimap.Setup(TC.NumTiles);
         EnemyParent = new GameObject();
 
@@ -109,35 +110,28 @@ public class GameController : MonoBehaviour {
             }
             if (!spawning && Input.GetKeyDown(KeyCode.G)) {
 
-				// Enemy Information
-				if (currentWave == 0) {
-					Debug.Log ("Wave 1 start");
-					closeButton.SetActive (true);
-					enemyMenu.SetActive(true);
-					crawlerInfo.SetActive(true);
-				} else if (currentWave == 2) {
-					closeButton.SetActive (true);
-					enemyMenu.SetActive(true);
-					tunnelerInfo.SetActive(true);
-				} else if (currentWave == 4) {
-					closeButton.SetActive (true);
-					enemyMenu.SetActive(true);
-					superposInfo.SetActive(true);
-				} else if (currentWave == 7) {
-					closeButton.SetActive (true);
-					enemyMenu.SetActive(true);
-					swarmerInfo.SetActive(true);
-				}
+                // Enemy Information
+                if (currentWave == 0) {
+                    Debug.Log ("Wave 1 start");
+                    closeButton.SetActive (true);
+                    enemyMenu.SetActive(true);
+                    crawlerInfo.SetActive(true);
+                } else if (currentWave == 2) {
+                    closeButton.SetActive (true);
+                    enemyMenu.SetActive(true);
+                    tunnelerInfo.SetActive(true);
+                } else if (currentWave == 4) {
+                    closeButton.SetActive (true);
+                    enemyMenu.SetActive(true);
+                    superposInfo.SetActive(true);
+                } else if (currentWave == 7) {
+                    closeButton.SetActive (true);
+                    enemyMenu.SetActive(true);
+                    swarmerInfo.SetActive(true);
+                }
 
                 CreateNewWave();
                 spawning = true;
-                if (currentWave <= 5 && currentWave > 1) {
-                    if (currentWave == 5)
-                        newIntensity = 0;
-                    else
-                        newIntensity = mainLight.intensity / 2;
-                    dimLight = true;
-                }
                 waveActive = true;
             }
             else if (!spawning && waveActive) {
@@ -193,6 +187,13 @@ public class GameController : MonoBehaviour {
             }
         }
         currentWave++;
+        if (currentWave <= 5 && currentWave > 1) {
+            if (currentWave == 5)
+                newIntensity = 0;
+            else
+                newIntensity = mainLight.intensity / 2;
+            dimLight = true;
+        }
         if (!afkMode)
             StartWaveText.SetActive(false);
     }
@@ -213,5 +214,14 @@ public class GameController : MonoBehaviour {
         foreach (var spawner in Spawners) {
             spawner.ToggleLR();
         }
+    }
+
+    public void FlipCursorRangeSystem() {
+        var ps = TC.Cursor.GetComponent<ParticleSystem>();
+        
+        if (ps.isPlaying)
+            ps.Stop();
+        else 
+            ps.Play();
     }
 }

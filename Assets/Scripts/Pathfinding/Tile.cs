@@ -42,6 +42,17 @@ public class Tile
         GameController.instance.UpdatePathFinding();
     }
 
+    public void ActivateTowerIndicator() {
+        var ps = tower.GetComponent<ParticleSystem>();
+        if (ps != null) 
+            ps.Play();
+    }
+
+    public void DeactivateTowerIndicator() {
+        var ps = tower.GetComponent<ParticleSystem>();
+        if (ps != null)
+            ps.Stop();
+    }
     public bool DamageTower(float damage)
     {
         if (tower == null)

@@ -8,9 +8,8 @@ public class CameraMove : MonoBehaviour {
     public Vector2 UpperRightCorner;
     [HideInInspector]
     public bool AllowPayerControl = true;
-
-    private float zBoundary = 27.7f;
-    private float xBoundary = 14.2f;
+    
+    private Vector3 position;
 
     //Afk mode only
     private bool moving;
@@ -25,7 +24,10 @@ public class CameraMove : MonoBehaviour {
     // Update is called once per frame
     private void Update() {
         if (AllowPayerControl) {
+            position = transform.position;
             CameraMovement();
+            BoundaryCheck();
+            transform.position = position;
         }
         else if (moving)
             MoveTowards();
@@ -45,7 +47,6 @@ public class CameraMove : MonoBehaviour {
     }
 
     private void CameraMovement() {
-        Vector3 position = transform.position;
         //Right Movement
         if (Input.GetKey("d"))
             position.x += CameraSpeed * Time.deltaTime;
@@ -62,26 +63,20 @@ public class CameraMove : MonoBehaviour {
         if (Input.GetKey("s"))
             position.z -= CameraSpeed * Time.deltaTime;
 
-        BoundaryCheck(position);
-        transform.position = position;
     }
 
-    private void BoundaryCheck(Vector3 position) {
+    private void BoundaryCheck() {
         //X Boundary Check
-        if (position.x <= LowerLeftCorner.x) {
+        //X Boundary Check
+        if (position.x <= LowerLeftCorner.x)
             position.x = LowerLeftCorner.x;
-        }
-        else if (position.x >= UpperRightCorner.x) {
+        else if (position.x >= UpperRightCorner.x)
             position.x = UpperRightCorner.x;
-        }
 
         //Z Boundary Check
-        if (position.z <= LowerLeftCorner.y) {
+        if (position.z <= LowerLeftCorner.y)
             position.z = LowerLeftCorner.y;
-        }
-        else if (position.z >= UpperRightCorner.y) {
+        else if (position.z >= UpperRightCorner.y)
             position.z = UpperRightCorner.y;
-        }
-
     }
 }

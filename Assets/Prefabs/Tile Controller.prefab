@@ -67,3 +67,9 @@ MonoBehaviour:
     y: 62
   SelectedTower: 0
   AllowPlayerMovement: 1
+  CursorSizes:
+  - 10
+  - 4.95
+  - 7
+  - 0
+  - 5

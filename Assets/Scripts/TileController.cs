@@ -27,14 +27,19 @@ public class TileController : MonoBehaviour {
     [HideInInspector]
     public bool AllowPlayerMovement = true;
 
+    public float[] CursorSizes;
+
     //Private Variables
     private Plane mapFloor;
-    private GameObject cursor;
+    public GameObject Cursor;
     private Renderer cursorRenderer;
+    private ParticleSystem.ShapeModule cursorShape;
 
     private GameObject gameController;
     private int towerCost = 0;
     private int money;
+
+    private Vector2I lastPosition = new Vector2I(0, 0);
 
     //Debug for walls
     //public GameObject WallMarkerPreFab;
@@ -66,8 +71,9 @@ public class TileController : MonoBehaviour {
 
         mapFloor = new Plane(Vector3.up, Vector3.zero);
 
-        cursor = Instantiate(CursorPrefab);
-        cursorRenderer = cursor.GetComponent<Renderer>();
+        Cursor = Instantiate(CursorPrefab);
+        cursorRenderer = Cursor.transform.GetChild(0).GetComponent<Renderer>();
+        cursorShape = Cursor.GetComponent<ParticleSystem>().shape;
     }
 
     // Update is called once per frame
@@ -78,12 +84,29 @@ public class TileController : MonoBehaviour {
             //SetToWall(hoveredPos);
             PlaceTower(hoveredPos);
         }
-        cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.2f, 0);
-        if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y || Tiles[hoveredPos.x, hoveredPos.y].IsWall || Tiles[hoveredPos.x, hoveredPos.y].HasTower) {
+        Cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.2f, 0);
+        cursorShape.radius = CursorSizes[SelectedTower];
+        if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y) {
             cursorRenderer.material.color = Color.red;
         }
-        else
-            cursorRenderer.material.color = Color.green;
+        else {
+            if (Tiles[hoveredPos.x, hoveredPos.y].IsWall || Tiles[hoveredPos.x, hoveredPos.y].HasTower) {
+                cursorRenderer.material.color = Color.red;
+            }
+            else {
+                cursorRenderer.material.color = Color.green;
+            }
+            if (hoveredPos != lastPosition) {
+                if (Tiles[lastPosition.x, lastPosition.y].HasTower) {
+                    Tiles[lastPosition.x, lastPosition.y].DeactivateTowerIndicator();
+                }
+                if (Tiles[hoveredPos.x, hoveredPos.y].HasTower) {
+                    Tiles[hoveredPos.x, hoveredPos.y].ActivateTowerIndicator();
+                }
+                lastPosition = hoveredPos;
+            }
+        }
+            
         //Enable to allow saving of walls
         //if (Input.GetKeyDown(KeyCode.P))
         //    SaveWallsToFile();
@@ -143,11 +166,17 @@ public class TileController : MonoBehaviour {
             return;
 
         towerCost = Towers[SelectedTower].GetComponent<Tower>().Cost;
-        //Debug.Log(Towers[SelectedTower].GetComponent<Tower>().Cost);
         money = gameController.GetComponent<ResourceScript>().GetTotalMoney();
         if (money >= towerCost) {
             tile.SetTower(Instantiate(Towers[SelectedTower], TileToWorldPosition(pos), Quaternion.identity));
+            if (!AllowPlayerMovement)
+                tile.DeactivateTowerIndicator();
             gameController.GetComponent<ResourceScript>().PurchaseItem(towerCost);
+        }
+        else {
+            Debug.Log("Not enough money");
+            Debug.Log(Towers[SelectedTower].GetComponent<Tower>().Cost);
+            Debug.Log(money);
         }
     }
 

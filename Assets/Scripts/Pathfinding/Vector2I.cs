@@ -18,6 +18,14 @@ public class Vector2I {
         return vec2;
     }
 
+    public static bool operator ==(Vector2I left, Vector2I right) {
+        return left.x == right.x && left.y == right.y;
+    }
+
+    public static bool operator !=(Vector2I left, Vector2I right) {
+        return left.x != right.x || left.y != right.y;
+    }
+
     public override string ToString() {
         return "{" + x + ", " + y + "}";
     }
