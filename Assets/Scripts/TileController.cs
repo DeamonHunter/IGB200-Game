@@ -31,7 +31,7 @@ public class TileController : MonoBehaviour {
 
     //Private Variables
     private Plane mapFloor;
-    private GameObject cursor;
+    public GameObject Cursor;
     private Renderer cursorRenderer;
     private ParticleSystem.ShapeModule cursorShape;
 
@@ -71,9 +71,9 @@ public class TileController : MonoBehaviour {
 
         mapFloor = new Plane(Vector3.up, Vector3.zero);
 
-        cursor = Instantiate(CursorPrefab);
-        cursorRenderer = cursor.GetComponentInChildren<Renderer>();
-        cursorShape = cursor.GetComponent<ParticleSystem>().shape;
+        Cursor = Instantiate(CursorPrefab);
+        cursorRenderer = Cursor.transform.GetChild(0).GetComponent<Renderer>();
+        cursorShape = Cursor.GetComponent<ParticleSystem>().shape;
     }
 
     // Update is called once per frame
@@ -84,7 +84,7 @@ public class TileController : MonoBehaviour {
             //SetToWall(hoveredPos);
             PlaceTower(hoveredPos);
         }
-        cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.2f, 0);
+        Cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.2f, 0);
         cursorShape.radius = CursorSizes[SelectedTower];
         if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y) {
             cursorRenderer.material.color = Color.red;
