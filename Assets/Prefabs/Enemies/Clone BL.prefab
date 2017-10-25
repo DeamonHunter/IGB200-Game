@@ -162,6 +162,6 @@ MonoBehaviour:
   AttackSpeed: 1
   IgnoresWalls: 0
   IsInDark: 0
-  carriedGold: 3
-  curSpeed: 0
+  carriedGold: 2
+  curSpeed: 2
   Halo: {fileID: 0}

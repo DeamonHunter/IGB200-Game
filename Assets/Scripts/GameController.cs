@@ -132,13 +132,6 @@ public class GameController : MonoBehaviour {
 
                 CreateNewWave();
                 spawning = true;
-                if (currentWave <= 5 && currentWave > 1) {
-                    if (currentWave == 5)
-                        newIntensity = 0;
-                    else
-                        newIntensity = mainLight.intensity / 2;
-                    dimLight = true;
-                }
                 waveActive = true;
             }
             else if (!spawning && waveActive) {
@@ -194,6 +187,13 @@ public class GameController : MonoBehaviour {
             }
         }
         currentWave++;
+        if (currentWave <= 5 && currentWave > 1) {
+            if (currentWave == 5)
+                newIntensity = 0;
+            else
+                newIntensity = mainLight.intensity / 2;
+            dimLight = true;
+        }
         if (!afkMode)
             StartWaveText.SetActive(false);
     }

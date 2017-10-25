@@ -166,13 +166,17 @@ public class TileController : MonoBehaviour {
             return;
 
         towerCost = Towers[SelectedTower].GetComponent<Tower>().Cost;
-        //Debug.Log(Towers[SelectedTower].GetComponent<Tower>().Cost);
         money = gameController.GetComponent<ResourceScript>().GetTotalMoney();
         if (money >= towerCost) {
             tile.SetTower(Instantiate(Towers[SelectedTower], TileToWorldPosition(pos), Quaternion.identity));
             if (!AllowPlayerMovement)
                 tile.DeactivateTowerIndicator();
             gameController.GetComponent<ResourceScript>().PurchaseItem(towerCost);
+        }
+        else {
+            Debug.Log("Not enough money");
+            Debug.Log(Towers[SelectedTower].GetComponent<Tower>().Cost);
+            Debug.Log(money);
         }
     }
 
