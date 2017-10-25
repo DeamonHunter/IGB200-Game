@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 7fcad2a28d46acd458ef7821df12c525
+timeCreated: 1508916749
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Blanka
+  fontNames:
+  - Blanka
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
