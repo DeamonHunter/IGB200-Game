@@ -10,7 +10,6 @@ namespace Assets.Scripts.Tower_Scripts {
         public Transform BulletEmitter;
         public GameObject Bullet;
         public GameObject TowerObject;
-        private ParticleSystem ps;
 
         //Tower Properties
         public float BulletsPerSecond;
@@ -35,8 +34,6 @@ namespace Assets.Scripts.Tower_Scripts {
         protected virtual void Start() {
             fireRate = 1 / BulletsPerSecond;
             collider = GetComponent<SphereCollider>();
-            ps = GetComponent<ParticleSystem>();
-            //ps.Stop();
             transform.position += Vector3.up * HeightOffset;
         }
 

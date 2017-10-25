@@ -27,10 +27,13 @@ public class TileController : MonoBehaviour {
     [HideInInspector]
     public bool AllowPlayerMovement = true;
 
+    public float[] CursorSizes;
+
     //Private Variables
     private Plane mapFloor;
     private GameObject cursor;
     private Renderer cursorRenderer;
+    private ParticleSystem.ShapeModule cursorShape;
 
     private GameObject gameController;
     private int towerCost = 0;
@@ -69,7 +72,8 @@ public class TileController : MonoBehaviour {
         mapFloor = new Plane(Vector3.up, Vector3.zero);
 
         cursor = Instantiate(CursorPrefab);
-        cursorRenderer = cursor.GetComponent<Renderer>();
+        cursorRenderer = cursor.GetComponentInChildren<Renderer>();
+        cursorShape = cursor.GetComponent<ParticleSystem>().shape;
     }
 
     // Update is called once per frame
@@ -81,6 +85,7 @@ public class TileController : MonoBehaviour {
             PlaceTower(hoveredPos);
         }
         cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.2f, 0);
+        cursorShape.radius = CursorSizes[SelectedTower];
         if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y) {
             cursorRenderer.material.color = Color.red;
         }
@@ -92,7 +97,6 @@ public class TileController : MonoBehaviour {
                 cursorRenderer.material.color = Color.green;
             }
             if (hoveredPos != lastPosition) {
-                Debug.Log(hoveredPos);
                 if (Tiles[lastPosition.x, lastPosition.y].HasTower) {
                     Tiles[lastPosition.x, lastPosition.y].DeactivateTowerIndicator();
                 }
