@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour {
 
     public GameObject StartWaveText;
     public Text waveText;
-    private int currentWave = 7;
+    private int currentWave = 0;
     private bool spawning = false;
 
     public Light mainLight;
