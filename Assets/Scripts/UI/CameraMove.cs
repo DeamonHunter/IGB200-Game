@@ -8,9 +8,7 @@ public class CameraMove : MonoBehaviour {
     public Vector2 UpperRightCorner;
     [HideInInspector]
     public bool AllowPayerControl = true;
-
-    private float zBoundary = 18f;
-    private float xBoundary = 9.5f;
+    
     private Vector3 position;
 
     //Afk mode only
@@ -69,20 +67,16 @@ public class CameraMove : MonoBehaviour {
 
     private void BoundaryCheck() {
         //X Boundary Check
-        if (position.x > xBoundary) {
-            position.x = xBoundary;
-        }
-        else if (position.x < -xBoundary) {
-            position.x = -xBoundary;
-        }
+        //X Boundary Check
+        if (position.x <= LowerLeftCorner.x)
+            position.x = LowerLeftCorner.x;
+        else if (position.x >= UpperRightCorner.x)
+            position.x = UpperRightCorner.x;
 
         //Z Boundary Check
-        if (position.z > zBoundary) {
-            position.z = zBoundary;
-        }
-        else if (position.z < -zBoundary) {
-            position.z = -zBoundary;
-        }
-
+        if (position.z <= LowerLeftCorner.y)
+            position.z = LowerLeftCorner.y;
+        else if (position.z >= UpperRightCorner.y)
+            position.z = UpperRightCorner.y;
     }
 }
