@@ -36,6 +36,8 @@ public class TileController : MonoBehaviour {
     private int towerCost = 0;
     private int money;
 
+    private Vector2I lastPosition = new Vector2I(0, 0);
+
     //Debug for walls
     //public GameObject WallMarkerPreFab;
     //public GameObject[,] Markers;
@@ -79,11 +81,28 @@ public class TileController : MonoBehaviour {
             PlaceTower(hoveredPos);
         }
         cursor.transform.position = TileToWorldPosition(hoveredPos) + new Vector3(0, 0.2f, 0);
-        if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y || Tiles[hoveredPos.x, hoveredPos.y].IsWall || Tiles[hoveredPos.x, hoveredPos.y].HasTower) {
+        if (hoveredPos.x < 0 || hoveredPos.x >= NumTiles.x || hoveredPos.y < 0 || hoveredPos.y >= NumTiles.y) {
             cursorRenderer.material.color = Color.red;
         }
-        else
-            cursorRenderer.material.color = Color.green;
+        else {
+            if (Tiles[hoveredPos.x, hoveredPos.y].IsWall || Tiles[hoveredPos.x, hoveredPos.y].HasTower) {
+                cursorRenderer.material.color = Color.red;
+            }
+            else {
+                cursorRenderer.material.color = Color.green;
+            }
+            if (hoveredPos != lastPosition) {
+                Debug.Log(hoveredPos);
+                if (Tiles[lastPosition.x, lastPosition.y].HasTower) {
+                    Tiles[lastPosition.x, lastPosition.y].DeactivateTowerIndicator();
+                }
+                if (Tiles[hoveredPos.x, hoveredPos.y].HasTower) {
+                    Tiles[hoveredPos.x, hoveredPos.y].ActivateTowerIndicator();
+                }
+                lastPosition = hoveredPos;
+            }
+        }
+            
         //Enable to allow saving of walls
         //if (Input.GetKeyDown(KeyCode.P))
         //    SaveWallsToFile();
