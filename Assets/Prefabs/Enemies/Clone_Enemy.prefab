@@ -82,6 +82,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -97,6 +98,7 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -160,7 +162,7 @@ MonoBehaviour:
   AttackSpeed: 1
   IgnoresWalls: 0
   IsInDark: 0
-  carriedGold: 0
+  carriedGold: 10
   curSpeed: 0
   Halo: {fileID: 0}
   cloneSpawned1: {fileID: 1145837515334542, guid: 8378b2f312395904981ebb4470cdd4f9,
