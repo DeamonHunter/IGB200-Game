@@ -15,9 +15,9 @@ public class BasicEnemy : MonoBehaviour {
     public bool IgnoresWalls;
 
     public bool IsInDark = false;
-    private float timeTillReveal = 1f;
-    private bool revealing = false;
-    private float revealCoolDown = 0;
+    protected float timeTillReveal = 1f;
+    protected bool revealing = false;
+    protected float revealCoolDown = 0;
 
     public int carriedGold = 5;
 
@@ -84,7 +84,7 @@ public class BasicEnemy : MonoBehaviour {
         transform.LookAt(path[pathNum]);
     }
 
-    private void AttackNextPos() {
+    protected void AttackNextPos() {
         if (Time.time < attackTimer)
             return;
         Tile tile = GameController.instance.TC.GetTileAtWorldPos(path[pathNum]);
