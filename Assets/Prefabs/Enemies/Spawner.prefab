@@ -56,6 +56,7 @@ MonoBehaviour:
   - {fileID: 1901038433698154, guid: 2701c6de563e8fe46b3aefa59e6bb7e8, type: 2}
   - {fileID: 1779184333209246, guid: 24da2e9eb2c4a914785b37f5af132d23, type: 2}
   - {fileID: 1655418508649992, guid: 0cf1d864897592142bf48aaffd5d6f5f, type: 2}
+  - {fileID: 1763080207392218, guid: 24703a80e65a86448b50637fa99ed5ac, type: 2}
   Spawning: 0
   TilesToShow: 30
   EnemyHealthMultipliers: []

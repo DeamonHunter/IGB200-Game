@@ -16,7 +16,7 @@ public class BasicEnemy : MonoBehaviour {
 
     public bool IsInDark = false;
     protected float timeTillReveal = 1f;
-    protected bool revealing = false;
+    public bool revealing = false;
     protected float revealCoolDown = 0;
 
     public int carriedGold = 5;

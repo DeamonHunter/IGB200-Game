@@ -82,12 +82,11 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 29bcb9ac7faa8204bba5adc75dcf9c6f, type: 2}
+  - {fileID: 2100000, guid: 9b9352b838d07594592c1672d512aa95, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,7 +97,6 @@ MeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -162,6 +160,7 @@ MonoBehaviour:
   AttackSpeed: 1
   IgnoresWalls: 0
   IsInDark: 0
+  revealing: 0
   carriedGold: 10
   curSpeed: 3
   Halo: {fileID: 0}

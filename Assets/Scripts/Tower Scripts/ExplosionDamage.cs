@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ExplosionDamage : MonoBehaviour {
 
-	private float time;
+	private float time = 0.0f;
 	private float lifeTime = 3.0f;
 	private float damage;
 
@@ -17,9 +17,9 @@ public class ExplosionDamage : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//time += Time.time;
-		//if (time >= lifeTime)
-		//	Destroy (this.gameObject);
+		time += Time.deltaTime;
+		if (time >= lifeTime)
+			Destroy (this.gameObject);
 	}
 
 	public void OnTriggerEnter(Collider other) {
