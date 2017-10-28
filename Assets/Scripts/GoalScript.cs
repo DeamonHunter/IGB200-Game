@@ -7,6 +7,8 @@ public class GoalScript : MonoBehaviour {
 	public int damagePerEnemy;
 	private GameObject gameController;
 
+    public AudioSource objectHit;
+
 	// Use this for initialization
 	private void Start() {
 		gameController = GameObject.FindGameObjectWithTag ("GameController");
@@ -17,6 +19,14 @@ public class GoalScript : MonoBehaviour {
             return;
 		damagePerEnemy = other.gameObject.GetComponent<BasicEnemy> ().BaseDamage;
 		gameController.GetComponent<ResourceScript>().LoseLife(damagePerEnemy);
+        PlayObjectHit();
         Destroy(other.gameObject);
     }
+
+    void PlayObjectHit() {
+        if(objectHit != null) {
+            objectHit.Play();
+        }
+    }
+
 }

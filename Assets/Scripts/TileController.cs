@@ -41,6 +41,8 @@ public class TileController : MonoBehaviour {
 
     private Vector2I lastPosition = new Vector2I(0, 0);
 
+    public AudioSource placement;
+
     //Debug for walls
     //public GameObject WallMarkerPreFab;
     //public GameObject[,] Markers;
@@ -172,6 +174,7 @@ public class TileController : MonoBehaviour {
             if (!AllowPlayerMovement)
                 tile.DeactivateTowerIndicator();
             gameController.GetComponent<ResourceScript>().PurchaseItem(towerCost);
+            PlaySoundOnPurchase();
         }
         else {
             Debug.Log("Not enough money");
@@ -204,4 +207,11 @@ public class TileController : MonoBehaviour {
                 //    Markers[i, j] = Instantiate(WallMarkerPreFab, new Vector3(BottomLeftPosition.x + i * TileSize.x, 0, BottomLeftPosition.y + j * TileSize.y), transform.rotation);
             }
     }
+
+    void PlaySoundOnPurchase() {
+        if (placement != null) {
+            placement.Play();
+        }
+    }
+
 }
