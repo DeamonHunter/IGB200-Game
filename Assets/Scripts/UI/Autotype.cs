@@ -48,9 +48,9 @@ public class Autotype : MonoBehaviour
 
     IEnumerator PlayText()
     {
-
         foreach (char c in story)
         {
+
             delayBetweenChars = originDelayBetweenChars;
 
             if (lastCharPunctuation)  //If previous character was a comma/period, pause typing
@@ -67,5 +67,7 @@ public class Autotype : MonoBehaviour
             text.text += c;
             yield return new WaitForSeconds(delayBetweenChars);
         }
+
     }
+
 }
