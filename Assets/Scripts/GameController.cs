@@ -46,6 +46,7 @@ public class GameController : MonoBehaviour {
     public GameObject tunnelerInfo;
     public GameObject superposInfo;
     public GameObject swarmerInfo;
+    public GameObject shieldInfo;
 
     public GameObject openButton;
     public GameObject closeButton;
@@ -148,10 +149,14 @@ public class GameController : MonoBehaviour {
                 } else if (currentWave == 7 && !infoShown) {
                     closeButton.SetActive(true);
                     enemyMenu.SetActive(true);
+                    shieldInfo.SetActive(true);
+                    infoShown = true;
+                } else if (currentWave == 9 && !infoShown) {
+                    closeButton.SetActive(true);
+                    enemyMenu.SetActive(true);
                     swarmerInfo.SetActive(true);
                     infoShown = true;
-                }
-                else {
+                } else {
                     CreateNewWave();
                     infoShown = false;
                 }
