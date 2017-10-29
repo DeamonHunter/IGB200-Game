@@ -17,6 +17,8 @@ public class ShieldEnemy : BasicEnemy {
     public bool canRegen                = false;
     public bool canRegenAfterDestroy    = false;
 
+    public AudioSource shieldHit;
+
     protected override void Update() {
         if (AllowMove && !Attacking && pathNum < path.Count)
             MoveToNextPath();
@@ -87,7 +89,14 @@ public class ShieldEnemy : BasicEnemy {
                 Destroy(this.gameObject);
             }
         } else {
-            // Take no damage [Play sound?]
+            PlayObjectHit();
         }
     }
+
+    void PlayObjectHit() {
+        if (shieldHit != null) {
+            shieldHit.Play();
+        }
+    }
+
 }
