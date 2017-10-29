@@ -16887,6 +16887,7 @@ MonoBehaviour:
   tunnelerInfo: {fileID: 478424678}
   superposInfo: {fileID: 813190150}
   swarmerInfo: {fileID: 754117764}
+  shieldInfo: {fileID: 410993324}
   openButton: {fileID: 1670395697}
   closeButton: {fileID: 1424338612}
   waveIsInactive: {fileID: 891365513}
