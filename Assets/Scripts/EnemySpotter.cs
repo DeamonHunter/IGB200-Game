@@ -16,7 +16,9 @@ public class EnemySpotter : MonoBehaviour {
 
     private void OnTriggerStay(Collider other) {
         if (other.tag == "Enemy") {
-            other.GetComponent<BasicEnemy>().RevealEnemy(Time.fixedDeltaTime);
+            var enemy = other.GetComponent < BasicEnemy>();
+            if (enemy.IsInDark)
+                enemy.RevealEnemy(Time.fixedDeltaTime);
         }
     }
 
