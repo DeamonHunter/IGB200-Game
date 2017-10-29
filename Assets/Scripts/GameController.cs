@@ -53,6 +53,11 @@ public class GameController : MonoBehaviour {
     public AudioSource waveIsInactive;
     public AudioSource waveIsActive;
 
+    private bool isFadingOut = false;
+    private bool isFadingIn = false;
+    private bool oneSet = false;
+
+
     // Awake Checks - Singleton setup
     void Awake() {
 
@@ -100,6 +105,9 @@ public class GameController : MonoBehaviour {
 
         ControlLight();
 
+        SetWaveActiveSound();
+        SetWaveInactiveSound();
+
         waveText.text = currentWave.ToString();
 
         if (afkMode && Input.GetKeyDown(KeyCode.G)) {
@@ -112,7 +120,8 @@ public class GameController : MonoBehaviour {
                 spawning = spawning || spawner.Spawning;
             }
             if (!spawning && Input.GetKeyDown(KeyCode.G)) {
-                SetWaveActiveSound();
+                isFadingOut = true;
+                oneSet = true;
                 // Enemy Information
                 if (currentWave == 0) {
                     Debug.Log ("Wave 1 start");
@@ -141,7 +150,8 @@ public class GameController : MonoBehaviour {
                 StartWaveText.SetActive(true);
                 rs.GainMoney(Waves[currentWave].WaveBonus);
                 waveActive = false;
-                SetWaveInactiveSound();
+                isFadingIn = true;
+                oneSet = true;
             }
         }
     }
@@ -230,12 +240,39 @@ public class GameController : MonoBehaviour {
     }
 
     void SetWaveActiveSound() {
-        waveIsInactive.Stop();
-        waveIsActive.Play();
+        if (isFadingOut) {
+            FadeOut(waveIsInactive);
+            FadeIn(waveIsActive);
+        }
     }
 
     void SetWaveInactiveSound() {
-        waveIsActive.Stop();
-        waveIsInactive.Play();
+        if (isFadingIn) {
+            FadeOut(waveIsActive);
+            FadeIn(waveIsInactive);
+        }
+    }
+
+    void FadeIn(AudioSource IN) {
+        if (oneSet) {
+            IN.volume = 0.1f;
+            IN.Play();
+            oneSet = false;
+        }
+        if (IN.volume < 0.7) {
+            IN.volume += 0.15f * Time.deltaTime;
+        }else {
+            isFadingIn = false;
+        }
+    }
+
+    void FadeOut(AudioSource OUT) {
+        if(OUT.volume > 0.1) {
+            OUT.volume -= 0.15f * Time.deltaTime;
+        }
+        if (OUT.volume <= 0.1) {
+            OUT.Stop();
+            isFadingOut = false;
+        }
     }
 }

@@ -2640,7 +2640,8 @@ Prefab:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 82211194679221430, guid: 40d4d43abcad7d94982b4b62e60bd25b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 40d4d43abcad7d94982b4b62e60bd25b, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &152566146
@@ -6358,7 +6359,8 @@ Prefab:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 82211194679221430, guid: 40d4d43abcad7d94982b4b62e60bd25b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 40d4d43abcad7d94982b4b62e60bd25b, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &352039649
@@ -15056,7 +15058,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 607b0c2947191464f9f7423ce6532f2f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.7
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -28366,7 +28368,8 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 82602794852937856, guid: 9af1b9f51c6deb542822455d6f39de16, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 9af1b9f51c6deb542822455d6f39de16, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1710646841 stripped
@@ -29565,7 +29568,8 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 82602794852937856, guid: 9af1b9f51c6deb542822455d6f39de16, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 9af1b9f51c6deb542822455d6f39de16, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1766200136
@@ -30512,7 +30516,8 @@ Prefab:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 82211194679221430, guid: 40d4d43abcad7d94982b4b62e60bd25b, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 40d4d43abcad7d94982b4b62e60bd25b, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1856469094 stripped
