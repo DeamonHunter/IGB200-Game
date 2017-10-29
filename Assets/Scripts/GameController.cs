@@ -56,6 +56,8 @@ public class GameController : MonoBehaviour {
     private bool isFadingOut = false;
     private bool isFadingIn = false;
     private bool oneSet = false;
+    private bool infoShown = false;
+    private float waveTimer = 5;
 
 
     // Awake Checks - Singleton setup
@@ -121,30 +123,37 @@ public class GameController : MonoBehaviour {
             foreach (var spawner in Spawners) {
                 spawning = spawning || spawner.Spawning;
             }
-            if (!spawning && Input.GetKeyDown(KeyCode.G)) {
+            if (!spawning && Input.GetKeyDown(KeyCode.G) || infoShown && waveTimer < 0) {
                 // Enemy Information
-                if (currentWave == 0) {
+                waveTimer = 5f;
+                if (currentWave == 0 && !infoShown) {
                     Debug.Log ("Wave 1 start");
                     closeButton.SetActive (true);
                     enemyMenu.SetActive(true);
                     crawlerInfo.SetActive(true);
-                } else if (currentWave == 2) {
+                    infoShown = true;
+                } else if (currentWave == 2 && !infoShown) {
                     closeButton.SetActive (true);
                     enemyMenu.SetActive(true);
                     tunnelerInfo.SetActive(true);
-                } else if (currentWave == 4) {
+                    infoShown = true;
+                } else if (currentWave == 4 && !infoShown) {
                     closeButton.SetActive (true);
                     enemyMenu.SetActive(true);
                     superposInfo.SetActive(true);
-                } else if (currentWave == 7) {
-                    closeButton.SetActive (true);
+                    infoShown = true;
+                } else if (currentWave == 7 && !infoShown) {
+                    closeButton.SetActive(true);
                     enemyMenu.SetActive(true);
                     swarmerInfo.SetActive(true);
+                    infoShown = true;
                 }
-
-                CreateNewWave();
-                spawning = true;
-                waveActive = true;
+                else {
+                    CreateNewWave();
+                    spawning = true;
+                    waveActive = true;
+                    infoShown = false;
+                }
             }
             else if (!spawning && waveActive) {
                 StartWaveText.SetActive(true);
@@ -154,6 +163,8 @@ public class GameController : MonoBehaviour {
                 oneSet = true;
             }
         }
+        if (infoShown)
+            waveTimer -= Time.deltaTime;
     }
 
     public void UpdatePathFinding() {
