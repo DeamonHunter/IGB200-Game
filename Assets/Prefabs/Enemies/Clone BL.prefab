@@ -268,8 +268,8 @@ MonoBehaviour:
   AllowMove: 0
   MinDistance: 0.02
   BaseHealth: 2
-  LightSpeed: 0
-  DarkSpeed: 0
+  LightSpeed: 1
+  DarkSpeed: 1
   Damage: 1
   BaseDamage: 1
   AttackSpeed: 1
@@ -787,7 +787,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: 1.5, z: 0}
+    m_Position: {x: 0, y: 1, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 1, y: 0.1, z: 1}
     placementMode: 0
