@@ -11,6 +11,8 @@ namespace Assets.Scripts.Tower_Scripts {
         public GameObject Bullet;
         public GameObject TowerObject;
         public AudioSource shootingSound;
+        public AudioSource turretTakeDamage;
+        public AudioSource turretDestroyed;
 
         //Tower Properties
         public float BulletsPerSecond;
@@ -121,7 +123,9 @@ namespace Assets.Scripts.Tower_Scripts {
 
         public bool TakeDamage(float damage) {
             Health -= damage;
+            turretTakeDamage.Play();
             if (Health <= 0) {
+                turretDestroyed.Play();
                 Vector2I pos = GameController.instance.TC.WorldToTilePosition(transform.position);
                 GameController.instance.TC.Tiles[pos.x, pos.y].DeleteTower();
                 return true;

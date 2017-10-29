@@ -241,6 +241,7 @@ public class GameController : MonoBehaviour {
 
     void SetWaveActiveSound() {
         if (isFadingOut) {
+            isFadingIn = false;
             FadeOut(waveIsInactive);
             FadeIn(waveIsActive);
         }
@@ -248,6 +249,7 @@ public class GameController : MonoBehaviour {
 
     void SetWaveInactiveSound() {
         if (isFadingIn) {
+            isFadingOut = false;
             FadeOut(waveIsActive);
             FadeIn(waveIsInactive);
         }
