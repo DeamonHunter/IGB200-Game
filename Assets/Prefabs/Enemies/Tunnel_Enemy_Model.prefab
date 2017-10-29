@@ -275,7 +275,7 @@ MonoBehaviour:
   AttackSpeed: 0.5
   IgnoresWalls: 1
   revealing: 0
-  carriedGold: 4
+  carriedGold: 2
   curSpeed: 0
   Halo: {fileID: 0}
 --- !u!198 &198144393101610296

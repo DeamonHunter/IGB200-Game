@@ -10,7 +10,7 @@ public class ResourceScript : MonoBehaviour {
     private int lives;
     private int maxLives = 20;
     private int money;
-    private int baseMoney = 150;
+    private int baseMoney = 200;
     private int moneyIncrease = 1;
     private float timeCount;
     private float lastUpdate;
