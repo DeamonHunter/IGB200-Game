@@ -36,8 +36,6 @@ public class SpawnerScript : MonoBehaviour {
         Spawning = true;
         Invoke("Spawn", initialDelay);
         spawnInDark = dark;
-        if (dark)
-            lr.enabled = false;
     }
 
     private void Spawn() {

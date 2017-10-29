@@ -14,10 +14,18 @@ public class BasicEnemy : MonoBehaviour {
     public float AttackSpeed;
     public bool IgnoresWalls;
 
-    public bool IsInDark = false;
+    public bool IsInDark {
+        get { return isInDark; }
+        set {
+            isInDark = value;
+            Particles(value);
+        }
+    }
+    private bool isInDark;
     protected float timeTillReveal = 1f;
     public bool revealing = false;
     protected float revealCoolDown = 0;
+    protected const float lightDamageMult = 2;
 
     public int carriedGold = 5;
 
@@ -33,6 +41,7 @@ public class BasicEnemy : MonoBehaviour {
     protected float baseSpeed;
 
     protected GameObject gameController;
+    protected ParticleSystem ps;
     protected bool CalculatePathOnNextMovement;
 
     public Behaviour Halo;
@@ -113,7 +122,7 @@ public class BasicEnemy : MonoBehaviour {
     }
 
     public virtual void TakeDamage(float amount) {
-        curHealth -= amount;
+        curHealth -= IsInDark ? amount : amount * lightDamageMult;
         if (curHealth <= 0) {
             //Gain resources.
             gameController.GetComponent<ResourceScript>().GainMoney(carriedGold);
@@ -150,12 +159,16 @@ public class BasicEnemy : MonoBehaviour {
     }
 
     protected void EnemyIsRevealed() {
-        IsInDark = true;
-        if (!slowed)
-            curSpeed = LightSpeed;
-        else
-            curSpeed *= LightSpeed / DarkSpeed;
-        baseSpeed = LightSpeed;
-        //Do other stuff
+        IsInDark = false;
+        Debug.Log("Revealed");
+    }
+
+    protected void Particles(bool on) {
+        if (ps == null)
+            ps = GetComponent<ParticleSystem>();
+        if (on)
+            ps.Play();
+        else 
+            ps.Stop();
     }
 }
