@@ -42,6 +42,7 @@ public class TileController : MonoBehaviour {
     private Vector2I lastPosition = new Vector2I(0, 0);
 
     public AudioSource placement;
+    public AudioSource noPlacement;
 
     //Debug for walls
     //public GameObject WallMarkerPreFab;
@@ -177,6 +178,7 @@ public class TileController : MonoBehaviour {
             PlaySoundOnPurchase();
         }
         else {
+            PlaySoundOnFailedPurchase();
             Debug.Log("Not enough money");
             Debug.Log(Towers[SelectedTower].GetComponent<Tower>().Cost);
             Debug.Log(money);
@@ -211,6 +213,12 @@ public class TileController : MonoBehaviour {
     void PlaySoundOnPurchase() {
         if (placement != null) {
             placement.Play();
+        }
+    }
+
+    void PlaySoundOnFailedPurchase() {
+        if (noPlacement != null) {
+            noPlacement.Play();
         }
     }
 
