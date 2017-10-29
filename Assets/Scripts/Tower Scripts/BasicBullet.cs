@@ -33,10 +33,10 @@ public class BasicBullet : MonoBehaviour {
 
     protected virtual void OnTriggerEnter(Collider other) {
         if (other.tag == "Enemy" && !hitEnemy) {
-            hitEnemy = true;
             var enemy = other.gameObject.GetComponent<BasicEnemy>();
             if (enemy == null)
                 return;
+            hitEnemy = true;
             enemy.TakeDamage(Damage);
             Destroy(gameObject);
         }
