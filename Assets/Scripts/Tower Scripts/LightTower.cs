@@ -15,12 +15,15 @@ public class LightTower : Tower {
         Light.transform.LookAt(target.transform);
 
         //Light.transform.LookAt(new Vector3(curLookDir.x, 0, curLookDir.y) * (target.transform.position - transform.position).magnitude + new Vector3(transform.position.x, 0, transform.position.y));
+       
+        //Something broke this
+        //Ray ray = new Ray(transform.position, Light.transform.forward);
+        //float distance;
+        //if (pl.Raycast(ray, out distance)) {
+        //    LightTarget.transform.position = ray.GetPoint(distance);
+        //}
 
-        Ray ray = new Ray(transform.position, Light.transform.forward);
-        float distance;
-        if (pl.Raycast(ray, out distance)) {
-            LightTarget.transform.position = ray.GetPoint(distance);
-        }
+        LightTarget.transform.position = target.transform.position;
 
         return true;
     }
