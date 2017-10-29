@@ -150,8 +150,6 @@ public class GameController : MonoBehaviour {
                 }
                 else {
                     CreateNewWave();
-                    spawning = true;
-                    waveActive = true;
                     infoShown = false;
                 }
             }
@@ -159,8 +157,10 @@ public class GameController : MonoBehaviour {
                 StartWaveText.SetActive(true);
                 rs.GainMoney(Waves[currentWave].WaveBonus);
                 waveActive = false;
-                isFadingIn = true;
-                oneSet = true;
+                if (!afkMode) {
+                    isFadingIn = true;
+                    oneSet = true;
+                }
             }
         }
         if (infoShown)
@@ -224,6 +224,8 @@ public class GameController : MonoBehaviour {
             isFadingOut = true;
             oneSet = true;
         }
+        spawning = true;
+        waveActive = true;
     }
 
     public bool IsSpawning() {

@@ -17,6 +17,7 @@ public class BasicEnemy : MonoBehaviour {
     public bool IsInDark {
         get { return isInDark; }
         set {
+            Debug.Log(value);
             isInDark = value;
             Particles(value);
         }
