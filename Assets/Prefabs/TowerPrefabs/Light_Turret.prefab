@@ -481,7 +481,7 @@ MonoBehaviour:
   BulletsPerSecond: 1
   BulletSpeed: 0
   RotateSpeed: 400
-  Cost: 60
+  Cost: 45
   PathFindingCost: 10
   Health: 3
   HeightOffset: 0
