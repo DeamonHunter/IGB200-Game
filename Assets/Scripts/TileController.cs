@@ -214,12 +214,14 @@ public class TileController : MonoBehaviour {
 
     void PlaySoundOnPurchase() {
         if (placement != null) {
+            placement.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
             placement.Play();
         }
     }
 
     void PlaySoundOnFailedPurchase() {
         if (noPlacement != null) {
+            noPlacement.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
             noPlacement.Play();
         }
     }
