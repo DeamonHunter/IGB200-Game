@@ -53,6 +53,8 @@ public class GameController : MonoBehaviour {
     public AudioSource waveIsInactive;
     public AudioSource waveIsActive;
 
+    private bool ButtonPressed;
+
     private bool isFadingOut = false;
     private bool isFadingIn = false;
     private bool oneSet = false;
@@ -123,9 +125,10 @@ public class GameController : MonoBehaviour {
             foreach (var spawner in Spawners) {
                 spawning = spawning || spawner.Spawning;
             }
-            if (!spawning && Input.GetKeyDown(KeyCode.G) || infoShown && waveTimer < 0) {
+            if (!spawning && Input.GetKeyDown(KeyCode.G) || (infoShown && waveTimer < 0) || ButtonPressed) {
                 // Enemy Information
                 waveTimer = 5f;
+                ButtonPressed = false;
                 if (currentWave == 0 && !infoShown) {
                     Debug.Log ("Wave 1 start");
                     closeButton.SetActive (true);
@@ -244,6 +247,10 @@ public class GameController : MonoBehaviour {
         foreach (var spawner in Spawners) {
             spawner.ToggleLR();
         }
+    }
+
+    public void PressButton() {
+        ButtonPressed = true;
     }
 
     public void FlipCursorRangeSystem() {
