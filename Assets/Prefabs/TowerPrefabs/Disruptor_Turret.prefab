@@ -346,6 +346,8 @@ MonoBehaviour:
   Bullet: {fileID: 1045205105010708, guid: 4f32850751752cb448a7d6d8b12c14c9, type: 2}
   TowerObject: {fileID: 1552602909094616}
   shootingSound: {fileID: 0}
+  turretTakeDamage: {fileID: 0}
+  turretDestroyed: {fileID: 0}
   BulletsPerSecond: 0
   BulletSpeed: 0
   RotateSpeed: 0
