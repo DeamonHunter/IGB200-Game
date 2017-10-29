@@ -182,9 +182,9 @@ public class TileController : MonoBehaviour {
         }
         else {
             PlaySoundOnFailedPurchase();
-            Debug.Log("Not enough money");
-            Debug.Log(Towers[SelectedTower].GetComponent<Tower>().Cost);
-            Debug.Log(money);
+            //Debug.Log("Not enough money");
+            //Debug.Log(Towers[SelectedTower].GetComponent<Tower>().Cost);
+            //Debug.Log(money);
         }
     }
 

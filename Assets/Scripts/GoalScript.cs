@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class GoalScript : MonoBehaviour {
 
-	public int damagePerEnemy;
-	private GameObject gameController;
+    public int damagePerEnemy;
+    private GameObject gameController;
 
     public AudioSource objectHit;
     public Image damageUI;
@@ -26,7 +26,7 @@ public class GoalScript : MonoBehaviour {
 
     // Use this for initialization
     private void Start() {
-		gameController = GameObject.FindGameObjectWithTag ("GameController");
+        gameController = GameObject.FindGameObjectWithTag ("GameController");
         fade = startFade;
         fadeCount = startFade;
         lastFade = startFade;
@@ -42,7 +42,6 @@ public class GoalScript : MonoBehaviour {
 
             if (fade >= minFade) {
                 fade = Mathf.FloorToInt(fadeCount);
-                Debug.Log(fade);
                 damageUI.GetComponent<Image>().color = new Color32(255, 0, 0, (byte)fade);
 
                 if (fade <= lastFade - fadeIncrement) {
@@ -71,8 +70,8 @@ public class GoalScript : MonoBehaviour {
             lastFade = startFade;
             fadeScale = startFadeScale;
         }
-		damagePerEnemy = other.gameObject.GetComponent<BasicEnemy> ().BaseDamage;
-		gameController.GetComponent<ResourceScript>().LoseLife(damagePerEnemy);
+        damagePerEnemy = other.gameObject.GetComponent<BasicEnemy> ().BaseDamage;
+        gameController.GetComponent<ResourceScript>().LoseLife(damagePerEnemy);
         PlayObjectHit();
         Destroy(other.gameObject);
     }

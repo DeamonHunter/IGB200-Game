@@ -801,7 +801,7 @@ GameObject:
   - component: {fileID: 31162016}
   m_Layer: 0
   m_Name: EnemyFinder
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29953,8 +29953,8 @@ MonoBehaviour:
   tunnelerInfo: {fileID: 2074835348}
   superposInfo: {fileID: 1325051377}
   swarmerInfo: {fileID: 222519909}
-  openButton: {fileID: 0}
-  closeButton: {fileID: 0}
+  openButton: {fileID: 928246888}
+  closeButton: {fileID: 1293644421}
   waveIsInactive: {fileID: 1569425349}
   waveIsActive: {fileID: 1569425348}
 --- !u!82 &1569425348
