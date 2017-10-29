@@ -25,7 +25,7 @@ public class BasicEnemy : MonoBehaviour {
     protected float timeTillReveal = 1f;
     public bool revealing = false;
     protected float revealCoolDown = 0;
-    protected const float lightDamageMult = 2;
+    protected const float lightDamageMult = 1.5f;
 
     public int carriedGold = 5;
 
