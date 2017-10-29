@@ -97,6 +97,8 @@ public class GameController : MonoBehaviour {
             afkMode = true;
             TC.AllowPlayerMovement = false;
             StartWaveText.GetComponent<Text>().text = "Press G to Start the game!";
+            isFadingOut = true;
+            oneSet = true;
         }
     }
 
@@ -120,8 +122,6 @@ public class GameController : MonoBehaviour {
                 spawning = spawning || spawner.Spawning;
             }
             if (!spawning && Input.GetKeyDown(KeyCode.G)) {
-                isFadingOut = true;
-                oneSet = true;
                 // Enemy Information
                 if (currentWave == 0) {
                     Debug.Log ("Wave 1 start");
@@ -208,8 +208,11 @@ public class GameController : MonoBehaviour {
                 newIntensity = mainLight.intensity / 2;
             dimLight = true;
         }
-        if (!afkMode)
+        if (!afkMode) {
             StartWaveText.SetActive(false);
+            isFadingOut = true;
+            oneSet = true;
+        }
     }
 
     public bool IsSpawning() {
@@ -261,7 +264,7 @@ public class GameController : MonoBehaviour {
             IN.Play();
             oneSet = false;
         }
-        if (IN.volume < 0.7) {
+        if (IN.volume < 0.5) {
             IN.volume += 0.15f * Time.deltaTime;
         }else {
             isFadingIn = false;
