@@ -10,6 +10,7 @@ namespace Assets.Scripts.Tower_Scripts {
         public Transform BulletEmitter;
         public GameObject Bullet;
         public GameObject TowerObject;
+        public AudioSource shootingSound;
 
         //Tower Properties
         public float BulletsPerSecond;
@@ -105,6 +106,7 @@ namespace Assets.Scripts.Tower_Scripts {
         protected virtual void ShootAtEnemy(GameObject target) {
             if (Time.time > fireTimer) {
                 var bullet = Instantiate(Bullet, BulletEmitter.transform.position, Quaternion.identity, transform).GetComponent<BasicBullet>();
+                PlayShootingSoundIfNecessary();
                 bullet.Target = target;
                 //TODO: Maybe set bullet damage if adding upgrade system.
                 fireTimer = Time.time + fireRate;
@@ -126,5 +128,12 @@ namespace Assets.Scripts.Tower_Scripts {
             }
             return false;
         }
+
+        void PlayShootingSoundIfNecessary() {
+            if (shootingSound != null) {
+                shootingSound.Play();
+            }
+        }
+
     }
 }

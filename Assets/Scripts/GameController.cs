@@ -50,6 +50,9 @@ public class GameController : MonoBehaviour {
     public GameObject openButton;
     public GameObject closeButton;
 
+    public AudioSource waveIsInactive;
+    public AudioSource waveIsActive;
+
     // Awake Checks - Singleton setup
     void Awake() {
 
@@ -109,7 +112,7 @@ public class GameController : MonoBehaviour {
                 spawning = spawning || spawner.Spawning;
             }
             if (!spawning && Input.GetKeyDown(KeyCode.G)) {
-
+                SetWaveActiveSound();
                 // Enemy Information
                 if (currentWave == 0) {
                     Debug.Log ("Wave 1 start");
@@ -138,6 +141,7 @@ public class GameController : MonoBehaviour {
                 StartWaveText.SetActive(true);
                 rs.GainMoney(Waves[currentWave].WaveBonus);
                 waveActive = false;
+                SetWaveInactiveSound();
             }
         }
     }
@@ -223,5 +227,15 @@ public class GameController : MonoBehaviour {
             ps.Stop();
         else 
             ps.Play();
+    }
+
+    void SetWaveActiveSound() {
+        waveIsInactive.Stop();
+        waveIsActive.Play();
+    }
+
+    void SetWaveInactiveSound() {
+        waveIsActive.Stop();
+        waveIsInactive.Play();
     }
 }
